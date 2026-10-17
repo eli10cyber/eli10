@@ -8,21 +8,21 @@ const ids = new Set(lessons.map((l) => l.id));
 const terms = [...glossary].sort((a, b) => a.term.localeCompare(b.term));
 ---
 <Base title="Glossary" description="Security jargon in two lines each: once for a 10-year-old, once properly.">
-  <div class="narrow">
-    <h1>The <span class="scribble">glossary</span></h1>
-    <p class="muted">Every word explained twice: once simply, once properly.</p>
+  <div class="wrap measure">
+    <h1>Glossary</h1>
+    <p class="muted">Every term explained twice: once simply, once properly.</p>
     <label class="search">
       <span class="small muted">Find a term</span>
       <input id="q" type="search" placeholder="e.g. DNS" autocomplete="off" />
     </label>
     <dl class="terms">
       {terms.map((t) => (
-        <div class="term card" id={t.term.toLowerCase().replace(/[^a-z0-9]+/g, '-')} data-term={t.term.toLowerCase()}>
+        <div class="term" id={t.term.toLowerCase().replace(/[^a-z0-9]+/g, '-')} data-term={t.term.toLowerCase()}>
           <dt>{t.term}</dt>
           <dd>
-            <p class="kid">🖍️ {t.kid}</p>
-            <p class="grown">🎓 {t.grownup}</p>
-            {t.lesson && ids.has(t.lesson) && <a class="small" href={`/lessons/${t.lesson}/`}>Read the lesson →</a>}
+            <p class="kid casual">{t.kid}</p>
+            <p class="grown">{t.grownup}</p>
+            {t.lesson && ids.has(t.lesson) && <a class="small" href={`/lessons/${t.lesson}/`}>Read the lesson</a>}
           </dd>
         </div>
       ))}
@@ -32,13 +32,14 @@ const terms = [...glossary].sort((a, b) => a.term.localeCompare(b.term));
 </Base>
 
 <style>
-  .search { display: block; margin: 1.5rem 0; }
-  .search input { width: 100%; font: inherit; padding: 12px 14px; border-radius: 12px; border: 2px solid var(--ink); background: var(--card); color: var(--ink); }
-  .terms { display: grid; gap: 12px; margin: 0; }
-  dt { font-family: var(--font-head); font-weight: 800; font-size: 1.2rem; }
+  .search { display: block; margin: 1.5rem 0 2rem; }
+  .search input { width: 100%; font: inherit; padding: 12px 16px; border-radius: 999px; border: 2px solid var(--ink); background: var(--surface); color: var(--ink); }
+  .terms { margin: 0; border-top: 2px solid var(--ink); }
+  .term { padding: 18px 0; border-bottom: 1px solid var(--rule); }
+  dt { font-weight: 800; font-size: 1.25rem; }
   dd { margin: 6px 0 0; }
   dd p { margin: 0 0 6px; }
-  .kid { font-weight: 600; }
+  .kid { font-size: 1.08rem; }
   .grown { color: var(--ink-2); }
 </style>
 

@@ -29,9 +29,10 @@ const nav = [
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="/fonts/recursive.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="alternate" type="application/rss+xml" title="ELI10 Cyber" href="/rss.xml" />
-    <meta name="theme-color" content="#fbf7ef" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#16171c" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f2f5f9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f1b30" media="(prefers-color-scheme: dark)" />
     <meta property="og:type" content={type} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
@@ -43,12 +44,7 @@ const nav = [
     <a class="skip" href="#main">Skip to content</a>
     <header class="site-header">
       <div class="wrap header-inner">
-        <a href="/" class="logo" aria-label="ELI10 Cyber home">
-          <span class="logo-mark" aria-hidden="true">
-            <svg viewBox="0 0 32 32" width="28" height="28"><path d="M16 3 5 7v8c0 7 4.7 12 11 14 6.3-2 11-7 11-14V7L16 3Z" fill="var(--crayon-blue)"/><path d="m11 16 3.5 3.5L21.5 12" fill="none" stroke="var(--paper)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
-          <span class="logo-text">ELI10<span class="logo-accent">Cyber</span></span>
-        </a>
+        <a href="/" class="wordmark" aria-label="ELI10 Cyber home"><span class="w-kid">eli10</span><span class="w-tech">cyber</span></a>
         <nav aria-label="Main">
           <ul>
             {nav.map((n) => (
@@ -65,17 +61,14 @@ const nav = [
 
     <footer class="site-footer">
       <div class="wrap footer-inner">
-        <div>
-          <p class="footer-title">ELI10 Cyber</p>
-          <p class="muted">Cybersecurity explained like you’re 10, for people switching careers mid-way. Written by a commercial leader learning in public.</p>
-        </div>
+        <p class="muted">Cybersecurity explained three ways, for people switching careers mid-way. Written by Vas Evangelopoulos, a commercial leader learning in public.</p>
         <div class="footer-links">
           <a href="https://www.linkedin.com/in/vevangelopoulos" rel="me noopener" target="_blank">Follow on LinkedIn</a>
           <a href="/rss.xml">RSS feed</a>
           <a href="mailto:hello@eli10cyber.com">hello@eli10cyber.com</a>
         </div>
       </div>
-      <p class="wrap small muted">Independent study notes. Not affiliated with or endorsed by CompTIA. Security+ is a trademark of CompTIA.</p>
+      <p class="wrap small muted">Independent study notes, not affiliated with or endorsed by CompTIA. Security+ is a trademark of CompTIA.</p>
     </footer>
   </body>
 </html>

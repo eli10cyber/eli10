@@ -9,10 +9,10 @@ const total = domains.reduce((n, d) => n + d.topics.length, 0);
 ---
 <Base title="Learning map" description="The whole Security+ SY0-701 syllabus as one map. Tick topics off as you learn them.">
   <div class="wrap">
-    <h1>The learning <span class="scribble">map</span></h1>
-    <p class="muted lead">The five areas of the Security+ exam, one topic at a time. Tick them off as you go. Your progress stays on this device.</p>
+    <h1>Learning map</h1>
+    <p class="muted lead measure">The five areas of the Security+ exam, one topic at a time. Tick topics off as you learn them. Your progress is saved on this device only.</p>
 
-    <div class="progress card" aria-live="polite">
+    <div class="progress" aria-live="polite">
       <div class="progress-row">
         <strong>Your progress</strong>
         <span><span id="done">0</span> / {total} topics</span>
@@ -22,19 +22,20 @@ const total = domains.reduce((n, d) => n + d.topics.length, 0);
 
     {domains.map((d, i) => (
       <section class="domain">
-        <h2><span class="dnum">{i + 1}</span>{d.name} <span class="weight">{d.weight} of the exam</span></h2>
+        <h2><span class="dnum mono">{i + 1}</span><span>{d.name}</span></h2>
+        <p class="weight muted small">{d.weight} of the exam</p>
         <ul class="topics">
           {d.topics.map((t) => {
             const lesson = byTopic.get(t.id);
             return (
-              <li class="topic card" data-topic={t.id}>
+              <li class="topic" data-topic={t.id}>
                 <label class="check">
                   <input type="checkbox" aria-label={`Mark ${t.name} as learned`} />
-                  <span class="box-tick" aria-hidden="true"></span>
+                  <span class="tick" aria-hidden="true"></span>
                 </label>
                 <div class="topic-text">
                   {lesson ? <a href={`/lessons/${lesson.id}/`} class="topic-name">{t.name}</a> : <span class="topic-name">{t.name}</span>}
-                  <span class="muted small">{t.kid}</span>
+                  <span class="muted casual">{t.kid}</span>
                 </div>
                 {lesson ? <span class="status live">Lesson ready</span> : <span class="status soon">Coming soon</span>}
               </li>
@@ -47,28 +48,29 @@ const total = domains.reduce((n, d) => n + d.topics.length, 0);
 </Base>
 
 <style>
-  .lead { max-width: 620px; }
-  .progress { margin: 1.5rem 0 1rem; }
+  .lead { font-size: 1.15rem; margin: 1rem 0 0; }
+  .progress { margin: 2rem 0 0.5rem; max-width: 760px; }
   .progress-row { display: flex; justify-content: space-between; margin-bottom: 8px; }
-  .bar { height: 14px; background: var(--paper-2); border-radius: 999px; overflow: hidden; border: 2px solid var(--ink); }
-  .bar-fill { height: 100%; width: 0; background: var(--crayon-green); transition: width .3s; }
-  .domain h2 { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-  .dnum { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--crayon-blue); color: var(--paper); font-size: 1rem; flex-shrink: 0; }
-  .weight { font-family: var(--font-body); font-size: 0.85rem; font-weight: 600; color: var(--ink-2); }
-  .topics { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
-  .topic { display: flex; align-items: center; gap: 14px; padding: 14px 16px; }
+  .bar { height: 12px; background: var(--paper-2); border-radius: 999px; overflow: hidden; }
+  .bar-fill { height: 100%; width: 0; background: var(--marker); border-right: 2px solid var(--ink); transition: width .3s; }
+  .domain { max-width: 760px; }
+  .domain h2 { display: flex; align-items: baseline; gap: 12px; margin-bottom: 0.2rem; }
+  .dnum { color: var(--ink-2); font-size: 1.1rem; }
+  .weight { margin: 0 0 0.8rem; }
+  .topics { list-style: none; padding: 0; margin: 0; border-top: 2px solid var(--ink); }
+  .topic { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--rule); }
   .topic-text { display: flex; flex-direction: column; flex: 1; min-width: 0; }
   .topic-name { font-weight: 700; }
   span.topic-name { color: var(--ink); }
-  .status { font-size: 0.75rem; font-weight: 700; padding: 3px 8px; border-radius: 999px; white-space: nowrap; }
-  .live { background: var(--buyer-bg); color: var(--crayon-green); }
-  .soon { background: var(--paper-2); color: var(--ink-2); }
-  .check { position: relative; width: 28px; height: 28px; flex-shrink: 0; cursor: pointer; }
+  .status { font-size: 0.8rem; font-weight: 700; white-space: nowrap; }
+  .live { color: var(--ok); }
+  .soon { color: var(--ink-2); font-weight: 500; }
+  .check { position: relative; width: 26px; height: 26px; flex-shrink: 0; cursor: pointer; }
   .check input { position: absolute; inset: 0; opacity: 0; cursor: pointer; margin: 0; }
-  .box-tick { display: block; width: 28px; height: 28px; border: 2px solid var(--ink); border-radius: 8px; background: var(--card); }
-  .check input:checked + .box-tick { background: var(--crayon-green); }
-  .check input:checked + .box-tick::after { content: '✓'; color: #fff; display: grid; place-items: center; height: 100%; font-weight: 900; }
-  .check input:focus-visible + .box-tick { outline: 3px solid var(--crayon-orange); outline-offset: 2px; }
+  .tick { display: block; width: 26px; height: 26px; border: 2px solid var(--ink); border-radius: 50%; background: var(--surface); }
+  .check input:checked + .tick { background: var(--marker); }
+  .check input:checked + .tick::after { content: '✓'; color: var(--marker-ink); display: grid; place-items: center; height: 100%; font-weight: 900; font-size: 0.9rem; }
+  .check input:focus-visible + .tick { outline: 3px solid var(--marker); outline-offset: 3px; }
   @media (max-width: 560px) { .status { display: none; } }
 </style>
 

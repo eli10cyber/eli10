@@ -18,38 +18,43 @@ const d = lesson.data;
 const date = d.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 ---
 <Base title={d.title} description={d.description} image={d.image} type="article">
-  <article class="narrow">
-    <p class="crumbs small"><a href="/lessons/">Lessons</a> · Lesson #{String(d.number).padStart(2, '0')}{d.chapter && ` · ${d.chapter}`}</p>
-    <h1>{d.title}</h1>
-    <p class="muted small">{date} · Vas Evangelopoulos</p>
-
-    <div class="box box-kid oneliner">
-      <div class="box-label">🖍️ In one sentence</div>
-      <p>{d.oneLiner}</p>
-    </div>
+  <article class="wrap">
+    <header class="lesson-head measure">
+      <p class="crumbs small muted"><a href="/lessons/">Lessons</a> / Lesson {d.number}{d.chapter && <span>, {d.chapter}</span>}</p>
+      <h1>{d.title}</h1>
+      <p class="byline small muted">Vas Evangelopoulos, {date}</p>
+      <p class="oneliner casual">{d.oneLiner}</p>
+    </header>
 
     {d.image && <img class="hero" src={d.image} alt={d.imageAlt ?? ''} width="1200" height="675" />}
 
-    <div class="prose">
+    <div class="prose measure">
       <Content />
     </div>
 
-    <Flashcards cards={d.flashcards} />
-    <LearnedButton topic={d.topic} />
+    <div class="measure">
+      <Flashcards cards={d.flashcards} />
+      <LearnedButton topic={d.topic} />
 
-    <nav class="pager" aria-label="More lessons">
-      {prev ? <a class="card card-link" href={`/lessons/${prev.id}/`}><span class="small muted">← Previous</span><br />{prev.data.title}</a> : <span />}
-      {next ? <a class="card card-link right" href={`/lessons/${next.id}/`}><span class="small muted">Next lesson →</span><br />{next.data.title}</a> : <a class="card card-link right" href="/map/"><span class="small muted">What’s next →</span><br />See the learning map</a>}
-    </nav>
+      <nav class="pager" aria-label="More lessons">
+        {prev ? <a href={`/lessons/${prev.id}/`}><span class="small muted">Previous lesson</span><span class="pt">{prev.data.title}</span></a> : <span />}
+        {next ? <a class="right" href={`/lessons/${next.id}/`}><span class="small muted">Next lesson</span><span class="pt">{next.data.title}</span></a> : <a class="right" href="/map/"><span class="small muted">What to learn next</span><span class="pt">Open the learning map</span></a>}
+      </nav>
+    </div>
   </article>
 </Base>
 
 <style>
-  .crumbs { margin: 0 0 0.75rem; }
+  .crumbs { margin-bottom: 1rem; }
   .crumbs a { color: var(--ink-2); }
-  .oneliner p { font-size: 1.2rem; font-family: var(--font-head); font-weight: 700; }
-  .hero { border-radius: var(--radius); border: 1px solid var(--line); margin: 0.5rem 0 1.5rem; display: block; width: 100%; }
-  .pager { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 3rem; }
-  .pager .right { text-align: right; }
-  @media (max-width: 560px) { .pager { grid-template-columns: 1fr; } .pager .right { text-align: left; } }
+  .lesson-head h1 { font-size: clamp(2rem, 6vw, 3rem); }
+  .byline { margin: 0.9rem 0 1.5rem; }
+  .oneliner { font-size: clamp(1.25rem, 3vw, 1.5rem); line-height: 1.4; font-weight: 650; padding-left: 18px; border-left: 6px solid var(--marker); margin: 0 0 2rem; }
+  .hero { border-radius: var(--radius-l); border: 1px solid var(--rule); margin: 0 0 2rem; display: block; width: 100%; max-width: 900px; }
+  .pager { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 3.5rem; border-top: 2px solid var(--ink); padding-top: 16px; }
+  .pager a { text-decoration: none; color: var(--ink); display: flex; flex-direction: column; gap: 4px; }
+  .pager .pt { font-weight: 750; }
+  .pager a:hover .pt { text-decoration: underline; text-decoration-color: var(--marker); text-decoration-thickness: 4px; }
+  .pager .right { text-align: right; align-items: flex-end; }
+  @media (max-width: 560px) { .pager { grid-template-columns: 1fr; } .pager .right { text-align: left; align-items: flex-start; } }
 </style>

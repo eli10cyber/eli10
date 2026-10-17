@@ -5,16 +5,17 @@ const { topic } = Astro.props;
 ---
 <div class="learned" data-topic={topic}>
   <button type="button" class="btn learned-btn" aria-pressed="false">
-    <span class="when-off">✓ Mark as learned</span>
-    <span class="when-on">★ Learned! Back to the map</span>
+    <span class="when-off">Mark this topic as learned</span>
+    <span class="when-on">Learned. Open the map</span>
   </button>
   <p class="small muted">Your progress is saved on this device only.</p>
 </div>
 
 <style>
-  .learned { margin: 2.5rem 0 0; text-align: center; }
+  .learned { margin: 2.5rem 0 0; }
+  .learned p { margin-top: 0.6rem; }
   .when-on { display: none; }
-  .learned-btn[aria-pressed='true'] { background: var(--crayon-green); color: #fff; }
+  .learned-btn[aria-pressed='true'] { background: var(--marker); color: var(--marker-ink); border-color: var(--marker-ink); }
   .learned-btn[aria-pressed='true'] .when-on { display: inline; }
   .learned-btn[aria-pressed='true'] .when-off { display: none; }
 </style>

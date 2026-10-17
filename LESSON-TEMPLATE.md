@@ -18,15 +18,15 @@ flashcards:
     a: "Answer 3."
 ---
 
-<div class="box box-kid">
-<div class="box-label">🖍️ Like you’re 10</div>
+<div class="layer layer-kid">
+<p class="layer-name">Like you’re 10</p>
 
 A story with one everyday analogy. Short sentences. Bold the key idea.
 
 </div>
 
-<div class="box box-grown">
-<div class="box-label">🎓 Grown-up version</div>
+<div class="layer layer-grown">
+<p class="layer-name">Grown-up version</p>
 
 The correct terms and how it really works. Include a "what it does not do" list, since those are common exam traps.
 
@@ -36,8 +36,8 @@ The correct terms and how it really works. Include a "what it does not do" list,
 
 Something you did yourself, or a well-known incident.
 
-<div class="box box-buyer">
-<div class="box-label">💼 Why a buyer cares</div>
+<div class="layer layer-buyer">
+<p class="layer-name">Why a buyer cares</p>
 
 - **The risk it reduces:**
 - **Who owns it at a company:**

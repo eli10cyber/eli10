@@ -19,8 +19,8 @@ flashcards:
     a: "RRSIG. The public key used to check it is published in a DNSKEY record."
 ---
 
-<div class="box box-kid">
-<div class="box-label">🖍️ Like you’re 10</div>
+<div class="layer layer-kid">
+<p class="layer-name">Like you’re 10</p>
 
 The internet has a giant **address book** called DNS. When you type `eli10cyber.com`, your computer asks the address book, “Where does this website live?” and gets back a house number (an IP address).
 
@@ -34,8 +34,8 @@ And who vouches that the seal itself is real? The **parent** book does. The `.co
 
 [![Three address books, root, .com and eli10cyber.com, each with a wax seal. Each parent vouches for its child's seal and the resolver checks every seal.](/images/dnssec-chain.svg)](/images/dnssec-chain.svg "Tap to open full size")
 
-<div class="box box-grown">
-<div class="box-label">🎓 Grown-up version</div>
+<div class="layer layer-grown">
+<p class="layer-name">Grown-up version</p>
 
 **DNS Security Extensions (DNSSEC)** add cryptographic signatures to DNS data so that a **validating resolver** can confirm two things: the answer came from the authoritative source (*authenticity*), and it wasn’t altered in transit (*integrity*).
 
@@ -66,8 +66,8 @@ When I registered `eli10cyber.com` on Cloudflare, turning DNSSEC on took one cli
 
 So this very website is protected by the thing this lesson is about.
 
-<div class="box box-buyer">
-<div class="box-label">💼 Why a buyer cares</div>
+<div class="layer layer-buyer">
+<p class="layer-name">Why a buyer cares</p>
 
 - **The risk it reduces:** customers being silently redirected to a fake site, which leads to credential theft, payment fraud and brand damage. For banks, retailers and government services, that’s a board-level worry.
 - **Who owns it at a company:** usually the network or infrastructure team (often called the DNS or “DDI” team), with input from security. Domain registration itself sometimes sits with legal or marketing, which is how important domains get forgotten.

@@ -5,11 +5,11 @@ const { cards } = Astro.props;
 {cards.length > 0 && (
   <section class="flash" aria-labelledby="flash-title">
     <h2 id="flash-title">Test yourself</h2>
-    <p class="muted">Try to answer out loud, then tap to flip.</p>
+    <p class="muted">Answer out loud first, then check.</p>
     <div class="flash-grid">
       {cards.map((c, i) => (
         <details class="flash-card">
-          <summary><span class="flash-n">Q{i + 1}</span>{c.q}</summary>
+          <summary><span class="flash-n mono">{i + 1}</span>{c.q}</summary>
           <p>{c.a}</p>
         </details>
       ))}
@@ -18,13 +18,16 @@ const { cards } = Astro.props;
 )}
 
 <style>
-  .flash { margin-top: 2.5rem; }
-  .flash-grid { display: grid; gap: 12px; }
-  .flash-card { background: var(--card); border: 2px solid var(--ink); border-radius: var(--radius); box-shadow: 3px 3px 0 var(--ink); }
-  .flash-card summary { cursor: pointer; list-style: none; padding: 16px 18px; font-weight: 700; display: flex; gap: 10px; align-items: baseline; }
+  .flash { margin-top: 3rem; }
+  .flash h2 { margin-top: 0; }
+  .flash-grid { display: grid; gap: 10px; }
+  .flash-card { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius-l); }
+  .flash-card[open] { border-color: var(--ink); }
+  .flash-card summary { cursor: pointer; list-style: none; padding: 16px 20px; font-weight: 700; display: flex; gap: 12px; align-items: baseline; }
   .flash-card summary::-webkit-details-marker { display: none; }
-  .flash-card summary::after { content: 'Flip'; margin-left: auto; font-size: 0.8rem; color: var(--ink-2); font-weight: 600; white-space: nowrap; }
+  .flash-card summary::after { content: 'Show answer'; margin-left: auto; font-size: 0.8rem; color: var(--ink-2); font-weight: 600; white-space: nowrap; padding-left: 8px; }
   .flash-card[open] summary::after { content: 'Hide'; }
-  .flash-card p { margin: 0; padding: 0 18px 16px 18px; border-top: 1px dashed var(--line); padding-top: 12px; }
-  .flash-n { font-family: var(--font-head); color: var(--crayon-orange); flex-shrink: 0; }
+  .flash-card p { margin: 0; padding: 0 20px 18px 54px; font-variation-settings: 'CASL' 1, 'MONO' 0; }
+  .flash-n { color: var(--ink-2); flex-shrink: 0; min-width: 22px; }
+  @media (max-width: 560px) { .flash-card p { padding-left: 20px; } }
 </style>
