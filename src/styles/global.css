@@ -191,3 +191,8 @@ main { padding: 40px 0 72px; }
 .prose .panels img { width: 100%; max-height: none; }
 @media (min-width: 1000px) { .prose .panels { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 @media (max-width: 640px) { .prose .panels { grid-template-columns: 1fr; } }
+
+/* Auto-linked glossary terms: a dotted highlighter underline, distinct from ordinary links */
+.prose a.term-link { color: inherit; text-decoration: underline dotted; text-decoration-color: var(--link); text-decoration-thickness: 2px; text-underline-offset: 0.22em; }
+.prose a.term-link:hover { text-decoration-style: solid; text-decoration-color: var(--marker); text-decoration-thickness: 4px; }
+.layer-buyer a.term-link { text-decoration-color: var(--marker); }
