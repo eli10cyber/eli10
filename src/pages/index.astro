@@ -1,0 +1,86 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const lessons = (await getCollection('lessons', ({ data }) => !data.draft)).sort((a, b) => b.data.number - a.data.number);
+const latest = lessons.slice(0, 3);
+const first = [...lessons].sort((a, b) => a.data.number - b.data.number)[0];
+---
+<Base title="ELI10 Cyber" description="Cybersecurity explained like you're 10, for mid-career people moving into security. Simple pictures first, the proper terms second, and why companies pay for it.">
+  <section class="hero wrap">
+    <div class="hero-text">
+      <p class="tag">Learning in public · Security+ SY0-701</p>
+      <h1>Cybersecurity, explained like you’re <span class="scribble">10</span>.</h1>
+      <p class="lead">Simple pictures first. The proper words second. And why companies actually pay for it, for anyone switching into security mid-career.</p>
+      <div class="cta">
+        {first && <a class="btn btn-primary" href={`/lessons/${first.id}/`}>Start with lesson #1</a>}
+        <a class="btn" href="/map/">See the learning map</a>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 320 260">
+        <rect x="18" y="30" width="250" height="190" rx="18" fill="var(--card)" stroke="var(--ink)" stroke-width="3"/>
+        <rect x="18" y="30" width="250" height="40" rx="18" fill="var(--crayon-blue)" stroke="var(--ink)" stroke-width="3"/>
+        <circle cx="44" cy="50" r="6" fill="var(--paper)"/><circle cx="64" cy="50" r="6" fill="var(--paper)"/><circle cx="84" cy="50" r="6" fill="var(--paper)"/>
+        <path d="M44 100h150M44 125h110M44 150h170M44 175h90" stroke="var(--line)" stroke-width="10" stroke-linecap="round"/>
+        <g transform="translate(212 140) rotate(-8)">
+          <path d="M40 0 4 14v26c0 22 15 38 36 45 21-7 36-23 36-45V14L40 0Z" fill="var(--crayon-yellow)" stroke="var(--ink)" stroke-width="3"/>
+          <path d="m24 42 11 11 22-24" fill="none" stroke="var(--ink)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <path d="M30 236c40-10 80 6 120-2s70-8 100 0" fill="none" stroke="var(--crayon-orange)" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </section>
+
+  <section class="wrap how">
+    <h2>Every lesson has three layers</h2>
+    <div class="grid">
+      <div class="box box-kid"><div class="box-label">🖍️ Like you’re 10</div><p>A picture and a story. If a ten-year-old wouldn’t get it, it’s rewritten.</p></div>
+      <div class="box box-grown"><div class="box-label">🎓 Grown-up version</div><p>The correct terms, so you can pass the exam and talk to engineers without wincing.</p></div>
+      <div class="box box-buyer"><div class="box-label">💼 Why a buyer cares</div><p>Which risk it reduces, who owns it at a company, and what gets bought. The bit most courses skip.</p></div>
+    </div>
+  </section>
+
+  {latest.length > 0 && (
+    <section class="wrap">
+      <h2>Latest lessons</h2>
+      <div class="grid">
+        {latest.map((l) => (
+          <a class="card card-link" href={`/lessons/${l.id}/`}>
+            <span class="tag">#{String(l.data.number).padStart(2, '0')}</span>
+            <h3>{l.data.title}</h3>
+            <p class="muted">{l.data.oneLiner}</p>
+          </a>
+        ))}
+      </div>
+      <p><a href="/lessons/">All lessons →</a></p>
+    </section>
+  )}
+
+  <section class="wrap">
+    <div class="card story">
+      <div>
+        <h2>From ad tech to cybersecurity</h2>
+        <p>I’ve spent seven years selling and running digital advertising at Meta, GroupM and Sportradar. Now I’m learning security from scratch and writing down everything as simply as I can, so the next person switching careers has an easier start.</p>
+        <a href="/about/">Read my story →</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { display: grid; grid-template-columns: 1.3fr 1fr; gap: 32px; align-items: center; padding-top: 16px; padding-bottom: 32px; }
+  .lead { font-size: 1.2rem; color: var(--ink-2); max-width: 560px; }
+  .cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 1.5rem; }
+  .hero-art svg { width: 100%; max-width: 360px; display: block; margin: 0 auto; }
+  .how .box { margin: 0; }
+  .card h3 { margin: 0.6rem 0 0.4rem; }
+  .card p { margin: 0; }
+  .story { margin-top: 2.5rem; border-left: 6px solid var(--crayon-orange); }
+  .story h2 { margin-top: 0; }
+  @media (max-width: 760px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-art { order: -1; }
+    .hero-art svg { max-width: 220px; }
+  }
+</style>

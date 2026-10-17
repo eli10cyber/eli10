@@ -1,0 +1,20 @@
+{
+  "name": "eli10cyber",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro build && wrangler dev",
+    "deploy": "astro build && wrangler deploy"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.4.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.151.1"
+  },
+  "type": "module",
+  "private": true
+}

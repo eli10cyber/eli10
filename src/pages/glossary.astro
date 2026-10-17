@@ -1,0 +1,55 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { glossary } from '../data/glossary';
+
+const lessons = await getCollection('lessons', ({ data }) => !data.draft);
+const ids = new Set(lessons.map((l) => l.id));
+const terms = [...glossary].sort((a, b) => a.term.localeCompare(b.term));
+---
+<Base title="Glossary" description="Security jargon in two lines each: once for a 10-year-old, once properly.">
+  <div class="narrow">
+    <h1>The <span class="scribble">glossary</span></h1>
+    <p class="muted">Every word explained twice: once simply, once properly.</p>
+    <label class="search">
+      <span class="small muted">Find a term</span>
+      <input id="q" type="search" placeholder="e.g. DNS" autocomplete="off" />
+    </label>
+    <dl class="terms">
+      {terms.map((t) => (
+        <div class="term card" id={t.term.toLowerCase().replace(/[^a-z0-9]+/g, '-')} data-term={t.term.toLowerCase()}>
+          <dt>{t.term}</dt>
+          <dd>
+            <p class="kid">🖍️ {t.kid}</p>
+            <p class="grown">🎓 {t.grownup}</p>
+            {t.lesson && ids.has(t.lesson) && <a class="small" href={`/lessons/${t.lesson}/`}>Read the lesson →</a>}
+          </dd>
+        </div>
+      ))}
+    </dl>
+    <p id="none" class="muted" hidden>No match yet. That word might be in a future lesson.</p>
+  </div>
+</Base>
+
+<style>
+  .search { display: block; margin: 1.5rem 0; }
+  .search input { width: 100%; font: inherit; padding: 12px 14px; border-radius: 12px; border: 2px solid var(--ink); background: var(--card); color: var(--ink); }
+  .terms { display: grid; gap: 12px; margin: 0; }
+  dt { font-family: var(--font-head); font-weight: 800; font-size: 1.2rem; }
+  dd { margin: 6px 0 0; }
+  dd p { margin: 0 0 6px; }
+  .kid { font-weight: 600; }
+  .grown { color: var(--ink-2); }
+</style>
+
+<script>
+  const q = document.getElementById('q') as HTMLInputElement;
+  const items = Array.from(document.querySelectorAll<HTMLElement>('.term'));
+  const none = document.getElementById('none')!;
+  q.addEventListener('input', () => {
+    const v = q.value.trim().toLowerCase();
+    let shown = 0;
+    items.forEach((el) => { const hit = !v || el.dataset.term!.includes(v) || el.textContent!.toLowerCase().includes(v); el.hidden = !hit; if (hit) shown++; });
+    none.hidden = shown > 0;
+  });
+</script>

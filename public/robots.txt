@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://eli10cyber.com/sitemap-index.xml

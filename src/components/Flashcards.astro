@@ -1,0 +1,30 @@
+---
+interface Props { cards: { q: string; a: string }[] }
+const { cards } = Astro.props;
+---
+{cards.length > 0 && (
+  <section class="flash" aria-labelledby="flash-title">
+    <h2 id="flash-title">Test yourself</h2>
+    <p class="muted">Try to answer out loud, then tap to flip.</p>
+    <div class="flash-grid">
+      {cards.map((c, i) => (
+        <details class="flash-card">
+          <summary><span class="flash-n">Q{i + 1}</span>{c.q}</summary>
+          <p>{c.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+)}
+
+<style>
+  .flash { margin-top: 2.5rem; }
+  .flash-grid { display: grid; gap: 12px; }
+  .flash-card { background: var(--card); border: 2px solid var(--ink); border-radius: var(--radius); box-shadow: 3px 3px 0 var(--ink); }
+  .flash-card summary { cursor: pointer; list-style: none; padding: 16px 18px; font-weight: 700; display: flex; gap: 10px; align-items: baseline; }
+  .flash-card summary::-webkit-details-marker { display: none; }
+  .flash-card summary::after { content: 'Flip'; margin-left: auto; font-size: 0.8rem; color: var(--ink-2); font-weight: 600; white-space: nowrap; }
+  .flash-card[open] summary::after { content: 'Hide'; }
+  .flash-card p { margin: 0; padding: 0 18px 16px 18px; border-top: 1px dashed var(--line); padding-top: 12px; }
+  .flash-n { font-family: var(--font-head); color: var(--crayon-orange); flex-shrink: 0; }
+</style>

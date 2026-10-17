@@ -1,0 +1,98 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { domains } from '../data/map';
+
+const lessons = await getCollection('lessons', ({ data }) => !data.draft);
+const byTopic = new Map(lessons.map((l) => [l.data.topic, l]));
+const total = domains.reduce((n, d) => n + d.topics.length, 0);
+---
+<Base title="Learning map" description="The whole Security+ SY0-701 syllabus as one map. Tick topics off as you learn them.">
+  <div class="wrap">
+    <h1>The learning <span class="scribble">map</span></h1>
+    <p class="muted lead">The five areas of the Security+ exam, one topic at a time. Tick them off as you go. Your progress stays on this device.</p>
+
+    <div class="progress card" aria-live="polite">
+      <div class="progress-row">
+        <strong>Your progress</strong>
+        <span><span id="done">0</span> / {total} topics</span>
+      </div>
+      <div class="bar"><div class="bar-fill" id="bar"></div></div>
+    </div>
+
+    {domains.map((d, i) => (
+      <section class="domain">
+        <h2><span class="dnum">{i + 1}</span>{d.name} <span class="weight">{d.weight} of the exam</span></h2>
+        <ul class="topics">
+          {d.topics.map((t) => {
+            const lesson = byTopic.get(t.id);
+            return (
+              <li class="topic card" data-topic={t.id}>
+                <label class="check">
+                  <input type="checkbox" aria-label={`Mark ${t.name} as learned`} />
+                  <span class="box-tick" aria-hidden="true"></span>
+                </label>
+                <div class="topic-text">
+                  {lesson ? <a href={`/lessons/${lesson.id}/`} class="topic-name">{t.name}</a> : <span class="topic-name">{t.name}</span>}
+                  <span class="muted small">{t.kid}</span>
+                </div>
+                {lesson ? <span class="status live">Lesson ready</span> : <span class="status soon">Coming soon</span>}
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    ))}
+  </div>
+</Base>
+
+<style>
+  .lead { max-width: 620px; }
+  .progress { margin: 1.5rem 0 1rem; }
+  .progress-row { display: flex; justify-content: space-between; margin-bottom: 8px; }
+  .bar { height: 14px; background: var(--paper-2); border-radius: 999px; overflow: hidden; border: 2px solid var(--ink); }
+  .bar-fill { height: 100%; width: 0; background: var(--crayon-green); transition: width .3s; }
+  .domain h2 { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .dnum { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--crayon-blue); color: var(--paper); font-size: 1rem; flex-shrink: 0; }
+  .weight { font-family: var(--font-body); font-size: 0.85rem; font-weight: 600; color: var(--ink-2); }
+  .topics { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  .topic { display: flex; align-items: center; gap: 14px; padding: 14px 16px; }
+  .topic-text { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+  .topic-name { font-weight: 700; }
+  span.topic-name { color: var(--ink); }
+  .status { font-size: 0.75rem; font-weight: 700; padding: 3px 8px; border-radius: 999px; white-space: nowrap; }
+  .live { background: var(--buyer-bg); color: var(--crayon-green); }
+  .soon { background: var(--paper-2); color: var(--ink-2); }
+  .check { position: relative; width: 28px; height: 28px; flex-shrink: 0; cursor: pointer; }
+  .check input { position: absolute; inset: 0; opacity: 0; cursor: pointer; margin: 0; }
+  .box-tick { display: block; width: 28px; height: 28px; border: 2px solid var(--ink); border-radius: 8px; background: var(--card); }
+  .check input:checked + .box-tick { background: var(--crayon-green); }
+  .check input:checked + .box-tick::after { content: '✓'; color: #fff; display: grid; place-items: center; height: 100%; font-weight: 900; }
+  .check input:focus-visible + .box-tick { outline: 3px solid var(--crayon-orange); outline-offset: 2px; }
+  @media (max-width: 560px) { .status { display: none; } }
+</style>
+
+<script>
+  const KEY = 'eli10:learned';
+  const read = (): string[] => { try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch { return []; } };
+  const write = (v: string[]) => { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch {} };
+  const items = Array.from(document.querySelectorAll<HTMLElement>('.topic'));
+  const update = () => {
+    const learned = read();
+    const ids = items.map((i) => i.dataset.topic!);
+    const done = ids.filter((id) => learned.includes(id)).length;
+    document.getElementById('done')!.textContent = String(done);
+    (document.getElementById('bar') as HTMLElement).style.width = `${(done / ids.length) * 100}%`;
+  };
+  items.forEach((li) => {
+    const id = li.dataset.topic!;
+    const box = li.querySelector('input')!;
+    box.checked = read().includes(id);
+    box.addEventListener('change', () => {
+      const list = read().filter((x) => x !== id);
+      write(box.checked ? [...list, id] : list);
+      update();
+    });
+  });
+  update();
+</script>

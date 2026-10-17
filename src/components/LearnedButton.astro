@@ -1,0 +1,38 @@
+---
+// Saves progress in the visitor's own browser only. Nothing is sent anywhere.
+interface Props { topic: string }
+const { topic } = Astro.props;
+---
+<div class="learned" data-topic={topic}>
+  <button type="button" class="btn learned-btn" aria-pressed="false">
+    <span class="when-off">✓ Mark as learned</span>
+    <span class="when-on">★ Learned! Back to the map</span>
+  </button>
+  <p class="small muted">Your progress is saved on this device only.</p>
+</div>
+
+<style>
+  .learned { margin: 2.5rem 0 0; text-align: center; }
+  .when-on { display: none; }
+  .learned-btn[aria-pressed='true'] { background: var(--crayon-green); color: #fff; }
+  .learned-btn[aria-pressed='true'] .when-on { display: inline; }
+  .learned-btn[aria-pressed='true'] .when-off { display: none; }
+</style>
+
+<script>
+  const KEY = 'eli10:learned';
+  const read = (): string[] => { try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch { return []; } };
+  const write = (v: string[]) => { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch {} };
+  document.querySelectorAll<HTMLElement>('.learned').forEach((el) => {
+    const topic = el.dataset.topic!;
+    const btn = el.querySelector('button')!;
+    const sync = () => btn.setAttribute('aria-pressed', String(read().includes(topic)));
+    sync();
+    btn.addEventListener('click', () => {
+      const list = read();
+      if (list.includes(topic)) { window.location.href = '/map/'; return; }
+      write([...list, topic]);
+      sync();
+    });
+  });
+</script>
