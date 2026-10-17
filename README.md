@@ -25,6 +25,36 @@ Built with [Astro](https://astro.build) and hosted on Cloudflare Workers (static
 
 Set `draft: true` to keep a lesson hidden while you work on it.
 
+## Illustrations
+
+Put images in `src/content/lessons/images/` and reference them from the lesson with a relative path:
+
+```md
+![Describe what the picture shows](./images/my-picture.jpg)
+
+<p class="caption">One line about the picture.</p>
+```
+
+The site converts them to WebP automatically, sizes them for phones, and lets readers tap any image to open it full size.
+
+For a comic made of several panels, put each panel in its own file inside a `panels` block. It shows as a strip of four on desktop and one panel per screen on phones, so the text stays readable:
+
+```md
+<div class="panels">
+
+![Panel 1](./images/panel-1.jpg)
+
+![Panel 2](./images/panel-2.jpg)
+
+</div>
+```
+
+**Image checklist**
+- Export the original, not a mock-up photo of it. At least 2000 px on the long side.
+- Keep text inside the picture short and large; long captions go in the lesson text.
+- Check every number and label is correct (AI images often garble them).
+- No company logos or brand names inside illustrations.
+
 ## Commands
 
 ```bash

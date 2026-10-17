@@ -168,3 +168,26 @@ main { padding: 40px 0 72px; }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }
+
+/* ---------- Illustrations ----------
+   Lesson images are the main content, often dense with text, so they:
+   - break out wider than the text column on large screens
+   - never get taller than the screen
+   - open full size on tap (see Lightbox) */
+.prose p:has(> img), .prose p:has(> a > img), .prose .figure {
+  width: min(1040px, calc(100vw - 40px));
+  margin: 2rem 0 0.5rem;
+}
+.prose p:has(> img) img, .prose p:has(> a > img) img {
+  display: block; width: auto; max-width: 100%; height: auto; max-height: 82vh;
+  border-radius: var(--radius-l); border: 1px solid var(--rule); margin: 0; cursor: zoom-in; background: var(--surface);
+}
+.prose .caption { font-size: 0.9rem; color: var(--ink-2); margin: 0 0 2rem; max-width: var(--measure); }
+.prose .caption::before { content: ''; display: inline-block; width: 18px; height: 3px; background: var(--marker); vertical-align: middle; margin-right: 8px; border-radius: 2px; }
+
+/* A comic split into panels: 2 x 2 on wide screens, one per row on phones so each is readable */
+.prose .panels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; width: min(1040px, calc(100vw - 40px)); margin: 2rem 0 0.5rem; }
+.prose .panels p { margin: 0; width: auto; }
+.prose .panels img { width: 100%; max-height: none; }
+@media (min-width: 1000px) { .prose .panels { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .prose .panels { grid-template-columns: 1fr; } }

@@ -34,6 +34,7 @@ export const domains: Domain[] = [
     name: 'Security architecture',
     weight: '18%',
     topics: [
+      { id: 'network-basics', name: 'Network basics: NTP, DHCP, IPv4, IPv6', kid: 'Clocks, name tags and addresses for computers' },
       { id: 'secure-protocols', name: 'Secure protocols', kid: 'Rules for talking safely' },
       { id: 'dnssec', name: 'DNSSEC', kid: 'A wax seal on the internet’s address book' },
       { id: 'segmentation', name: 'Network segmentation', kid: 'Locked rooms inside the house' },

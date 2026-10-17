@@ -1,0 +1,48 @@
+---
+// Tap any lesson image to see it full size. Tap again to zoom to actual pixels and pan around.
+---
+<dialog class="lightbox" aria-label="Image viewer">
+  <div class="lb-bar">
+    <span class="lb-hint small">Tap the image to zoom</span>
+    <button type="button" class="lb-close" aria-label="Close image">Close</button>
+  </div>
+  <div class="lb-stage"><img alt="" /></div>
+</dialog>
+
+<style>
+  .lightbox { padding: 0; border: 0; width: 100vw; height: 100dvh; max-width: none; max-height: none; background: #0b1426; color: #eef3fa; }
+  .lightbox::backdrop { background: rgba(9, 16, 30, 0.6); }
+  .lb-bar { position: sticky; top: 0; display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; z-index: 1; }
+  .lb-close { font: inherit; font-weight: 700; color: #13233f; background: #ffd84d; border: 0; border-radius: 999px; padding: 8px 16px; cursor: pointer; }
+  .lb-stage { height: calc(100dvh - 56px); overflow: auto; display: grid; place-items: center; padding: 0 12px 12px; }
+  .lb-stage img { max-width: 100%; max-height: 100%; cursor: zoom-in; border-radius: 8px; }
+  .lightbox.zoomed .lb-stage { place-items: start; }
+  .lightbox.zoomed .lb-stage img { max-width: none; max-height: none; width: auto; cursor: zoom-out; }
+</style>
+
+<script>
+  const dlg = document.querySelector<HTMLDialogElement>('.lightbox');
+  if (dlg) {
+    const big = dlg.querySelector('img')!;
+    const largest = (img: HTMLImageElement) => {
+      const set = img.getAttribute('srcset');
+      if (!set) return img.currentSrc || img.src;
+      const options = set.split(',').map((s) => s.trim().split(/\s+/)).map(([u, w]) => ({ u, w: parseInt(w) || 0 }));
+      return options.sort((a, b) => b.w - a.w)[0].u;
+    };
+    document.querySelectorAll<HTMLImageElement>('.prose img').forEach((img) => {
+      const link = img.closest('a');
+      const target = link ?? img;
+      target.addEventListener('click', (e) => {
+        e.preventDefault();
+        big.src = largest(img);
+        big.alt = img.alt;
+        dlg.classList.remove('zoomed');
+        dlg.showModal();
+      });
+    });
+    big.addEventListener('click', () => dlg.classList.toggle('zoomed'));
+    dlg.querySelector('.lb-close')!.addEventListener('click', () => dlg.close());
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  }
+</script>

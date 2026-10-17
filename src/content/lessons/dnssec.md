@@ -32,7 +32,9 @@ And who vouches that the seal itself is real? The **parent** book does. The `.co
 
 </div>
 
-[![Three address books, root, .com and eli10cyber.com, each with a wax seal. Each parent vouches for its child's seal and the resolver checks every seal.](/images/dnssec-chain.svg)](/images/dnssec-chain.svg "Tap to open full size")
+![Three address books, root, .com and eli10cyber.com, each with a wax seal. Each parent vouches for its child's seal and the resolver checks every seal.](/images/dnssec-chain.svg)
+
+<p class="caption">The chain of trust: each level vouches for the seal below it. Tap to enlarge.</p>
 
 <div class="layer layer-grown">
 <p class="layer-name">Grown-up version</p>
