@@ -6,7 +6,7 @@ number: 1
 topic: ip-addressing
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "Every device on the internet needs a house number. The old system (IPv4) ran out of numbers, so we built a new one (IPv6) that never will."
-draft: false
+draft: true
 buyerScore:
   budget: 1
   pain: 0.5

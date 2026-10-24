@@ -6,7 +6,7 @@ number: 6
 topic: directory-services
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "A directory is a company’s master list of every person, computer and permission. Whoever controls it controls the company."
-draft: false
+draft: true
 buyerScore:
   budget: 2.5
   pain: 2.5

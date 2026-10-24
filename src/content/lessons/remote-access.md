@@ -6,7 +6,7 @@ number: 7
 topic: remote-access
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "SSH lets you type commands on a faraway computer through a secret tunnel. RDP lets you see and control its whole screen. Both are powerful, so attackers love them too."
-draft: false
+draft: true
 buyerScore:
   budget: 2
   pain: 2.5

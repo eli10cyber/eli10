@@ -6,7 +6,7 @@ number: 8
 topic: voip
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "An internet call needs a doorbell to start it (SIP), a conveyor belt to carry your voice (RTP), and a locked tunnel so nobody listens in (SRTP)."
-draft: false
+draft: true
 buyerScore:
   budget: 1.5
   pain: 1

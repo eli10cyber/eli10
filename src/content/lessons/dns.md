@@ -6,7 +6,7 @@ number: 3
 topic: dns
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "DNS turns names people can remember, like eli10cyber.com, into the number addresses computers actually use."
-draft: false
+draft: true
 buyerScore:
   budget: 2
   pain: 2

@@ -6,7 +6,7 @@ number: 5
 topic: email-auth
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "SPF lists who may send email for a company, DKIM seals each email so changes show, and DMARC tells inboxes what to do with fakes."
-draft: false
+draft: true
 buyerScore:
   budget: 2
   pain: 2.5

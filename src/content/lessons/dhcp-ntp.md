@@ -6,7 +6,7 @@ number: 2
 topic: dhcp-ntp
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "DHCP hands every new device an address the moment it joins a network. NTP makes sure every device’s clock shows exactly the same time."
-draft: false
+draft: true
 buyerScore:
   budget: 1
   pain: 0.5
