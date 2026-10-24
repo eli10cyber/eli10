@@ -4,6 +4,7 @@ import Base from '../../layouts/Base.astro';
 import Flashcards from '../../components/Flashcards.astro';
 import LearnedButton from '../../components/LearnedButton.astro';
 import Lightbox from '../../components/Lightbox.astro';
+import BuyerScore from '../../components/BuyerScore.astro';
 
 export async function getStaticPaths() {
   const lessons = (await getCollection('lessons', ({ data }) => !data.draft)).sort((a, b) => a.data.number - b.data.number);
@@ -34,6 +35,7 @@ const date = d.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'lon
     </div>
 
     <div class="measure">
+      {d.buyerScore && <BuyerScore score={d.buyerScore} />}
       <Flashcards cards={d.flashcards} />
       <LearnedButton topic={d.topic} />
 

@@ -2,10 +2,17 @@
 title: "DNSSEC: a wax seal on the internet’s address book"
 description: "DNSSEC explained like you're 10: what it is, how the chain of trust works, what it doesn't do, and why companies care."
 pubDate: 2026-10-17
-number: 1
+number: 4
 topic: dnssec
 chapter: "Gibson & Shelley, Ch. 3 (protocols)"
 oneLiner: "DNSSEC puts a seal on the internet’s address book, so you know the address you were given is real and nobody swapped it on the way."
+buyerScore:
+  budget: 0.5
+  pain: 1
+  pressure: 1.5
+  owner: 1
+  verdict: "A checkbox feature inside managed DNS. Important, but rarely bought on its own."
+  pitch: "Proves customers are reaching your real website, not a forged copy."
 flashcards:
   - q: "What does DNSSEC add to DNS?"
     a: "Digital signatures. They let a resolver check that a DNS answer is authentic and hasn’t been changed."

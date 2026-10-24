@@ -1,0 +1,55 @@
+---
+// The commercial "buyer score": four questions, 0–2.5 each, adding up to 10.
+interface Props {
+  score: { budget: number; pain: number; pressure: number; owner: number; verdict: string };
+}
+const { score } = Astro.props;
+const total = score.budget + score.pain + score.pressure + score.owner;
+const parts = [
+  { key: 'budget', label: 'Budget', q: 'Is there a product category companies buy for this?' },
+  { key: 'pain', label: 'Pain', q: 'Does it cause breaches or outages people have heard of?' },
+  { key: 'pressure', label: 'Pressure', q: 'Do regulators, insurers or auditors demand it?' },
+  { key: 'owner', label: 'Owner', q: 'Is there a clear buyer who is judged on it?' },
+] as const;
+const fmt = (n: number) => (Number.isInteger(n) ? String(n) : n.toFixed(1));
+---
+<section class="buyer-score" aria-labelledby="bs-title">
+  <div class="bs-head">
+    <h2 id="bs-title">Buyer score</h2>
+    <p class="bs-total"><span class="bs-num">{fmt(total)}</span><span class="bs-of">/10</span></p>
+  </div>
+  <p class="bs-verdict">{score.verdict}</p>
+  <dl class="bs-parts">
+    {parts.map((p) => (
+      <div class="bs-row">
+        <dt><span class="bs-label">{p.label}</span><span class="bs-q small">{p.q}</span></dt>
+        <dd>
+          <span class="bs-bar" aria-hidden="true"><span style={`width:${(score[p.key] / 2.5) * 100}%`}></span></span>
+          <span class="bs-val">{fmt(score[p.key])}<span class="bs-max">/2.5</span></span>
+        </dd>
+      </div>
+    ))}
+  </dl>
+  <p class="small muted"><a href="/selling-points/">See every topic ranked by buyer score</a></p>
+</section>
+
+<style>
+  .buyer-score { margin-top: 3rem; border-top: 2px solid var(--ink); padding-top: 1rem; }
+  .bs-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+  .bs-head h2 { margin: 0; }
+  .bs-total { margin: 0; font-weight: 900; line-height: 1; }
+  .bs-num { font-size: 3rem; font-variation-settings: 'CASL' 1, 'MONO' 0; background: linear-gradient(transparent 55%, var(--marker) 55%); padding: 0 0.1em; color: var(--ink); }
+  .bs-of { font-size: 1.1rem; color: var(--ink-2); margin-left: 2px; }
+  .bs-verdict { font-weight: 650; margin: 0.8rem 0 1.2rem; }
+  .bs-parts { margin: 0 0 1rem; display: grid; gap: 12px; }
+  .bs-row { display: grid; grid-template-columns: 1fr 230px; gap: 16px; align-items: center; }
+  .bs-row dt { display: flex; flex-direction: column; }
+  .bs-label { font-weight: 750; }
+  .bs-q { color: var(--ink-2); }
+  .bs-row dd { margin: 0; display: flex; align-items: center; gap: 10px; }
+  .bs-bar { flex: 1; height: 10px; border-radius: 999px; background: var(--paper-2); overflow: hidden; }
+  .bs-bar span { display: block; height: 100%; background: var(--ink); border-radius: 999px; }
+  .bs-val { font-variation-settings: 'CASL' 0, 'MONO' 1; font-size: 0.9rem; min-width: 7.5ch; text-align: right; }
+  .bs-max { color: var(--ink-2); }
+  @media (max-width: 560px) { .bs-row { grid-template-columns: 1fr; gap: 6px; } }
+</style>

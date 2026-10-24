@@ -1,0 +1,83 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const lessons = (await getCollection('lessons', ({ data }) => !data.draft && !!data.buyerScore)).map((l) => {
+  const s = l.data.buyerScore!;
+  return { id: l.id, title: l.data.title, s, total: s.budget + s.pain + s.pressure + s.owner };
+});
+lessons.sort((a, b) => b.total - a.total || a.title.localeCompare(b.title));
+const top = lessons.filter((l) => l.total >= 8);
+const rest = lessons.filter((l) => l.total < 8);
+const fmt = (n: number) => (Number.isInteger(n) ? String(n) : n.toFixed(1));
+---
+<Base title="Selling points" description="Every security topic, ranked by how much companies actually spend on it. A commercial cheat sheet for people moving into cyber sales.">
+  <div class="wrap">
+    <h1>Selling points</h1>
+    <p class="lead muted measure">Every topic on this site, ranked by how much it matters to the people who sign the cheques. The ones scoring 8 or more are where budgets, breaches and board attention meet.</p>
+
+    <details class="rubric measure">
+      <summary>How the score works</summary>
+      <p>Four questions, each scored from 0 to 2.5:</p>
+      <ul>
+        <li><strong>Budget.</strong> Is there a product category companies buy for this, or is it just a feature inside something else?</li>
+        <li><strong>Pain.</strong> Does it cause breaches or outages that people have heard of?</li>
+        <li><strong>Pressure.</strong> Do regulators, insurers or auditors demand it?</li>
+        <li><strong>Owner.</strong> Is there a clear buyer, like a CISO or head of IT, who is judged on it?</li>
+      </ul>
+      <p>The scores are my judgement as I learn. They will change as I learn more.</p>
+    </details>
+
+    {lessons.length === 0 && <p class="muted">Scores appear here as lessons are published.</p>}
+
+    {top.length > 0 && (
+      <section>
+        <h2>Top selling points</h2>
+        <ol class="sp-list">
+          {top.map((l) => (
+            <li class="sp-item sp-top">
+              <span class="sp-score">{fmt(l.total)}</span>
+              <div>
+                <a class="sp-title" href={`/lessons/${l.id}/`}>{l.title}</a>
+                {l.s.pitch && <p class="sp-pitch">{l.s.pitch}</p>}
+                <p class="sp-verdict muted small">{l.s.verdict}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+    )}
+
+    {rest.length > 0 && (
+      <section>
+        <h2>Everything else</h2>
+        <ol class="sp-list">
+          {rest.map((l) => (
+            <li class="sp-item">
+              <span class="sp-score">{fmt(l.total)}</span>
+              <div>
+                <a class="sp-title" href={`/lessons/${l.id}/`}>{l.title}</a>
+                <p class="sp-verdict muted small">{l.s.verdict}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+    )}
+  </div>
+</Base>
+
+<style>
+  .lead { font-size: 1.15rem; margin: 1rem 0 1.5rem; }
+  .rubric { border: 1px solid var(--rule); border-radius: var(--radius-l); padding: 14px 18px; background: var(--surface); }
+  .rubric summary { cursor: pointer; font-weight: 700; }
+  .rubric ul { padding-left: 1.2rem; }
+  .sp-list { list-style: none; padding: 0; margin: 0; border-top: 2px solid var(--ink); max-width: 860px; }
+  .sp-item { display: grid; grid-template-columns: 4rem 1fr; gap: 14px; padding: 18px 0; border-bottom: 1px solid var(--rule); align-items: start; }
+  .sp-score { font-weight: 900; font-size: 1.8rem; line-height: 1; font-variation-settings: 'CASL' 1, 'MONO' 0; color: var(--ink-2); }
+  .sp-top .sp-score { color: var(--ink); background: linear-gradient(transparent 55%, var(--marker) 55%); justify-self: start; padding: 0 4px; }
+  .sp-title { font-weight: 750; font-size: 1.15rem; color: var(--ink); text-decoration: none; }
+  .sp-title:hover { text-decoration: underline; text-decoration-color: var(--marker); text-decoration-thickness: 4px; }
+  .sp-pitch { margin: 6px 0 4px; font-weight: 600; }
+  .sp-verdict { margin: 4px 0 0; }
+</style>

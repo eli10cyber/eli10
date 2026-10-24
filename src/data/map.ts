@@ -34,9 +34,13 @@ export const domains: Domain[] = [
     name: 'Security architecture',
     weight: '18%',
     topics: [
-      { id: 'network-basics', name: 'Network basics: NTP, DHCP, IPv4, IPv6', kid: 'Clocks, name tags and addresses for computers' },
-      { id: 'secure-protocols', name: 'Secure protocols', kid: 'Rules for talking safely' },
+      { id: 'ip-addressing', name: 'IPv4 and IPv6', kid: 'House numbers for computers, and why we ran out' },
+      { id: 'dhcp-ntp', name: 'DHCP and NTP', kid: 'A car park attendant and a school bell' },
+      { id: 'dns', name: 'DNS', kid: 'The internet’s address book' },
       { id: 'dnssec', name: 'DNSSEC', kid: 'A wax seal on the internet’s address book' },
+      { id: 'email-auth', name: 'Email authentication: SPF, DKIM, DMARC', kid: 'A guest list, a wax seal and a rulebook for email' },
+      { id: 'remote-access', name: 'Remote access: SSH and RDP', kid: 'Controlling a computer from far away, safely' },
+      { id: 'voip', name: 'Internet calls: SIP, RTP, SRTP', kid: 'A doorbell, a conveyor belt and a locked tunnel' },
       { id: 'segmentation', name: 'Network segmentation', kid: 'Locked rooms inside the house' },
       { id: 'cloud', name: 'Cloud security', kid: 'Keeping your stuff safe in someone else’s house' },
       { id: 'resilience', name: 'Backups and resilience', kid: 'A spare key and a spare house' },
@@ -47,6 +51,7 @@ export const domains: Domain[] = [
     name: 'Security operations',
     weight: '28%',
     topics: [
+      { id: 'directory-services', name: 'Directory services: AD DS, LDAP, LDAPS', kid: 'The head teacher’s binder of who can open which door' },
       { id: 'iam', name: 'Identity and access management', kid: 'Giving out the right keys' },
       { id: 'mfa', name: 'Multi-factor authentication', kid: 'Password plus something you hold' },
       { id: 'monitoring', name: 'Logging, SIEM and monitoring', kid: 'Security cameras for computers' },

@@ -2,6 +2,9 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
+// Each of the four buyer-score questions is scored 0–2.5, in steps of 0.5.
+const part = z.number().min(0).max(2.5).multipleOf(0.5);
+
 const lessons = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/lessons' }),
   schema: z.object({
@@ -14,6 +17,16 @@ const lessons = defineCollection({
     image: z.string().optional(),
     imageAlt: z.string().optional(),
     oneLiner: z.string(), // the "explain like I'm 10" sentence
+    buyerScore: z
+      .object({
+        budget: part, // is there a product category companies buy for this?
+        pain: part, // does it cause breaches or outages people have heard of?
+        pressure: part, // do regulators, insurers or auditors demand it?
+        owner: part, // is there a clear buyer who is judged on it?
+        verdict: z.string(), // one line: why the score is what it is
+        pitch: z.string().optional(), // the selling point in one sentence, for the Selling points page
+      })
+      .optional(),
     flashcards: z.array(z.object({ q: z.string(), a: z.string() })).default([]),
     draft: z.boolean().default(false),
   }),
