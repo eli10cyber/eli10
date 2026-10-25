@@ -182,10 +182,12 @@ const data = panels.map((p, i) => ({ ...p, box: boxes[i] }));
       const want = strip(b.dataset.find!);
       const prose = wrap.closest('.prose')!;
       const target = Array.from(prose.querySelectorAll<HTMLElement>('p, li, td, th, h2, h3'))
-        .filter((el) => wrap.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING && el.offsetParent !== null)
+        .filter((el) => wrap.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING)
         .find((el) => strip(el.textContent || '').includes(want));
       sheet.close();
       if (!target) return;
+      // If a reading mode has hidden that part of the lesson, show everything first
+      if (target.offsetParent === null) window.dispatchEvent(new Event('eli10:show-all'));
       const row = target.closest('tr') ?? target;
       row.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
       row.classList.remove('jump-flash'); void row.offsetWidth; row.classList.add('jump-flash');

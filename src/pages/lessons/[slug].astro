@@ -9,6 +9,7 @@ import PosterPanels from '../../components/PosterPanels.astro';
 import TermCards from '../../components/TermCards.astro';
 import AclGame from '../../components/AclGame.astro';
 import Quiz from '../../components/Quiz.astro';
+import ReadingMode from '../../components/ReadingMode.astro';
 
 export async function getStaticPaths() {
   const lessons = (await getCollection('lessons', ({ data }) => !data.draft)).sort((a, b) => a.data.number - b.data.number);
@@ -30,6 +31,7 @@ const date = d.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'lon
       <h1>{d.title}</h1>
       <p class="byline small muted">Vas Evangelopoulos, {date}</p>
       <p class="oneliner casual">{d.oneLiner}</p>
+      <ReadingMode />
     </header>
 
     <div class="prose measure">

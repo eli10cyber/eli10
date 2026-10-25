@@ -1,0 +1,97 @@
+---
+// Lets readers show just one layer of a lesson. The choice is remembered on this device.
+const modes = [
+  { id: 'all', label: 'Everything' },
+  { id: 'kid', label: 'Like you’re 10' },
+  { id: 'grown', label: 'Grown-up' },
+  { id: 'buyer', label: 'Buyer’s view' },
+];
+---
+<div class="rmode" hidden>
+  <span class="rm-label small">Read as</span>
+  <div class="rm-opts" role="radiogroup" aria-label="Reading mode">
+    {modes.map((m, i) => (
+      <button type="button" role="radio" aria-checked={i === 0 ? 'true' : 'false'} data-mode={m.id}>{m.label}</button>
+    ))}
+  </div>
+</div>
+
+<style>
+  .rmode { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 0 0 1.75rem; }
+  .rm-label { font-weight: 700; color: var(--ink-2); }
+  .rm-opts { display: inline-flex; flex-wrap: wrap; border: 2px solid var(--ink); border-radius: 999px; overflow: hidden; }
+  .rm-opts button { font: inherit; font-size: .9rem; font-weight: 700; padding: 7px 14px; border: 0; background: transparent; color: var(--ink-2); cursor: pointer; }
+  .rm-opts button + button { border-left: 2px solid var(--ink); }
+  .rm-opts button[aria-checked='true'] { background: var(--marker); color: var(--marker-ink); }
+  .rm-opts button:hover:not([aria-checked='true']) { color: var(--ink); }
+  @media (max-width: 560px) {
+    .rm-opts { display: grid; grid-template-columns: 1fr 1fr; border-radius: 14px; width: 100%; }
+    .rm-opts button + button { border-left: 0; }
+    .rm-opts button:nth-child(2n) { border-left: 2px solid var(--ink); }
+    .rm-opts button:nth-child(n + 3) { border-top: 2px solid var(--ink); }
+  }
+</style>
+
+<script>
+  const KEY = 'eli10:mode';
+  const SHOW: Record<string, string[]> = {
+    kid: ['poster', 'kid', 'remember'],
+    grown: ['grown', 'example', 'remember'],
+    buyer: ['buyer', 'example', 'remember', 'score'],
+  };
+  const box = document.querySelector<HTMLElement>('.rmode');
+  const prose = document.querySelector<HTMLElement>('article .prose');
+  if (box && prose) {
+    box.hidden = false;
+    const btns = Array.from(box.querySelectorAll<HTMLButtonElement>('[data-mode]'));
+
+    // Work out which layer each block of the lesson belongs to
+    const groupOf = () => {
+      const out: [HTMLElement, string][] = [];
+      let current = 'poster';
+      for (const el of Array.from(prose.children) as HTMLElement[]) {
+        const cls = el.classList;
+        if (cls.contains('layer-kid')) current = 'kid';
+        else if (cls.contains('layer-grown')) current = 'grown';
+        else if (cls.contains('layer-buyer')) current = 'buyer';
+        else if (cls.contains('poster') || el.querySelector('img[alt^="Poster"]')) current = 'poster';
+        else if (cls.contains('game')) { out.push([el, 'grown']); continue; }
+        else if (el.tagName === 'H2') current = /one thing to remember/i.test(el.textContent || '') ? 'remember' : 'example';
+        out.push([el, current]);
+      }
+      const score = document.querySelector<HTMLElement>('.buyer-score');
+      if (score) out.push([score, 'score']);
+      return out;
+    };
+
+    const apply = (mode: string, remember = true) => {
+      if (!SHOW[mode]) mode = 'all';
+      btns.forEach((b) => {
+        const on = b.dataset.mode === mode;
+        b.setAttribute('aria-checked', String(on));
+        b.tabIndex = on ? 0 : -1;
+      });
+      for (const [el, g] of groupOf()) el.hidden = mode !== 'all' && !SHOW[mode].includes(g);
+      if (remember) { try { localStorage.setItem(KEY, mode); } catch {} }
+    };
+
+    btns.forEach((b, i) => {
+      b.addEventListener('click', () => apply(b.dataset.mode!));
+      b.addEventListener('keydown', (e) => {
+        const dir = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0;
+        if (!dir) return;
+        e.preventDefault();
+        const nb = btns[(i + dir + btns.length) % btns.length];
+        apply(nb.dataset.mode!);
+        nb.focus();
+      });
+    });
+    // Other features (like the poster's "Read this in the lesson") can ask to show everything
+    window.addEventListener('eli10:show-all', () => apply('all'));
+
+    let saved = 'all';
+    try { saved = localStorage.getItem(KEY) || 'all'; } catch {}
+    // Wait one frame so the poster and game have been placed before grouping
+    requestAnimationFrame(() => apply(saved, false));
+  }
+</script>
