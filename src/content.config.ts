@@ -32,6 +32,9 @@ const lessons = defineCollection({
     posterGrid: z.array(z.number()).length(8).optional(),
     panels: z.array(z.object({ title: z.string(), note: z.string(), find: z.string() })).length(4).optional(),
     game: z.enum(['acl']).optional(), // an interactive exercise placed where the lesson has <div data-game="..."></div>
+    quiz: z
+      .array(z.object({ q: z.string(), options: z.array(z.string()).min(2), answer: z.number(), why: z.string() }))
+      .default([]),
     flashcards: z.array(z.object({ q: z.string(), a: z.string() })).default([]),
     draft: z.boolean().default(false),
   }),

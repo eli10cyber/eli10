@@ -29,6 +29,7 @@ const { topic } = Astro.props;
     const btn = el.querySelector('button')!;
     const sync = () => btn.setAttribute('aria-pressed', String(read().includes(topic)));
     sync();
+    window.addEventListener('eli10:learned', sync);
     btn.addEventListener('click', () => {
       const list = read();
       if (list.includes(topic)) { window.location.href = '/map/'; return; }

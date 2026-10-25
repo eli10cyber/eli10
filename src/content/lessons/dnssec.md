@@ -28,6 +28,19 @@ panels:
   - title: "Sealed, Not Secret"
     note: "DNSSEC proves an answer is authentic and unaltered. It does not encrypt lookups; that needs DoH or DoT."
     find: "does not encrypt"
+quiz:
+  - q: "What does DNSSEC provide?"
+    options: ["Integrity and authenticity", "Protection against DDoS", "Anonymous browsing", "Confidentiality"]
+    answer: 0
+    why: "DNSSEC proves an answer is real and unaltered. It doesn’t hide anything."
+  - q: "Which record holds the digital signature over a set of DNS records?"
+    options: ["MX", "RRSIG", "DNSKEY", "DS"]
+    answer: 1
+    why: "RRSIG is the signature, DNSKEY holds the public keys, and DS lets the parent vouch for the child."
+  - q: "You want your DNS lookups hidden from others on the same Wi-Fi. What do you need?"
+    options: ["A DS record", "DNS over HTTPS or DNS over TLS", "DNSSEC", "SPF"]
+    answer: 1
+    why: "DoH and DoT encrypt lookups. DNSSEC signs answers but leaves them readable."
 flashcards:
   - q: "What does DNSSEC add to DNS?"
     a: "Digital signatures. They let a resolver check that a DNS answer is authentic and hasn’t been changed."

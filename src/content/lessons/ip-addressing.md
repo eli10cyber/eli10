@@ -30,6 +30,19 @@ panels:
   - title: "IPv6: Endless Plots"
     note: "IPv6 addresses are 128 bits long, about 3.4 × 10³⁸ of them. Networks running both versions must watch both."
     find: "Dual stack"
+quiz:
+  - q: "How long is an IPv4 address?"
+    options: ["16 bits", "32 bits", "64 bits", "128 bits"]
+    answer: 1
+    why: "IPv4 is 32 bits, about 4.3 billion addresses. IPv6 is 128 bits."
+  - q: "Which statement about NAT is true?"
+    options: ["It replaces the need for a firewall", "It lets many devices share one public IPv4 address", "It encrypts traffic leaving the network", "IPv6 depends on it to work"]
+    answer: 1
+    why: "NAT translates private addresses to a shared public one. It hides internal addresses, but it is not a security control on its own."
+  - q: "A company runs IPv4 and IPv6 side by side but only monitors IPv4. What is the risk?"
+    options: ["None, because IPv6 is always encrypted", "IPv6 traffic is blocked automatically", "IPv6 becomes an unwatched side door", "IPv4 stops working"]
+    answer: 2
+    why: "Dual stack means firewall rules and monitoring must cover both versions. IPv6 traffic is not encrypted by default."
 flashcards:
   - q: "How long is an IPv4 address, and how is it written?"
     a: "32 bits, written as four numbers from 0 to 255 separated by dots, like 192.168.1.5. That allows about 4.3 billion addresses."

@@ -30,6 +30,19 @@ panels:
   - title: "Why Time Matters"
     note: "Investigators line up logs from many systems. If the clocks disagree, the timeline falls apart."
     find: "line up logs"
+quiz:
+  - q: "What are the four steps of DHCP, in order?"
+    options: ["Discover, Request, Offer, Acknowledge", "Request, Offer, Discover, Accept", "Offer, Discover, Accept, Release", "Discover, Offer, Request, Acknowledge"]
+    answer: 3
+    why: "Remember DORA: Discover, Offer, Request, Acknowledge."
+  - q: "Which switch feature stops a rogue DHCP server handing out settings?"
+    options: ["NAT", "MAC filtering", "BPDU guard", "DHCP snooping"]
+    answer: 3
+    why: "DHCP snooping only trusts DHCP replies from approved ports."
+  - q: "Why does a security team care about NTP?"
+    options: ["It blocks malware downloads", "It assigns IP addresses", "Matching timestamps let investigators rebuild an attack timeline", "It encrypts log files"]
+    answer: 2
+    why: "If clocks disagree, logs can’t be lined up. Kerberos sign-ins also fail when clocks drift."
 flashcards:
   - q: "What does DHCP give a device when it joins a network?"
     a: "An IP address for a limited time (a lease), plus settings such as the default gateway and which DNS servers to use."

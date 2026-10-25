@@ -1,0 +1,122 @@
+---
+// Three multiple-choice questions at the end of a lesson.
+// A perfect score marks the lesson's topic as learned (stored on this device only).
+interface Props {
+  slug: string;
+  topic: string;
+  questions: { q: string; options: string[]; answer: number; why: string }[];
+}
+const { slug, topic, questions } = Astro.props;
+---
+{questions.length > 0 && (
+  <section class="quiz" data-slug={slug} data-topic={topic} data-total={questions.length} aria-labelledby="quiz-title">
+    <h2 id="quiz-title">Check yourself</h2>
+    <p class="muted">{questions.length} quick questions. Get them all right and this lesson is marked as learned.</p>
+    <ol class="quiz-list">
+      {questions.map((qq, i) => (
+        <li class="quiz-q" data-answer={qq.answer}>
+          <p class="quiz-ask"><span class="quiz-n mono">{i + 1}</span>{qq.q}</p>
+          <div class="quiz-opts" role="group" aria-label={`Question ${i + 1} options`}>
+            {qq.options.map((o, oi) => (
+              <button type="button" class="quiz-opt" data-i={oi}>{o}</button>
+            ))}
+          </div>
+          <p class="quiz-why" hidden><strong class="quiz-mark"></strong> {qq.why}</p>
+        </li>
+      ))}
+    </ol>
+    <div class="quiz-result" aria-live="polite" hidden>
+      <p class="quiz-score"></p>
+      <button type="button" class="btn quiz-retry">Try again</button>
+    </div>
+  </section>
+)}
+
+<style>
+  .quiz { margin-top: 3rem; }
+  .quiz h2 { margin-top: 0; }
+  .quiz-list { list-style: none; padding: 0; margin: 1.2rem 0 0; display: grid; gap: 14px; }
+  .quiz-q { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius-l); padding: 16px 18px; }
+  .quiz-ask { font-weight: 700; margin: 0 0 12px; display: flex; gap: 12px; align-items: baseline; }
+  .quiz-n { color: var(--ink-2); min-width: 22px; flex-shrink: 0; }
+  .quiz-opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  @media (max-width: 560px) { .quiz-opts { grid-template-columns: 1fr; } }
+  .quiz-opt {
+    font: inherit; text-align: left; padding: 10px 14px; border-radius: 12px; cursor: pointer; line-height: 1.35;
+    border: 1.5px solid var(--rule); background: var(--paper); color: var(--ink); transition: border-color .12s, transform .12s;
+  }
+  .quiz-opt:hover:not(:disabled) { border-color: var(--ink); transform: translateY(-1px); }
+  .quiz-opt:disabled { cursor: default; }
+  .quiz-opt.right { border-color: #1e8a5a; background: rgba(76, 194, 138, .2); font-weight: 700; }
+  .quiz-opt.wrong { border-color: #c0392b; background: rgba(231, 76, 60, .15); text-decoration: line-through; }
+  .quiz-opt.faded { opacity: .5; }
+  .quiz-why { margin: 12px 0 0; font-variation-settings: 'CASL' 1, 'MONO' 0; }
+  .quiz-result { margin-top: 1.2rem; padding: 16px 18px; border-radius: var(--radius-l); border: 2px solid var(--ink); display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+  .quiz-result.perfect { background: var(--marker); color: var(--marker-ink); border-color: var(--marker); }
+  .quiz-result.perfect .btn { color: var(--marker-ink); border-color: var(--marker-ink); }
+  .quiz-score { margin: 0; font-weight: 750; font-size: 1.1rem; }
+  @media (prefers-reduced-motion: reduce) { .quiz-opt { transition: none; } .quiz-opt:hover:not(:disabled) { transform: none; } }
+</style>
+
+<script>
+  const LEARNED = 'eli10:learned';
+  const BEST = 'eli10:quiz';
+  const load = <T,>(k: string, d: T): T => { try { return JSON.parse(localStorage.getItem(k) || '') ?? d; } catch { return d; } };
+  const save = (k: string, v: unknown) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
+
+  document.querySelectorAll<HTMLElement>('.quiz').forEach((quiz) => {
+    const total = Number(quiz.dataset.total);
+    const qs = Array.from(quiz.querySelectorAll<HTMLElement>('.quiz-q'));
+    const result = quiz.querySelector<HTMLElement>('.quiz-result')!;
+    const scoreEl = quiz.querySelector<HTMLElement>('.quiz-score')!;
+    let answered = 0, correct = 0;
+
+    const finish = () => {
+      const best = load<Record<string, number>>(BEST, {});
+      best[quiz.dataset.slug!] = Math.max(best[quiz.dataset.slug!] ?? 0, correct);
+      save(BEST, best);
+      result.hidden = false;
+      result.classList.toggle('perfect', correct === total);
+      if (correct === total) {
+        const learned = load<string[]>(LEARNED, []);
+        if (!learned.includes(quiz.dataset.topic!)) save(LEARNED, [...learned, quiz.dataset.topic!]);
+        window.dispatchEvent(new Event('eli10:learned'));
+        scoreEl.textContent = `${correct} out of ${total}. Lesson marked as learned.`;
+      } else {
+        scoreEl.textContent = `${correct} out of ${total}. Read the explanations, then try again.`;
+      }
+    };
+
+    qs.forEach((q) => {
+      const answer = Number(q.dataset.answer);
+      const opts = Array.from(q.querySelectorAll<HTMLButtonElement>('.quiz-opt'));
+      const why = q.querySelector<HTMLElement>('.quiz-why')!;
+      const mark = q.querySelector<HTMLElement>('.quiz-mark')!;
+      opts.forEach((o) => o.addEventListener('click', () => {
+        const pick = Number(o.dataset.i);
+        const ok = pick === answer;
+        opts.forEach((x, i) => {
+          x.disabled = true;
+          if (i === answer) x.classList.add('right');
+          else if (i === pick) x.classList.add('wrong');
+          else x.classList.add('faded');
+        });
+        mark.textContent = ok ? 'Right.' : 'Not quite.';
+        why.hidden = false;
+        answered++;
+        if (ok) correct++;
+        if (answered === total) finish();
+      }));
+    });
+
+    quiz.querySelector('.quiz-retry')!.addEventListener('click', () => {
+      answered = 0; correct = 0;
+      result.hidden = true;
+      qs.forEach((q) => {
+        q.querySelectorAll<HTMLButtonElement>('.quiz-opt').forEach((x) => { x.disabled = false; x.classList.remove('right', 'wrong', 'faded'); });
+        q.querySelector<HTMLElement>('.quiz-why')!.hidden = true;
+      });
+      qs[0].querySelector<HTMLButtonElement>('.quiz-opt')?.focus();
+    });
+  });
+</script>

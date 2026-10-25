@@ -31,6 +31,19 @@ panels:
   - title: "RDP: The Magic Remote"
     note: "RDP gives a full remote desktop on TCP port 3389. Keep it behind a VPN or gateway with MFA, never open to the internet."
     find: "Never expose RDP"
+quiz:
+  - q: "Which port does RDP use?"
+    options: ["443", "3389", "23", "22"]
+    answer: 1
+    why: "RDP uses TCP 3389, SSH uses 22 and Telnet uses 23."
+  - q: "What does ssh-copy-id do?"
+    options: ["Creates a new key pair", "Copies your private key to the server", "Turns off password logins", "Adds your public key to the server’s authorised keys"]
+    answer: 3
+    why: "Your private key never leaves your machine. The server only gets the public key."
+  - q: "What is the safest way to give remote staff RDP access?"
+    options: ["Open port 3389 with a strong password", "Behind a VPN or gateway, with MFA", "Use Telnet instead", "Move RDP to port 3390"]
+    answer: 1
+    why: "Exposed RDP is one of the most common ways ransomware gets in. Changing the port only hides it briefly."
 flashcards:
   - q: "Which ports do SSH and RDP use?"
     a: "SSH uses TCP 22. RDP uses TCP 3389."

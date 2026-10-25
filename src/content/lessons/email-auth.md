@@ -31,6 +31,19 @@ panels:
   - title: "SPF or DKIM = Delivered"
     note: "An email passes DMARC if either SPF or DKIM passes and aligns with the visible From domain. It fails only when both fail."
     find: "The exam trap"
+quiz:
+  - q: "An email fails SPF but passes DKIM, and the DKIM domain aligns with the From address. What does DMARC decide?"
+    options: ["It passes: one aligned pass is enough", "It fails: both checks must pass", "DMARC only looks at SPF", "It goes to spam automatically"]
+    answer: 0
+    why: "DMARC passes if either SPF or DKIM passes and aligns. It fails only when both fail."
+  - q: "Which DMARC policy tells receivers to refuse failing email?"
+    options: ["p=reject", "p=block", "p=none", "p=quarantine"]
+    answer: 0
+    why: "none only monitors, quarantine sends to spam, and reject refuses the email."
+  - q: "Where are SPF, DKIM and DMARC published?"
+    options: ["As TXT records in the sending domain’s DNS", "Inside every email’s body", "In the reader’s browser", "On the receiving mail server"]
+    answer: 0
+    why: "Receivers look up the sender’s DNS to check the email against them."
 flashcards:
   - q: "What does SPF check?"
     a: "Whether the server that sent the email is on the domain’s published list of approved sending servers."

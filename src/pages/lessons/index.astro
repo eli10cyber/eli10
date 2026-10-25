@@ -8,12 +8,16 @@ const lessons = (await getCollection('lessons', ({ data }) => !data.draft)).sort
   <div class="wrap">
     <h1>Lessons</h1>
     <p class="lead muted measure">One idea per lesson, in the order I’m learning them. Each starts simple, gets precise, and ends with why companies pay for it.</p>
+    <div class="progress" hidden>
+      <p class="small"><strong class="p-done">0</strong> of {lessons.length} lessons learned on this device</p>
+      <div class="p-bar" aria-hidden="true"><span></span></div>
+    </div>
     <ol class="lesson-list" reversed>
       {lessons.map((l) => (
-        <li>
+        <li data-topic={l.data.topic}>
           <a href={`/lessons/${l.id}/`}>
             <span class="ln mono">{String(l.data.number).padStart(2, '0')}</span>
-            <span class="lt">{l.data.title}</span>
+            <span class="lt">{l.data.title}<span class="tick" aria-label="learned" hidden>✓ Learned</span></span>
             <span class="lo muted">{l.data.oneLiner}</span>
           </a>
         </li>
@@ -28,7 +32,30 @@ const lessons = (await getCollection('lessons', ({ data }) => !data.draft)).sort
   .lesson-list li { border-bottom: 1px solid var(--rule); }
   .lesson-list a { display: grid; grid-template-columns: 3rem 1fr; column-gap: 12px; padding: 18px 0; text-decoration: none; color: var(--ink); }
   .lesson-list a:hover .lt { text-decoration: underline; text-decoration-color: var(--marker); text-decoration-thickness: 4px; text-underline-offset: 0.15em; }
+  .tick[hidden] { display: none; }
+  .progress { max-width: 860px; margin: 0 0 1.5rem; }
+  .progress p { margin: 0 0 6px; }
+  .p-bar { height: 10px; border-radius: 999px; background: var(--paper-2); overflow: hidden; border: 1px solid var(--rule); }
+  .p-bar span { display: block; height: 100%; width: 0; background: var(--marker); transition: width .6s ease; }
+  .tick { display: inline-block; margin-left: 10px; font-size: .75rem; font-weight: 800; vertical-align: 3px; background: var(--marker); color: var(--marker-ink); padding: 2px 8px; border-radius: 999px; }
   .ln { color: var(--ink-2); padding-top: 0.2rem; }
   .lt { font-weight: 750; font-size: 1.25rem; line-height: 1.3; }
   .lo { grid-column: 2; margin-top: 4px; }
 </style>
+
+<script>
+  let learned: string[] = [];
+  try { learned = JSON.parse(localStorage.getItem('eli10:learned') || '[]'); } catch {}
+  const items = Array.from(document.querySelectorAll<HTMLElement>('.lesson-list li[data-topic]'));
+  let done = 0;
+  items.forEach((li) => {
+    const on = learned.includes(li.dataset.topic!);
+    if (on) { done++; li.querySelector<HTMLElement>('.tick')!.hidden = false; }
+  });
+  if (done > 0) {
+    const box = document.querySelector<HTMLElement>('.progress')!;
+    box.hidden = false;
+    box.querySelector('.p-done')!.textContent = String(done);
+    requestAnimationFrame(() => { box.querySelector<HTMLElement>('.p-bar span')!.style.width = `${(done / items.length) * 100}%`; });
+  }
+</script>

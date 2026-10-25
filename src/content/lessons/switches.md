@@ -30,6 +30,19 @@ panels:
   - title: "Physical vs Logical Ports"
     note: "A physical port is a socket for a cable. A logical port is a number for a service, like 22 for SSH or 443 for HTTPS."
     find: "A physical port"
+quiz:
+  - q: "A device sends one message that every device on the local network receives. What is this called?"
+    options: ["Unicast", "Broadcast", "Routing", "Multicast"]
+    answer: 1
+    why: "A broadcast reaches every device on the local network and stops at the router. IPv6 uses multicast instead."
+  - q: "Why is MAC filtering a weak control on its own?"
+    options: ["MAC addresses can be copied in software", "It only works with IPv6", "MAC addresses change every day", "Switches can’t read MAC addresses"]
+    answer: 0
+    why: "An attacker can spoof an approved device’s MAC address in seconds."
+  - q: "Which control makes a device prove its identity before a switch port opens?"
+    options: ["MAC filtering", "Spanning Tree Protocol", "NAT", "802.1X"]
+    answer: 3
+    why: "802.1X checks a certificate or credentials first. It is the basis of network access control (NAC)."
 flashcards:
   - q: "What is the difference between unicast and broadcast?"
     a: "Unicast goes from one device to one specific device. Broadcast goes from one device to every device on the local network."

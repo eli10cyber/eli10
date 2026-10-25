@@ -31,6 +31,19 @@ panels:
   - title: "Protective DNS"
     note: "Protective DNS refuses to look up known malicious domains, stopping malware and phishing links early."
     find: "protective DNS"
+quiz:
+  - q: "Which DNS record maps a name to an IPv6 address?"
+    options: ["A", "AAAA", "CNAME", "MX"]
+    answer: 1
+    why: "A is for IPv4 and AAAA, four times as long, is for IPv6."
+  - q: "Which DNS record says where to deliver email for a domain?"
+    options: ["NS", "MX", "A", "TXT"]
+    answer: 1
+    why: "MX means mail exchanger. TXT records hold email security policies like SPF and DMARC."
+  - q: "What does protective DNS do?"
+    options: ["Makes websites load faster", "Encrypts every lookup", "Signs DNS records", "Refuses to look up known malicious domains"]
+    answer: 3
+    why: "Most malware and phishing links need a DNS lookup, so blocking bad ones stops attacks early."
 flashcards:
   - q: "What does a DNS A record do, and what does an AAAA record do?"
     a: "An A record maps a name to an IPv4 address. An AAAA record maps a name to an IPv6 address."

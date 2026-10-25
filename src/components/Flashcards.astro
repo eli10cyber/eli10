@@ -4,8 +4,8 @@ const { cards } = Astro.props;
 ---
 {cards.length > 0 && (
   <section class="flash" aria-labelledby="flash-title">
-    <h2 id="flash-title">Test yourself</h2>
-    <p class="muted">Answer out loud first, then check.</p>
+    <h2 id="flash-title">Revision cards</h2>
+    <p class="muted">For later: answer out loud first, then check.</p>
     <div class="flash-grid">
       {cards.map((c, i) => (
         <details class="flash-card">

@@ -31,6 +31,19 @@ panels:
   - title: "LDAPS"
     note: "LDAPS wraps LDAP in TLS on TCP port 636, so passwords and answers can’t be read in transit."
     find: "Plain LDAP sends data unencrypted"
+quiz:
+  - q: "Which port does LDAPS use?"
+    options: ["389", "636", "88", "443"]
+    answer: 1
+    why: "Plain LDAP uses 389. LDAPS, LDAP inside TLS, uses 636. Kerberos uses 88."
+  - q: "Which protocol does Active Directory mainly use to sign users in?"
+    options: ["SNMP", "Kerberos", "RDP", "SIP"]
+    answer: 1
+    why: "Domain controllers authenticate users with Kerberos tickets."
+  - q: "Sign-ins suddenly fail across the office. Which is a likely cause?"
+    options: ["Clocks have drifted too far apart", "DNSSEC was switched on", "IPv6 was enabled", "LDAPS is in use"]
+    answer: 0
+    why: "Kerberos rejects tickets when clocks differ by more than 5 minutes by default. That’s the link to NTP."
 flashcards:
   - q: "What is Active Directory Domain Services (AD DS)?"
     a: "Microsoft’s directory service. It stores users, groups, computers and policies centrally, and runs on servers called domain controllers."

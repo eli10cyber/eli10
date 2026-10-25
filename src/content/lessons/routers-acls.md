@@ -31,6 +31,19 @@ panels:
   - title: "SNMP v1/v2c vs v3"
     note: "SNMPv1 and v2c send their community string in plain text. SNMPv3 adds authentication and encryption."
     find: "SNMP (Simple Network"
+quiz:
+  - q: "Rule 1 permits any traffic to the web server on port 443. Rule 2 denies everything. A visitor connects to the web server on 443. What happens?"
+    options: ["Blocked by the implicit deny", "It depends on SNMP", "Blocked: deny rules always win", "Allowed: the first matching rule wins"]
+    answer: 3
+    why: "ACLs are read top to bottom and stop at the first match, so rule 1 lets the visitor in."
+  - q: "Traffic matches none of the rules in an ACL. What happens to it?"
+    options: ["It is allowed through", "The router asks an administrator", "It is blocked by the implicit deny", "It is logged and allowed"]
+    answer: 2
+    why: "Every ACL ends with an invisible deny-everything rule."
+  - q: "Which version of SNMP should a network use?"
+    options: ["SNMPv1", "Any of them, they are equally secure", "SNMPv2c", "SNMPv3"]
+    answer: 3
+    why: "v1 and v2c send their community string in plain text. v3 adds authentication and encryption."
 flashcards:
   - q: "What is an ACL, and in what order are its rules checked?"
     a: "An access control list: rules that permit or deny traffic by source, destination, protocol and port. Rules are checked top to bottom, and the first match wins."

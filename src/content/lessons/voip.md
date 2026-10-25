@@ -30,6 +30,19 @@ panels:
   - title: "SRTP: The Locked Tunnel"
     note: "SRTP encrypts and authenticates the audio. A fully secure call needs SRTP for the voice and TLS for the signalling."
     find: "Encrypting SIP alone"
+quiz:
+  - q: "Which protocol sets up and ends a VoIP call?"
+    options: ["SNMP", "RTP", "SRTP", "SIP"]
+    answer: 3
+    why: "SIP is the doorbell: it rings, agrees how to talk and hangs up. RTP carries the voice."
+  - q: "What does SRTP add to RTP?"
+    options: ["Call set-up", "Encryption, authentication and replay protection", "Guaranteed delivery", "Faster delivery"]
+    answer: 1
+    why: "SRTP protects the media itself. The signalling needs TLS separately."
+  - q: "Attackers break into a company’s phone system and run up expensive international calls. What is this called?"
+    options: ["Jitter", "Toll fraud", "Vishing", "Caller ID spoofing"]
+    answer: 1
+    why: "Toll fraud leaves the company with the bill. Vishing is a scam call aimed at a person."
 flashcards:
   - q: "What does SIP do in a VoIP call?"
     a: "It sets up, manages and ends the call: ringing the other side, agreeing how to talk, and hanging up. It doesn’t carry the voice itself."

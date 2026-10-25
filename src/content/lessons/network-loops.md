@@ -30,6 +30,19 @@ panels:
   - title: "BPDU Guard"
     note: "A normal PC never sends BPDUs. If one arrives on a user port, BPDU guard shuts that port down."
     find: "err-disables"
+quiz:
+  - q: "Why does a broadcast storm never fade out on its own?"
+    options: ["Ethernet frames have no time-to-live", "Switches encrypt the frames", "DHCP keeps creating new frames", "Routers keep resending the frames"]
+    answer: 0
+    why: "IP packets expire, but Ethernet frames don’t, so a switch forwards them round a loop forever."
+  - q: "What does Spanning Tree Protocol do?"
+    options: ["Hands out IP addresses", "Filters traffic by port number", "Encrypts traffic between switches", "Blocks redundant paths so only one active path remains"]
+    answer: 3
+    why: "STP keeps spare links blocked and ready, and opens one if the active path fails."
+  - q: "Someone plugs a small switch into their desk socket, and BPDU guard is on. What happens?"
+    options: ["The network speeds up", "Nothing, it works normally", "The port shuts down", "The new switch becomes the root"]
+    answer: 2
+    why: "A PC never sends BPDUs, so when one arrives on a user port, BPDU guard disables that port."
 flashcards:
   - q: "What causes a broadcast storm?"
     a: "A switching loop. Broadcast frames go out of every port, travel round the loop and come back, multiplying until they swamp the network."
