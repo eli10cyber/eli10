@@ -1,0 +1,96 @@
+---
+// A small card for glossary terms inside lessons.
+// Mouse: hover a dotted term to preview it; clicking still follows the link.
+// Touch: the first tap opens the card, which has its own link onward.
+---
+<div class="term-card" id="term-card" role="tooltip" hidden>
+  <p class="tc-term"></p>
+  <p class="tc-kid"></p>
+  <p class="tc-grown small"></p>
+  <a class="tc-link small" href="/glossary/"></a>
+</div>
+
+<style is:global>
+  .term-card {
+    position: absolute; z-index: 50; width: min(340px, calc(100vw - 24px)); padding: 14px 16px 12px;
+    background: var(--surface); color: var(--ink); border: 2px solid var(--ink); border-radius: 14px;
+    box-shadow: 4px 4px 0 var(--marker); font-size: 1rem; line-height: 1.45;
+    animation: tc-in .14s ease-out;
+  }
+  @keyframes tc-in { from { opacity: 0; transform: translateY(4px); } }
+  @media (prefers-reduced-motion: reduce) { .term-card { animation: none; } }
+  .term-card p { margin: 0 0 6px; }
+  .tc-term { font-weight: 800; font-size: 1.05rem; }
+  .tc-kid { font-variation-settings: 'CASL' 1, 'MONO' 0; }
+  .tc-grown { color: var(--ink-2); }
+  .tc-link { font-weight: 700; color: var(--link); }
+</style>
+
+<script>
+  const card = document.getElementById('term-card');
+  if (card) {
+    const term = card.querySelector('.tc-term')!;
+    const kid = card.querySelector('.tc-kid')!;
+    const grown = card.querySelector('.tc-grown')!;
+    const link = card.querySelector<HTMLAnchorElement>('.tc-link')!;
+    let showTimer = 0, hideTimer = 0;
+    let current: HTMLAnchorElement | null = null;
+    let lastPointer = 'mouse';
+    let viaPointer = false;
+    let wasOpen = false;
+
+    const place = (a: HTMLElement) => {
+      const r = a.getBoundingClientRect();
+      const w = card.offsetWidth, h = card.offsetHeight;
+      let left = r.left + window.scrollX - 16;
+      left = Math.max(window.scrollX + 12, Math.min(left, window.scrollX + document.documentElement.clientWidth - w - 12));
+      const below = r.bottom + 10 + h < window.innerHeight;
+      const top = below ? r.bottom + window.scrollY + 10 : r.top + window.scrollY - h - 10;
+      card.style.left = `${left}px`;
+      card.style.top = `${top}px`;
+    };
+    const show = (a: HTMLAnchorElement) => {
+      clearTimeout(hideTimer);
+      current = a;
+      term.textContent = a.dataset.term || a.textContent;
+      kid.textContent = a.dataset.kid || '';
+      grown.textContent = a.dataset.grown || '';
+      link.href = a.href;
+      link.textContent = a.pathname.startsWith('/lessons/') ? 'Read the lesson →' : 'Open in the glossary →';
+      card.hidden = false;
+      place(a);
+      a.setAttribute('aria-describedby', 'term-card');
+    };
+    const hide = () => {
+      card.hidden = true;
+      current?.removeAttribute('aria-describedby');
+      current = null;
+    };
+    const hideSoon = () => { clearTimeout(showTimer); hideTimer = window.setTimeout(hide, 220); };
+
+    document.querySelectorAll<HTMLAnchorElement>('a.term-link[data-kid]').forEach((a) => {
+      a.addEventListener('pointerdown', (e) => { lastPointer = e.pointerType; viaPointer = true; wasOpen = current === a && !card.hidden; });
+      a.addEventListener('pointerenter', (e) => {
+        if (e.pointerType !== 'mouse') return;
+        clearTimeout(hideTimer);
+        showTimer = window.setTimeout(() => show(a), 250);
+      });
+      a.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') hideSoon(); });
+      a.addEventListener('focus', () => show(a));
+      a.addEventListener('blur', () => { if (lastPointer === 'mouse') hideSoon(); });
+      a.addEventListener('click', (e) => {
+        // On touch screens the first tap previews; the card's own link goes onward
+        if (viaPointer && lastPointer !== 'mouse' && !wasOpen) { e.preventDefault(); show(a); }
+        viaPointer = false;
+      });
+    });
+    card.addEventListener('pointerenter', () => clearTimeout(hideTimer));
+    card.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') hideSoon(); });
+    document.addEventListener('pointerdown', (e) => {
+      const t = e.target as Element;
+      if (!card.hidden && !card.contains(t) && !t.closest('a.term-link')) hide();
+    });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') hide(); });
+    window.addEventListener('resize', () => { if (current) place(current); });
+  }
+</script>

@@ -2,7 +2,7 @@
 // The first mention of each term on a page becomes a link:
 //   - to the lesson that teaches it, if that lesson is published
 //   - otherwise to the term's entry on the glossary page
-// Hovering shows the "like you're 10" definition.
+// Each link carries both definitions, which TermCards.astro shows in a small card on hover or tap.
 // Terms are never linked inside headings, code, existing links, or on their own lesson.
 import fs from 'node:fs';
 import path from 'node:path';
@@ -88,7 +88,7 @@ export default function rehypeTermLinks({ glossary = [] } = {}) {
           out.push({
             type: 'element',
             tagName: 'a',
-            properties: { href, className: ['term-link'], title: entry.kid, dataTerm: entry.term },
+            properties: { href, className: ['term-link'], dataTerm: entry.term, dataKid: entry.kid, dataGrown: entry.grownup },
             children: [{ type: 'text', value: m[1] }],
           });
           last = m.index + m[1].length;
