@@ -6,6 +6,7 @@ number: 5
 topic: dhcp-ntp
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "DHCP hands every new device an address the moment it joins a network. NTP makes sure every device’s clock shows exactly the same time."
+grownLiner: "DHCP hands out IP addresses automatically, and DHCP snooping blocks rogue servers. NTP keeps every clock in sync, so logs from different systems line up during an investigation."
 draft: false
 image: "/images/og/dhcp-ntp.jpg"
 imageAlt: "Poster: DHCP and NTP. A car park attendant handing out address tickets, a fake attendant being stopped, a town clock and computer screens all showing 10:30, and a detective lining up clues all stamped 10:31."

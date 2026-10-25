@@ -6,6 +6,7 @@ number: 3
 topic: network-loops
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "One extra cable can make messages run round in circles until the whole network jams. Spanning tree switches off the extra path before that happens."
+grownLiner: "A switching loop makes broadcast frames circulate forever, because Ethernet frames have no time-to-live. Spanning Tree Protocol blocks redundant paths, and BPDU guard shuts ports where rogue switches appear."
 draft: false
 image: "/images/og/network-loops.jpg"
 imageAlt: "Poster: Broadcast storms and loops. A corridor that loops into a circle, children running round shouting in a storm, a caretaker locking one door marked BLOCKED (spanning tree), and an alarm when a toy robot is plugged into a socket (BPDU guard)."

@@ -6,23 +6,24 @@ const lessons = (await getCollection('lessons', ({ data }) => !data.draft)).sort
 const latest = [...lessons].reverse().slice(0, 5);
 const first = lessons[0];
 
+// One example per published lesson. The homepage picks one per day; "Show me another" cycles.
+const score = (b?: { budget: number; pain: number; pressure: number; owner: number }) => (b ? b.budget + b.pain + b.pressure + b.owner : null);
+const examples = lessons
+  .filter((l) => l.data.grownLiner)
+  .map((l) => ({
+    href: `/lessons/${l.id}/`,
+    name: l.data.title.split(':')[0],
+    kid: l.data.oneLiner,
+    grown: l.data.grownLiner!,
+    buyer: l.data.buyerScore ? (l.data.buyerScore.pitch ?? l.data.buyerScore.verdict) : '',
+    score: score(l.data.buyerScore),
+  }));
+const ex = examples[0];
 const levels = [
-  {
-    id: 'kid',
-    label: 'Like you’re 10',
-    text: 'DNSSEC is a wax seal on the internet’s address book. If someone swaps the page, the seal breaks and your computer refuses to go there.',
-  },
-  {
-    id: 'grown',
-    label: 'Grown-up',
-    text: 'DNSSEC signs DNS records with RRSIG, DNSKEY and DS records, so a validating resolver can prove an answer is authentic and unaltered. It does not encrypt anything.',
-  },
-  {
-    id: 'buyer',
-    label: 'Why a buyer cares',
-    text: 'It stops customers being silently sent to a fake login page. Companies rarely buy it alone: it comes inside managed DNS and DDI platforms run by the network team.',
-  },
-];
+  { id: 'kid', label: 'Like you’re 10' },
+  { id: 'grown', label: 'Grown-up' },
+  { id: 'buyer', label: 'Why a buyer cares' },
+] as const;
 ---
 <Base title="ELI10 Cyber" description="Cybersecurity explained three ways: like you're 10, like a grown-up, and why a buyer cares. For people moving into security mid-career.">
   <section class="hero wrap">
@@ -38,12 +39,17 @@ const levels = [
         ))}
       </div>
       <div class="switch-panel" id="switch-panel" role="tabpanel" aria-live="polite" aria-labelledby="tab-kid">
-        <p class="switch-topic small muted">Today’s example: <a href={first ? `/lessons/${first.id}/` : '/lessons/'}>DNSSEC</a></p>
+        <div class="switch-meta">
+          <p class="switch-topic small muted">Today’s example: <a data-ex="link" href={ex?.href}>{ex?.name}</a></p>
+          <button type="button" class="shuffle small" data-ex="next">Show me another <span aria-hidden="true">↻</span></button>
+        </div>
         {levels.map((l, i) => (
-          <p class="switch-text" data-for={l.id} hidden={i !== 0}>{l.text}</p>
+          <p class="switch-text" data-for={l.id} data-ex={l.id} hidden={i !== 0}>{ex?.[l.id]}</p>
         ))}
+        <p class="switch-score small" data-for="buyer" hidden>Buyer score <strong data-ex="score">{ex?.score}</strong>/10 · <a href="/selling-points/">all selling points</a></p>
       </div>
     </div>
+    <script type="application/json" id="examples" set:html={JSON.stringify(examples)} />
 
     <div class="cta">
       {first && <a class="btn btn-primary" href={`/lessons/${first.id}/`}>Start the first lesson</a>}
@@ -99,7 +105,17 @@ const levels = [
   .switch-tabs button + button { border-left: 2px solid var(--ink); }
   .switch-tabs button[aria-selected='true'] { background: var(--marker); color: var(--marker-ink); }
   .switch-panel { padding: 22px 26px 26px; min-height: 12.5rem; }
-  .switch-topic { margin-bottom: 0.6rem; }
+  .switch-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 0.6rem; }
+  .switch-topic { margin: 0; }
+  .shuffle { font: inherit; font-weight: 700; background: transparent; color: inherit; border: 1.5px solid currentColor; border-radius: 999px; padding: 4px 12px; cursor: pointer; white-space: nowrap; opacity: 0.85; }
+  .shuffle:hover { opacity: 1; }
+  .shuffle span { display: inline-block; transition: transform .4s ease; }
+  .shuffle:hover span { transform: rotate(180deg); }
+  .switch-score { margin: 1rem 0 0; }
+  .switch-score strong { background: var(--marker); color: var(--marker-ink); border-radius: 6px; padding: 1px 7px; }
+  .switch-text.swap { animation: swap .35s ease-out; }
+  @keyframes swap { from { opacity: 0; transform: translateY(6px); } }
+  @media (prefers-reduced-motion: reduce) { .switch-text.swap, .switch-text { animation: none !important; } }
   .switch-text {
     font-size: clamp(1.25rem, 3.2vw, 1.65rem); line-height: 1.38; font-weight: 600; margin: 0;
   }
@@ -112,7 +128,7 @@ const levels = [
   .switch-text[data-for='buyer'] { font-variation-settings: 'CASL' 0, 'MONO' 0; font-weight: 700; }
   .switch[data-level='buyer'] .switch-panel { background: var(--buyer-bg); color: var(--buyer-ink); }
   .switch[data-level='buyer'] .switch-panel .muted { color: var(--buyer-2); }
-  .switch[data-level='buyer'] .switch-panel a { color: var(--marker); }
+  .switch[data-level='buyer'] .switch-panel a { color: var(--buyer-link); }
 
   .cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 1.75rem; }
 
@@ -135,7 +151,6 @@ const levels = [
 <script>
   document.querySelectorAll<HTMLElement>('.switch').forEach((sw) => {
     const tabs = Array.from(sw.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
-    const texts = Array.from(sw.querySelectorAll<HTMLElement>('.switch-text'));
     const panel = sw.querySelector('[role="tabpanel"]')!;
     const select = (id: string, focus = false) => {
       sw.dataset.level = id;
@@ -145,7 +160,7 @@ const levels = [
         t.tabIndex = on ? 0 : -1;
         if (on && focus) t.focus();
       });
-      texts.forEach((p) => (p.hidden = p.dataset.for !== id));
+      sw.querySelectorAll<HTMLElement>('[data-for]').forEach((p) => (p.hidden = p.dataset.for !== id));
       panel.setAttribute('aria-labelledby', `tab-${id}`);
     };
     tabs.forEach((t, i) => {
@@ -158,5 +173,27 @@ const levels = [
         select(tabs[(i + dir + tabs.length) % tabs.length].dataset.level!, true);
       });
     });
+
+    // Rotating example: one per day, and a button to cycle through the rest
+    type Ex = { href: string; name: string; kid: string; grown: string; buyer: string; score: number | null };
+    let list: Ex[] = [];
+    try { list = JSON.parse(document.getElementById('examples')?.textContent || '[]'); } catch {}
+    if (!list.length) return;
+    const get = (k: string) => sw.querySelector<HTMLElement>(`[data-ex="${k}"]`)!;
+    const day = Math.floor(Date.now() / 86400000);
+    let idx = day % list.length;
+    const show = (animate: boolean) => {
+      const e = list[idx];
+      const link = get('link') as HTMLAnchorElement;
+      link.href = e.href; link.textContent = e.name;
+      (['kid', 'grown', 'buyer'] as const).forEach((k) => {
+        const p = get(k); p.textContent = e[k];
+        if (animate) { p.classList.remove('swap'); void p.offsetWidth; p.classList.add('swap'); }
+      });
+      const sc = get('score');
+      sc.textContent = e.score == null ? '–' : String(e.score);
+    };
+    show(false);
+    get('next').addEventListener('click', () => { idx = (idx + 1) % list.length; show(true); });
   });
 </script>

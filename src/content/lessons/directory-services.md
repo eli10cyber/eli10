@@ -6,6 +6,7 @@ number: 9
 topic: directory-services
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "A directory is a company’s master list of every person, computer and permission. Whoever controls it controls the company."
+grownLiner: "Active Directory Domain Services stores users, groups and permissions in one place. Apps query it over LDAP, and LDAPS wraps those queries in TLS so nobody can read them in transit."
 draft: false
 image: "/images/og/directory-services.jpg"
 imageAlt: "Poster: Directory services. A head teacher with a giant binder and key cards, a new pupil getting a key card while a leaver’s card is crossed out, a robot asking whether Sam is a teacher (LDAP), and an eavesdropper hearing only scrambled noise (LDAPS)."

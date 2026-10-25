@@ -6,6 +6,7 @@ number: 11
 topic: voip
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "An internet call needs a doorbell to start it (SIP), a conveyor belt to carry your voice (RTP), and a locked tunnel so nobody listens in (SRTP)."
+grownLiner: "SIP sets up and ends calls, RTP carries the audio over UDP, and SRTP encrypts and authenticates that audio. A secure call protects both the signalling and the media."
 draft: false
 image: "/images/og/voip.jpg"
 imageAlt: "Poster: SIP, RTP and SRTP. Tin-can phones joined by the internet, a doorbell asking want to talk, a conveyor belt of numbered speech bubbles, and the same belt inside a locked glass tunnel."

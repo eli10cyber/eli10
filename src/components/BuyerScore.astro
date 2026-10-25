@@ -38,7 +38,7 @@ const fmt = (n: number) => (Number.isInteger(n) ? String(n) : n.toFixed(1));
   .bs-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
   .bs-head h2 { margin: 0; }
   .bs-total { margin: 0; font-weight: 900; line-height: 1; }
-  .bs-num { font-size: 3rem; font-variation-settings: 'CASL' 1, 'MONO' 0; background: linear-gradient(transparent 55%, var(--marker) 55%); padding: 0 0.1em; color: var(--ink); }
+  .bs-num { font-size: 3rem; font-variation-settings: 'CASL' 1, 'MONO' 0; background: var(--marker); color: var(--marker-ink); border-radius: 12px; padding: 0.04em 0.24em; line-height: 1.1; display: inline-block; }
   .bs-of { font-size: 1.1rem; color: var(--ink-2); margin-left: 2px; }
   .bs-verdict { font-weight: 650; margin: 0.8rem 0 1.2rem; }
   .bs-parts { margin: 0 0 1rem; display: grid; gap: 12px; }

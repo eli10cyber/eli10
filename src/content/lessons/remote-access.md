@@ -6,6 +6,7 @@ number: 10
 topic: remote-access
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "SSH lets you type commands on a faraway computer through a secret tunnel. RDP lets you see and control its whole screen. Both are powerful, so attackers love them too."
+grownLiner: "SSH (TCP 22) gives an encrypted command line, ideally with key-based login and no direct root login. RDP (TCP 3389) gives a full desktop and should never be exposed to the internet."
 draft: false
 image: "/images/og/remote-access.jpg"
 imageAlt: "Poster: SSH and RDP. A child in a treehouse sending commands through an encrypted tunnel, hanging a padlock on a server door, a chained root door while Sam walks in by a side door, and a magic remote behind an MFA gate."

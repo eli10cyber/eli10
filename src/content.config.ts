@@ -17,6 +17,7 @@ const lessons = defineCollection({
     image: z.string().optional(),
     imageAlt: z.string().optional(),
     oneLiner: z.string(), // the "explain like I'm 10" sentence
+    grownLiner: z.string().optional(), // the same idea in one precise sentence, used on the homepage
     buyerScore: z
       .object({
         budget: part, // is there a product category companies buy for this?

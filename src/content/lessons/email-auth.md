@@ -6,6 +6,7 @@ number: 8
 topic: email-auth
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "SPF lists who may send email for a company, DKIM seals each email so changes show, and DMARC tells inboxes what to do with fakes."
+grownLiner: "SPF lists the servers allowed to send for a domain, DKIM signs each message, and DMARC tells receivers what to do when neither passes in alignment with the From domain."
 draft: false
 image: "/images/og/email-auth.jpg"
 imageAlt: "Poster: SPF, DKIM and DMARC. A castle bouncer with an approved senders list, an intact and a broken wax seal, a postman following the DMARC rulebook into a REJECT bin, and two paths that both lead to delivery."

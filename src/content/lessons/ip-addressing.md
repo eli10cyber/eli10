@@ -6,6 +6,7 @@ number: 1
 topic: ip-addressing
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "Every device on the internet needs a house number. The old system (IPv4) ran out of numbers, so we built a new one (IPv6) that never will."
+grownLiner: "IPv4 uses 32-bit addresses, about 4.3 billion in total and now exhausted, so NAT lets many devices share one public address. IPv6 uses 128-bit addresses and removes that shortage."
 draft: false
 image: "/images/og/ip-addressing.jpg"
 imageAlt: "Poster: IPv4 vs IPv6. A postman at a house numbered 203.0.113.5, a full street of IPv4 houses, NAT as one front door shared by many children, and endless IPv6 plots with a house numbered 2001:db8::5."

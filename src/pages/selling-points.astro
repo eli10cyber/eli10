@@ -75,7 +75,7 @@ const fmt = (n: number) => (Number.isInteger(n) ? String(n) : n.toFixed(1));
   .sp-list { list-style: none; padding: 0; margin: 0; border-top: 2px solid var(--ink); max-width: 860px; }
   .sp-item { display: grid; grid-template-columns: 4rem 1fr; gap: 14px; padding: 18px 0; border-bottom: 1px solid var(--rule); align-items: start; }
   .sp-score { font-weight: 900; font-size: 1.8rem; line-height: 1; font-variation-settings: 'CASL' 1, 'MONO' 0; color: var(--ink-2); }
-  .sp-top .sp-score { color: var(--ink); background: linear-gradient(transparent 55%, var(--marker) 55%); justify-self: start; padding: 0 4px; }
+  .sp-top .sp-score { color: var(--marker-ink); background: var(--marker); border-radius: 8px; justify-self: start; padding: 0 8px; }
   .sp-title { font-weight: 750; font-size: 1.15rem; color: var(--ink); text-decoration: none; }
   .sp-title:hover { text-decoration: underline; text-decoration-color: var(--marker); text-decoration-thickness: 4px; }
   .sp-pitch { margin: 6px 0 4px; font-weight: 600; }

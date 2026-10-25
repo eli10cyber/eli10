@@ -6,6 +6,7 @@ number: 2
 topic: switching
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "A switch is the hallway monitor of a network: it delivers each message to the right door, and a hardened one won’t let strangers plug in."
+grownLiner: "Switches forward frames by MAC address. Port security limits which devices each port accepts, but MAC addresses can be spoofed, so 802.1X is the strong control."
 draft: false
 image: "/images/og/switches.jpg"
 imageAlt: "Poster: Switches. A note passed to one friend (unicast), a megaphone in the dining hall stopped at a router gate (broadcast), a hallway monitor checking badges (port security), and a wall socket next to doors numbered 22, 53 and 443 (physical vs logical ports)."

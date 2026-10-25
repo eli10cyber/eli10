@@ -6,6 +6,7 @@ number: 7
 topic: dnssec
 chapter: "Gibson & Shelley, Ch. 3 (protocols)"
 oneLiner: "DNSSEC puts a seal on the internet’s address book, so you know the address you were given is real and nobody swapped it on the way."
+grownLiner: "DNSSEC signs DNS records with RRSIG, DNSKEY and DS records, so a validating resolver can prove an answer is authentic and unaltered. It does not encrypt anything."
 buyerScore:
   budget: 0.5
   pain: 1
