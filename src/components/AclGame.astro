@@ -1,0 +1,209 @@
+---
+// "Fix the firewall" game for the routers lesson.
+// Readers reorder or switch off rules, then watch five packets checked top to bottom.
+// Teaches: first match wins, implicit deny, and why old rules need reviewing.
+---
+<section class="game" id="game-acl" hidden aria-labelledby="acl-title">
+  <p class="game-tag small">Try it yourself</p>
+  <h3 id="acl-title">Fix the firewall</h3>
+  <p>Five packets are about to reach this router. Right now, a customer can’t reach the website and an attacker can log in to the server. <strong>Reorder the rules, or switch one off</strong>, then send the packets. Rules are checked from the top, and the first match wins.</p>
+
+  <ol class="acl-rules" aria-label="Access control list"></ol>
+
+  <div class="acl-run">
+    <button type="button" class="btn btn-primary acl-send">Send the packets</button>
+    <button type="button" class="acl-reset small">Start again</button>
+  </div>
+
+  <div class="acl-table-wrap">
+    <table class="acl-packets">
+      <thead><tr><th>Packet</th><th>Should be</th><th>What happened</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <p class="acl-verdict" aria-live="polite"></p>
+</section>
+
+<style is:global>
+  .game { margin: 2.5rem 0; padding: 22px 24px 24px; border: 2px solid var(--ink); border-radius: var(--radius-l); background: var(--surface); box-shadow: 6px 6px 0 var(--marker); }
+  .game h3 { margin: 0.2rem 0 0.6rem; font-size: 1.45rem; }
+  .game-tag { display: inline-block; margin: 0; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; font-size: .75rem; background: var(--marker); color: var(--marker-ink); padding: 3px 10px; border-radius: 999px; }
+  .game ol.acl-rules { list-style: none; padding: 0; margin: 1.2rem 0; display: grid; gap: 8px; counter-reset: rule; }
+  .acl-rule { display: grid; grid-template-columns: 2rem 1fr auto; gap: 4px 12px; align-items: center; padding: 10px 12px; border: 1.5px solid var(--rule); border-radius: 12px; background: var(--paper); transition: background-color .15s, border-color .15s, opacity .2s; }
+  .acl-rule .n { font-variation-settings: 'CASL' 0, 'MONO' 1; color: var(--ink-2); font-weight: 700; }
+  .acl-rule .what { font-weight: 650; line-height: 1.35; }
+  .acl-rule .note { grid-column: 2; color: var(--ink-2); font-size: .85rem; }
+  .acl-rule .act { display: inline-block; font-size: .72rem; font-weight: 800; letter-spacing: .05em; padding: 2px 8px; border-radius: 6px; margin-right: 6px; vertical-align: 1px; }
+  .act.permit { background: #d5f2e3; color: #0f5a37; }
+  .act.deny { background: #fbd9d6; color: #8a1c13; }
+  .acl-rule .ctl { grid-column: 3; grid-row: 1 / span 2; display: flex; gap: 6px; align-items: center; }
+  .acl-rule button { font: inherit; font-size: .85rem; font-weight: 700; min-width: 36px; height: 36px; border: 1.5px solid var(--ink); background: var(--surface); color: var(--ink); border-radius: 10px; cursor: pointer; padding: 0 8px; }
+  .acl-rule button:disabled { opacity: .3; cursor: default; }
+  .acl-rule button[aria-pressed='false'] { background: var(--paper-2); color: var(--ink-2); border-style: dashed; }
+  .acl-rule.off { opacity: .5; }
+  .acl-rule.off .what { text-decoration: line-through; }
+  .acl-rule.implicit { border-style: dashed; background: transparent; }
+  .acl-rule.checking { border-color: var(--ink); background: rgba(255, 216, 77, .35); }
+  .acl-rule.hit-permit { border-color: #1e8a5a; background: rgba(76, 194, 138, .22); }
+  .acl-rule.hit-deny { border-color: #c0392b; background: rgba(231, 76, 60, .18); }
+  .acl-run { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-bottom: 1rem; }
+  .acl-reset { font: inherit; background: none; border: 0; color: var(--link); text-decoration: underline; cursor: pointer; padding: 0; }
+  .acl-table-wrap { overflow-x: auto; }
+  .acl-packets { width: 100%; border-collapse: collapse; font-size: .95rem; }
+  .acl-packets th { text-align: left; font-size: .8rem; color: var(--ink-2); border-bottom: 2px solid var(--ink); padding: 6px 8px; }
+  .acl-packets td { padding: 9px 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  .acl-packets tr.active td { background: rgba(255, 216, 77, .25); }
+  .acl-packets .route { display: block; font-variation-settings: 'CASL' 0, 'MONO' 1; font-size: .8rem; color: var(--ink-2); }
+  .expect-m { display: none; font-size: .8rem; font-weight: 700; margin-top: 2px; }
+  .res-ok { color: #1e8a5a; font-weight: 750; }
+  .res-bad { color: #c0392b; font-weight: 750; }
+  @media (prefers-color-scheme: dark) { .res-ok { color: #4cc28a; } .res-bad { color: #ff8a7a; } .act.permit { background: #174a33; color: #bff0d6; } .act.deny { background: #5a1f1a; color: #ffd0ca; } }
+  .acl-verdict { font-weight: 700; margin: 1rem 0 0; min-height: 1.5em; }
+  .acl-verdict.win { background: var(--marker); color: var(--marker-ink); padding: 12px 14px; border-radius: 12px; }
+  @media (max-width: 560px) {
+    .game { padding: 18px 16px 20px; box-shadow: 4px 4px 0 var(--marker); }
+    .acl-rule { grid-template-columns: 1.4rem 1fr; }
+    .acl-rule .ctl { grid-column: 2; grid-row: auto; margin-top: 4px; }
+    .acl-packets th:nth-child(2), .acl-packets td:nth-child(2) { display: none; }
+    .expect-m { display: block; }
+  }
+</style>
+
+<script>
+  type Rule = { id: string; action: 'permit' | 'deny'; from: string; to: string; port: string; note: string; on: boolean };
+  type Packet = { label: string; from: string; to: string; port: string; expect: 'allow' | 'block' };
+  const START: Rule[] = [
+    { id: 'old', action: 'permit', from: 'Any', to: 'Server', port: '22', note: 'Added for a contractor in 2019. Nobody remembers why.', on: true },
+    { id: 'deny', action: 'deny', from: 'Internet', to: 'Any', port: 'Any', note: 'Block everything coming from outside.', on: true },
+    { id: 'web', action: 'permit', from: 'Internet', to: 'Web server', port: '443', note: 'Let customers reach the website.', on: true },
+    { id: 'admin', action: 'permit', from: 'Admin PC', to: 'Server', port: '22', note: 'Let the admin manage the server over SSH.', on: true },
+  ];
+  const PACKETS: Packet[] = [
+    { label: 'A customer visits the website', from: 'Internet', to: 'Web server', port: '443', expect: 'allow' },
+    { label: 'An attacker probes the database', from: 'Internet', to: 'Database', port: '3306', expect: 'block' },
+    { label: 'The admin logs in to fix something', from: 'Admin PC', to: 'Server', port: '22', expect: 'allow' },
+    { label: 'An attacker tries to log in over SSH', from: 'Internet', to: 'Server', port: '22', expect: 'block' },
+    { label: 'A guest’s laptop scans the network', from: 'Guest Wi-Fi', to: 'Database', port: '3306', expect: 'block' },
+  ];
+
+  const game = document.getElementById('game-acl');
+  const slot = document.querySelector('[data-game="acl"]');
+  if (game && slot) {
+    slot.replaceWith(game);
+    game.hidden = false;
+    const list = game.querySelector<HTMLOListElement>('.acl-rules')!;
+    const body = game.querySelector('tbody')!;
+    const verdict = game.querySelector<HTMLElement>('.acl-verdict')!;
+    const send = game.querySelector<HTMLButtonElement>('.acl-send')!;
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const wait = (ms: number) => new Promise((r) => setTimeout(r, reduce ? 0 : ms));
+    let rules: Rule[] = [];
+    let running = false;
+
+    const matches = (r: Rule, p: Packet) =>
+      (r.from === 'Any' || r.from === p.from) && (r.to === 'Any' || r.to === p.to) && (r.port === 'Any' || r.port === p.port);
+
+    const describe = (r: Rule) =>
+      `<span class="act ${r.action}">${r.action.toUpperCase()}</span>from ${r.from} to ${r.to}, port ${r.port}`;
+
+    const renderRules = () => {
+      list.innerHTML = '';
+      rules.forEach((r, i) => {
+        const li = document.createElement('li');
+        li.className = 'acl-rule' + (r.on ? '' : ' off');
+        li.dataset.id = r.id;
+        li.innerHTML = `<span class="n">${i + 1}</span><span class="what">${describe(r)}</span><span class="note">${r.note}</span>
+          <span class="ctl">
+            <button type="button" data-do="up" aria-label="Move rule ${i + 1} up" ${i === 0 ? 'disabled' : ''}>↑</button>
+            <button type="button" data-do="down" aria-label="Move rule ${i + 1} down" ${i === rules.length - 1 ? 'disabled' : ''}>↓</button>
+            <button type="button" data-do="toggle" aria-pressed="${r.on}" aria-label="Rule ${i + 1} switched ${r.on ? 'on' : 'off'}">${r.on ? 'On' : 'Off'}</button>
+          </span>`;
+        list.appendChild(li);
+      });
+      const imp = document.createElement('li');
+      imp.className = 'acl-rule implicit';
+      imp.dataset.id = 'implicit';
+      imp.innerHTML = `<span class="n">∞</span><span class="what"><span class="act deny">DENY</span>everything else</span><span class="note">The invisible implicit deny. You can’t move or remove it.</span>`;
+      list.appendChild(imp);
+    };
+
+    const renderPackets = () => {
+      body.innerHTML = PACKETS.map((p) => `<tr><td>${p.label}<span class="route">${p.from} → ${p.to} :${p.port}</span><span class="expect-m">Should be ${p.expect === 'allow' ? 'allowed' : 'blocked'}</span></td><td>${p.expect === 'allow' ? 'Allowed' : 'Blocked'}</td><td class="res">–</td></tr>`).join('');
+    };
+
+    const reset = (full: boolean) => {
+      if (full) rules = START.map((r) => ({ ...r }));
+      renderRules();
+      renderPackets();
+      verdict.textContent = '';
+      verdict.classList.remove('win');
+    };
+
+    list.addEventListener('click', (e) => {
+      const b = (e.target as Element).closest<HTMLButtonElement>('button[data-do]');
+      if (!b || running) return;
+      const id = b.closest<HTMLElement>('li')!.dataset.id;
+      const i = rules.findIndex((r) => r.id === id);
+      const act = b.dataset.do;
+      if (act === 'up' && i > 0) [rules[i - 1], rules[i]] = [rules[i], rules[i - 1]];
+      if (act === 'down' && i < rules.length - 1) [rules[i + 1], rules[i]] = [rules[i], rules[i + 1]];
+      if (act === 'toggle') rules[i].on = !rules[i].on;
+      reset(false);
+      // Keep keyboard focus on the same control after re-rendering
+      list.querySelector<HTMLButtonElement>(`li[data-id="${id}"] button[data-do="${act}"]:not(:disabled)`)?.focus();
+    });
+
+    send.addEventListener('click', async () => {
+      if (running) return;
+      running = true;
+      send.disabled = true;
+      renderPackets();
+      verdict.textContent = '';
+      verdict.classList.remove('win');
+      const rows = Array.from(body.querySelectorAll('tr'));
+      const items = Array.from(list.querySelectorAll<HTMLElement>('.acl-rule'));
+      let correct = 0;
+      const wrong: number[] = [];
+      for (const [pi, p] of PACKETS.entries()) {
+        rows.forEach((r) => r.classList.remove('active'));
+        rows[pi].classList.add('active');
+        items.forEach((li) => li.classList.remove('checking', 'hit-permit', 'hit-deny'));
+        let hit: Rule | null = null;
+        let hitIndex = -1;
+        for (const [ri, r] of rules.entries()) {
+          if (!r.on) continue;
+          items[ri].classList.add('checking');
+          await wait(260);
+          items[ri].classList.remove('checking');
+          if (matches(r, p)) { hit = r; hitIndex = ri; break; }
+        }
+        const allowed = hit?.action === 'permit';
+        const li = hit ? items[hitIndex] : items[items.length - 1];
+        li.classList.add(allowed ? 'hit-permit' : 'hit-deny');
+        const ok = (allowed ? 'allow' : 'block') === p.expect;
+        if (ok) correct++; else wrong.push(pi);
+        const by = hit ? `rule ${hitIndex + 1}` : 'the implicit deny';
+        rows[pi].querySelector('.res')!.innerHTML = `<span class="${ok ? 'res-ok' : 'res-bad'}">${ok ? '✓' : '✗'} ${allowed ? 'Allowed' : 'Blocked'}</span> by ${by}`;
+        await wait(650);
+      }
+      rows.forEach((r) => r.classList.remove('active'));
+      items.forEach((li) => li.classList.remove('checking', 'hit-permit', 'hit-deny'));
+      if (correct === PACKETS.length) {
+        verdict.classList.add('win');
+        verdict.textContent = 'Firewall fixed: 5 out of 5. That’s the everyday job of a firewall admin: specific rules above general ones, and old rules nobody can explain switched off.';
+      } else {
+        const hints: string[] = [];
+        if (wrong.includes(0)) hints.push('The customer hits a DENY before reaching the rule that would let them in. Order matters.');
+        if (wrong.includes(3)) hints.push('Something lets anyone on the internet reach SSH. Do you still need every rule?');
+        if (wrong.includes(2)) hints.push('The admin needs a way in. Is their rule switched on, and above anything that blocks them?');
+        if (wrong.includes(1) || wrong.includes(4)) hints.push('Something is letting through traffic that should be blocked.');
+        verdict.textContent = `${correct} out of 5 handled correctly. Hint: ${hints[0] ?? 'Try again.'}`;
+      }
+      running = false;
+      send.disabled = false;
+    });
+
+    game.querySelector('.acl-reset')!.addEventListener('click', () => { if (!running) reset(true); });
+    reset(true);
+  }
+</script>

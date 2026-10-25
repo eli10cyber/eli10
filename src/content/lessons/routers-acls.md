@@ -8,6 +8,7 @@ chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "Routers connect different networks and decide what may cross. Their golden rule: if it isn’t on the list, it doesn’t get through."
 grownLiner: "Routers forward packets between networks. ACLs are read top to bottom, the first match wins, and everything else hits an implicit deny. SNMPv3 adds the authentication and encryption v1 and v2c lack."
 draft: false
+game: acl
 image: "/images/og/routers-acls.jpg"
 imageAlt: "Poster: Routers, ACLs and SNMP. A crossroads guard between two neighbourhoods, a clipboard ending in DENY EVERYTHING ELSE, padlocked road signs, and a child shouting public across the playground next to a child whispering inside a v3 bubble."
 buyerScore:
@@ -81,6 +82,8 @@ A **router** forwards packets between different networks using a **routing table
 | **SNMPv3** | Per-user **authentication** and **encryption**. The only version to use |
 
 </div>
+
+<div data-game="acl"></div>
 
 ## A real-world example
 
