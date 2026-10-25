@@ -1,0 +1,195 @@
+---
+// Makes the lesson poster explorable: each of its four panels becomes a button that opens
+// a large, readable card with a short note and a link to the matching part of the lesson.
+interface Props {
+  panels: { title: string; note: string; find: string }[];
+  grid?: number[];
+}
+const { panels, grid = [1.7, 49.3, 50.6, 98.3, 12.7, 52.2, 54.1, 98.0] } = Astro.props;
+const [l, ml, mr, r, t, rb, rt, b] = grid;
+// Each panel's box as % of the poster: x, y, width, height
+const boxes = [
+  [l, t, ml - l, rb - t],
+  [mr, t, r - mr, rb - t],
+  [l, rt, ml - l, b - rt],
+  [mr, rt, r - mr, b - rt],
+];
+const data = panels.map((p, i) => ({ ...p, box: boxes[i] }));
+---
+<dialog class="panel-sheet" aria-label="Poster panels">
+  <div class="ps-bar">
+    <span class="ps-count small" aria-live="polite"></span>
+    <div class="ps-nav">
+      <button type="button" class="ps-btn" data-dir="-1" aria-label="Previous panel">←</button>
+      <button type="button" class="ps-btn" data-dir="1" aria-label="Next panel">→</button>
+      <button type="button" class="ps-close">Close</button>
+    </div>
+  </div>
+  <div class="ps-track">
+    {data.map((p, i) => (
+      <article class="ps-card" data-i={i}>
+        <div class="ps-crop" role="img" aria-label={`Panel ${i + 1} of the poster: ${p.title}`}></div>
+        <h3><span class="ps-n">{i + 1}</span>{p.title}</h3>
+        <p>{p.note}</p>
+        <div class="ps-actions">
+          <button type="button" class="btn ps-jump" data-find={p.find}>Read this in the lesson ↓</button>
+          <button type="button" class="ps-full small">See the full poster</button>
+        </div>
+        {i < data.length - 1 && <p class="ps-swipe small">Swipe for panel {i + 2} →</p>}
+      </article>
+    ))}
+  </div>
+</dialog>
+<script type="application/json" id="poster-panels" set:html={JSON.stringify(data)} />
+
+<style is:global>
+  .poster { position: relative; display: block; margin: 1.5rem 0; }
+  .poster img { margin: 0 !important; width: 100%; }
+  .poster-hot {
+    position: absolute; border: 0; padding: 0; margin: 0; background: transparent; cursor: pointer;
+    border-radius: 10px; outline: 3px solid transparent; outline-offset: -3px; transition: outline-color .15s, background-color .15s;
+  }
+  .poster-hot::after {
+    content: attr(data-label); position: absolute; left: 50%; bottom: 14%; transform: translate(-50%, 6px);
+    background: var(--marker); color: var(--marker-ink); font: inherit; font-weight: 750; font-size: 0.85rem;
+    padding: 5px 12px; border-radius: 999px; white-space: nowrap; opacity: 0; transition: opacity .15s, transform .15s; pointer-events: none;
+    box-shadow: 0 2px 0 rgba(19,35,63,.35);
+  }
+  .poster-hot:hover, .poster-hot:focus-visible { outline-color: var(--marker); background: rgba(255, 216, 77, 0.12); }
+  .poster-hot:hover::after, .poster-hot:focus-visible::after { opacity: 1; transform: translate(-50%, 0); }
+  /* A gentle one-time hint that the panels are tappable */
+  .poster.hint .poster-hot { animation: hot-hint 1.6s ease-in-out 0.6s 1; }
+  .poster.hint .poster-hot:nth-of-type(2) { animation-delay: 0.8s; }
+  .poster.hint .poster-hot:nth-of-type(3) { animation-delay: 1s; }
+  .poster.hint .poster-hot:nth-of-type(4) { animation-delay: 1.2s; }
+  @keyframes hot-hint { 0%, 100% { outline-color: transparent; } 40% { outline-color: var(--marker); } }
+
+  .panel-sheet { width: min(760px, 100vw); max-width: 100vw; max-height: 100dvh; padding: 0; border: 2px solid var(--ink); border-radius: var(--radius-l); background: var(--surface); color: var(--ink); overflow: hidden; }
+  .panel-sheet::backdrop { background: rgba(9, 16, 30, 0.65); }
+  .ps-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid var(--rule); }
+  .ps-count { font-weight: 700; color: var(--ink-2); }
+  .ps-nav { display: flex; gap: 6px; }
+  .ps-btn, .ps-close { font: inherit; font-weight: 700; border: 2px solid var(--ink); background: transparent; color: var(--ink); border-radius: 999px; padding: 4px 12px; cursor: pointer; }
+  .ps-close { background: var(--marker); color: var(--marker-ink); border-color: var(--marker); }
+  .ps-btn:disabled { opacity: 0.35; cursor: default; }
+  .ps-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
+  .ps-track::-webkit-scrollbar { display: none; }
+  .ps-card { flex: 0 0 100%; scroll-snap-align: start; padding: 16px 18px 20px; box-sizing: border-box; }
+  .ps-crop { width: 100%; border-radius: 10px; background-repeat: no-repeat; border: 1px solid var(--rule); }
+  .ps-card h3 { margin: 1rem 0 0.4rem; display: flex; align-items: center; gap: 10px; font-size: 1.3rem; }
+  .ps-n { display: inline-grid; place-items: center; width: 1.7rem; height: 1.7rem; border-radius: 50%; background: var(--marker); color: var(--marker-ink); font-size: 1rem; flex-shrink: 0; }
+  .ps-card p { margin: 0 0 1rem; font-size: 1.08rem; line-height: 1.55; }
+  .ps-actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  .ps-swipe { display: none; margin: 1.5rem 0 0 !important; color: var(--ink-2); font-size: 0.9rem !important; }
+  @media (hover: none) { .ps-swipe { display: block; } }
+  .ps-full { font: inherit; background: none; border: 0; color: var(--link); text-decoration: underline; cursor: pointer; padding: 0; }
+  @media (max-width: 640px) {
+    .panel-sheet { width: 100vw; height: 100dvh; border-radius: 0; border: 0; margin: 0; }
+    .ps-card { padding: 14px 16px 24px; }
+  }
+  /* Where "Read this in the lesson" lands */
+  .jump-flash { animation: jump-flash 2.2s ease-out; border-radius: 6px; }
+  @keyframes jump-flash { 0%, 35% { background-color: rgba(255, 216, 77, 0.55); box-shadow: 0 0 0 6px rgba(255, 216, 77, 0.55); } 100% { background-color: transparent; box-shadow: 0 0 0 6px transparent; } }
+  @media (prefers-reduced-motion: reduce) { .poster.hint .poster-hot, .jump-flash { animation: none; } .poster-hot::after { transition: none; } }
+</style>
+
+<script>
+  type Panel = { title: string; note: string; find: string; box: number[] };
+  const sheet = document.querySelector<HTMLDialogElement>('.panel-sheet');
+  const raw = document.getElementById('poster-panels')?.textContent;
+  const img = Array.from(document.querySelectorAll<HTMLImageElement>('.prose img')).find((i) => i.alt.startsWith('Poster'));
+  if (sheet && raw && img) {
+    const panels: Panel[] = JSON.parse(raw);
+    const track = sheet.querySelector<HTMLElement>('.ps-track')!;
+    const cards = Array.from(sheet.querySelectorAll<HTMLElement>('.ps-card'));
+    const count = sheet.querySelector<HTMLElement>('.ps-count')!;
+    const [prev, next] = Array.from(sheet.querySelectorAll<HTMLButtonElement>('.ps-btn'));
+    const largest = () => {
+      const set = img.getAttribute('srcset');
+      if (!set) return img.currentSrc || img.src;
+      return set.split(',').map((s) => s.trim().split(/\s+/)).sort((a, b) => (parseInt(b[1]) || 0) - (parseInt(a[1]) || 0))[0][0];
+    };
+    const ratio = () => (img.naturalWidth && img.naturalHeight ? img.naturalWidth / img.naturalHeight : 1200 / 896);
+
+    // Wrap the poster and lay a button over each panel
+    const host = img.closest('p') ?? img.parentElement!;
+    const wrap = document.createElement('div');
+    wrap.className = 'poster hint';
+    host.replaceWith(wrap);
+    wrap.appendChild(img);
+    panels.forEach((p, i) => {
+      const [x, y, w, h] = p.box;
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'poster-hot';
+      b.style.cssText = `left:${x}%;top:${y}%;width:${w}%;height:${h}%`;
+      b.dataset.label = `${i + 1} · Explore`;
+      b.setAttribute('aria-label', `Panel ${i + 1}: ${p.title}. Open the explainer`);
+      b.addEventListener('click', () => open(i));
+      wrap.appendChild(b);
+    });
+
+    // Crop each card to its panel using the poster as a background image
+    let cropped = false;
+    const crop = () => {
+      if (cropped) return;
+      cropped = true;
+      const src = largest();
+      cards.forEach((c, i) => {
+        const [x, y, w, h] = panels[i].box.map((v) => v / 100);
+        const el = c.querySelector<HTMLElement>('.ps-crop')!;
+        el.style.backgroundImage = `url("${src}")`;
+        el.style.backgroundSize = `${100 / w}% ${100 / h}%`;
+        el.style.backgroundPosition = `${(x / (1 - w)) * 100}% ${(y / (1 - h)) * 100}%`;
+        el.style.aspectRatio = String((w * ratio()) / h);
+      });
+    };
+
+    let current = 0;
+    const update = (i: number) => {
+      current = i;
+      count.textContent = `Panel ${i + 1} of ${panels.length}`;
+      prev.disabled = i === 0;
+      next.disabled = i === panels.length - 1;
+    };
+    const go = (i: number, smooth = true) => {
+      i = Math.max(0, Math.min(panels.length - 1, i));
+      track.scrollTo({ left: i * track.clientWidth, behavior: smooth ? 'smooth' : 'instant' });
+      update(i);
+    };
+    const open = (i: number) => {
+      crop();
+      sheet.showModal();
+      requestAnimationFrame(() => go(i, false));
+    };
+    track.addEventListener('scroll', () => {
+      const i = Math.round(track.scrollLeft / track.clientWidth);
+      if (i !== current) update(i);
+    }, { passive: true });
+    prev.addEventListener('click', () => go(current - 1));
+    next.addEventListener('click', () => go(current + 1));
+    sheet.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); go(current + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); go(current - 1); }
+    });
+    sheet.querySelector('.ps-close')!.addEventListener('click', () => sheet.close());
+    sheet.addEventListener('click', (e) => { if (e.target === sheet) sheet.close(); });
+    sheet.querySelectorAll<HTMLButtonElement>('.ps-full').forEach((b) => b.addEventListener('click', () => { sheet.close(); img.click(); }));
+
+    // Jump to the first paragraph, list item or table cell after the poster that mentions the phrase
+    const strip = (s: string) => s.toLowerCase().replace(/[’']/g, "'");
+    sheet.querySelectorAll<HTMLButtonElement>('.ps-jump').forEach((b) => b.addEventListener('click', () => {
+      const want = strip(b.dataset.find!);
+      const prose = wrap.closest('.prose')!;
+      const target = Array.from(prose.querySelectorAll<HTMLElement>('p, li, td, th, h2, h3'))
+        .filter((el) => wrap.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING && el.offsetParent !== null)
+        .find((el) => strip(el.textContent || '').includes(want));
+      sheet.close();
+      if (!target) return;
+      const row = target.closest('tr') ?? target;
+      row.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
+      row.classList.remove('jump-flash'); void row.offsetWidth; row.classList.add('jump-flash');
+    }));
+    window.addEventListener('resize', () => { if (sheet.open) go(current, false); });
+  }
+</script>

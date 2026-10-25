@@ -16,6 +16,20 @@ buyerScore:
   pressure: 1.5
   owner: 1
   verdict: "Router ACLs themselves are free, but filtering traffic between networks is the job of firewalls, one of the biggest security budgets there is."
+posterGrid: [1.7, 49.3, 50.6, 98.3, 12.7, 52.2, 54.1, 98.0]
+panels:
+  - title: "Routers"
+    note: "Routers forward packets between different networks, using a routing table to pick the next hop."
+    find: "routing table"
+  - title: "ACLs & Implicit Deny"
+    note: "ACL rules are checked top to bottom and the first match wins. Anything not allowed hits the invisible implicit deny."
+    find: "top to bottom"
+  - title: "Route Security"
+    note: "Routers learn routes from each other. Authentication, route filtering and RPKI stop false routes being accepted."
+    find: "Route security: routers"
+  - title: "SNMP v1/v2c vs v3"
+    note: "SNMPv1 and v2c send their community string in plain text. SNMPv3 adds authentication and encryption."
+    find: "SNMP (Simple Network"
 flashcards:
   - q: "What is an ACL, and in what order are its rules checked?"
     a: "An access control list: rules that permit or deny traffic by source, destination, protocol and port. Rules are checked top to bottom, and the first match wins."
@@ -31,7 +45,7 @@ flashcards:
 
 ![Poster: Routers, ACLs and SNMP. A crossroads guard between two neighbourhoods, a clipboard ending in DENY EVERYTHING ELSE, padlocked road signs, and a child shouting public across the playground next to a child whispering inside a v3 bubble.](./images/routers-acls-poster.jpg)
 
-<p class="caption">Tap the poster to zoom in.</p>
+<p class="caption">Tap any panel to explore it.</p>
 
 <div class="layer layer-kid">
 <p class="layer-name">Like you’re 10</p>

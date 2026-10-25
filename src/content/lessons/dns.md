@@ -17,6 +17,20 @@ buyerScore:
   owner: 1.5
   verdict: "Every connection starts with a DNS lookup, so blocking bad lookups is one of the cheapest, widest security controls a company can buy."
   pitch: "Protective DNS stops users reaching malicious sites before any connection is even made."
+posterGrid: [1.7, 49.3, 50.6, 98.3, 12.7, 52.2, 54.1, 98.0]
+panels:
+  - title: "Names vs Numbers"
+    note: "People remember names, computers connect to numbers. DNS translates one into the other."
+    find: "distributed, hierarchical"
+  - title: "The Librarian"
+    note: "A recursive resolver asks the root servers, then the top-level domain servers, then the domain’s own servers."
+    find: "recursive resolver"
+  - title: "The Answer"
+    note: "The answer is a DNS record: an A record for IPv4, AAAA for IPv6. The resolver caches it for next time."
+    find: "Record types to know"
+  - title: "Protective DNS"
+    note: "Protective DNS refuses to look up known malicious domains, stopping malware and phishing links early."
+    find: "protective DNS"
 flashcards:
   - q: "What does a DNS A record do, and what does an AAAA record do?"
     a: "An A record maps a name to an IPv4 address. An AAAA record maps a name to an IPv6 address."
@@ -32,7 +46,7 @@ flashcards:
 
 ![Poster: DNS. A child wondering what eli10cyber.com is, a librarian walking between ROOT and .com shelves, the librarian handing over 203.0.113.5, and the librarian refusing to give out the address of a bad site.](./images/dns-poster.jpg)
 
-<p class="caption">Tap the poster to zoom in.</p>
+<p class="caption">Tap any panel to explore it.</p>
 
 <div class="layer layer-kid">
 <p class="layer-name">Like you’re 10</p>

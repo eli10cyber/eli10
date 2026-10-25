@@ -17,6 +17,20 @@ buyerScore:
   owner: 1.5
   verdict: "Fake emails are behind some of the costliest fraud there is, and the big inbox providers now refuse bulk mail without these records."
   pitch: "Stops criminals sending emails that look like they came from your company, to your customers or your finance team."
+posterGrid: [2.0, 49.5, 50.6, 98.2, 11.0, 52.0, 53.2, 97.1]
+panels:
+  - title: "SPF: The Guest List"
+    note: "SPF lists the servers allowed to send email for a domain, published as a DNS TXT record."
+    find: "Sender Policy Framework"
+  - title: "DKIM: The Wax Seal"
+    note: "DKIM adds a digital signature to each email. If the message is changed on the way, the signature no longer verifies."
+    find: "DomainKeys Identified Mail"
+  - title: "DMARC: The Rulebook"
+    note: "DMARC tells receivers what to do when checks fail (monitor, quarantine or reject) and sends the domain owner reports."
+    find: "DMARC policies"
+  - title: "SPF or DKIM = Delivered"
+    note: "An email passes DMARC if either SPF or DKIM passes and aligns with the visible From domain. It fails only when both fail."
+    find: "The exam trap"
 flashcards:
   - q: "What does SPF check?"
     a: "Whether the server that sent the email is on the domain’s published list of approved sending servers."
@@ -32,7 +46,7 @@ flashcards:
 
 ![Poster: SPF, DKIM and DMARC. A castle bouncer with an approved senders list, an intact and a broken wax seal, a postman following the DMARC rulebook into a REJECT bin, and two paths that both lead to delivery.](./images/email-auth-poster.jpg)
 
-<p class="caption">Tap the poster to zoom in.</p>
+<p class="caption">Tap any panel to explore it.</p>
 
 <div class="layer layer-kid">
 <p class="layer-name">Like you’re 10</p>

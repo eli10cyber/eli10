@@ -16,6 +16,20 @@ buyerScore:
   pressure: 1
   owner: 0.5
   verdict: "Invisible until it breaks. Time sync is an audit requirement, but it’s bought as part of network platforms, not on its own."
+posterGrid: [1.7, 49.3, 50.6, 98.3, 12.7, 52.2, 54.1, 98.0]
+panels:
+  - title: "DHCP: The Car Park Attendant"
+    note: "DHCP gives each device an IP address lease plus its gateway and DNS settings, in four steps: Discover, Offer, Request, Acknowledge."
+    find: "DORA"
+  - title: "Rogue DHCP"
+    note: "A fake DHCP server can route victims through an attacker. DHCP snooping on switches only trusts the real server."
+    find: "Rogue DHCP server"
+  - title: "NTP: The School Bell"
+    note: "NTP synchronises every clock to a trusted time source, over UDP port 123."
+    find: "synchronises clocks"
+  - title: "Why Time Matters"
+    note: "Investigators line up logs from many systems. If the clocks disagree, the timeline falls apart."
+    find: "line up logs"
 flashcards:
   - q: "What does DHCP give a device when it joins a network?"
     a: "An IP address for a limited time (a lease), plus settings such as the default gateway and which DNS servers to use."
@@ -29,7 +43,7 @@ flashcards:
 
 ![Poster: DHCP and NTP. A car park attendant handing out address tickets, a fake attendant being stopped, a town clock and computer screens all showing 10:30, and a detective lining up clues all stamped 10:31.](./images/dhcp-ntp-poster.jpg)
 
-<p class="caption">Tap the poster to zoom in.</p>
+<p class="caption">Tap any panel to explore it.</p>
 
 <div class="layer layer-kid">
 <p class="layer-name">Like you’re 10</p>

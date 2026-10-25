@@ -14,6 +14,20 @@ buyerScore:
   owner: 1
   verdict: "A checkbox feature inside managed DNS. Important, but rarely bought on its own."
   pitch: "Proves customers are reaching your real website, not a forged copy."
+posterGrid: [1.7, 49.3, 50.6, 98.3, 12.7, 52.2, 54.1, 98.0]
+panels:
+  - title: "The Swapped Page"
+    note: "Cache poisoning feeds a resolver forged answers, sending you to the attacker’s site instead of the real one."
+    find: "Dan Kaminsky"
+  - title: "The Wax Seal"
+    note: "An RRSIG record is a digital signature over DNS records. Anyone can check it with the zone’s public key, the DNSKEY."
+    find: "The digital signature over"
+  - title: "Chain of Trust"
+    note: "Each parent zone stores a DS record vouching for its child’s key, all the way up to the root."
+    find: "chain of trust from the root"
+  - title: "Sealed, Not Secret"
+    note: "DNSSEC proves an answer is authentic and unaltered. It does not encrypt lookups; that needs DoH or DoT."
+    find: "does not encrypt"
 flashcards:
   - q: "What does DNSSEC add to DNS?"
     a: "Digital signatures. They let a resolver check that a DNS answer is authentic and hasn’t been changed."
@@ -31,7 +45,7 @@ imageAlt: "Poster: DNSSEC. A sneaky person swapping a page in the address book, 
 
 ![Poster: DNSSEC. A sneaky person swapping a page in the address book, an intact and a broken wax seal, books labelled ROOT and .com passing seals down a chain, and a glass envelope that is sealed but readable.](./images/dnssec-poster.jpg)
 
-<p class="caption">Tap the poster to zoom in.</p>
+<p class="caption">Tap any panel to explore it.</p>
 
 <div class="layer layer-kid">
 <p class="layer-name">Like you’re 10</p>

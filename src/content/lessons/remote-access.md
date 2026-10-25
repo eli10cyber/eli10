@@ -17,6 +17,20 @@ buyerScore:
   owner: 1.5
   verdict: "Remote access is one of the main doors ransomware walks through, and insurers check how it’s locked."
   pitch: "Closes the remote-access doors that ransomware gangs use most to get in."
+posterGrid: [2.0, 49.5, 50.6, 98.2, 11.0, 52.0, 53.2, 97.1]
+panels:
+  - title: "SSH: The Secret Tunnel"
+    note: "SSH gives an encrypted command line on a faraway computer, on TCP port 22."
+    find: "SSH (Secure Shell)"
+  - title: "SSH Keys"
+    note: "Your public key goes on the server; your private key never leaves your machine."
+    find: "Key-based login, properly"
+  - title: "No Super-Boss Logins"
+    note: "Disable direct root login. Log in as yourself and use sudo, so every admin action is tied to a person."
+    find: "Disable direct root login"
+  - title: "RDP: The Magic Remote"
+    note: "RDP gives a full remote desktop on TCP port 3389. Keep it behind a VPN or gateway with MFA, never open to the internet."
+    find: "Never expose RDP"
 flashcards:
   - q: "Which ports do SSH and RDP use?"
     a: "SSH uses TCP 22. RDP uses TCP 3389."
@@ -32,7 +46,7 @@ flashcards:
 
 ![Poster: SSH and RDP. A child in a treehouse sending commands through an encrypted tunnel, hanging a padlock on a server door, a chained root door while Sam walks in by a side door, and a magic remote behind an MFA gate.](./images/remote-access-poster.jpg)
 
-<p class="caption">Tap the poster to zoom in.</p>
+<p class="caption">Tap any panel to explore it.</p>
 
 <div class="layer layer-kid">
 <p class="layer-name">Like you’re 10</p>

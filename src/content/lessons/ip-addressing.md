@@ -16,6 +16,20 @@ buyerScore:
   pressure: 0.5
   owner: 1
   verdict: "Pure plumbing. It matters to network teams, but nobody buys “IPv6” as a security product."
+posterGrid: [1.7, 49.3, 50.6, 98.3, 12.7, 52.2, 54.1, 98.0]
+panels:
+  - title: "What is an IP Address?"
+    note: "An IP address identifies a device on a network so data can be delivered to it, like a house number for the postman."
+    find: "identifies a device"
+  - title: "IPv4: The Full Street"
+    note: "IPv4 addresses are 32 bits long, which allows about 4.3 billion. The last free blocks were handed out from 2011 onwards."
+    find: "global pool of free IPv4"
+  - title: "NAT: One Front Door"
+    note: "NAT lets a whole home or office share one public IPv4 address. It hides internal addresses, but it is not a firewall."
+    find: "NAT is not a firewall"
+  - title: "IPv6: Endless Plots"
+    note: "IPv6 addresses are 128 bits long, about 3.4 × 10³⁸ of them. Networks running both versions must watch both."
+    find: "Dual stack"
 flashcards:
   - q: "How long is an IPv4 address, and how is it written?"
     a: "32 bits, written as four numbers from 0 to 255 separated by dots, like 192.168.1.5. That allows about 4.3 billion addresses."
@@ -29,7 +43,7 @@ flashcards:
 
 ![Poster: IPv4 vs IPv6. A postman at a house numbered 203.0.113.5, a full street of IPv4 houses, NAT as one front door shared by many children, and endless IPv6 plots with a house numbered 2001:db8::5.](./images/ip-addressing-poster.jpg)
 
-<p class="caption">Tap the poster to zoom in.</p>
+<p class="caption">Tap any panel to explore it.</p>
 
 <div class="layer layer-kid">
 <p class="layer-name">Like you’re 10</p>

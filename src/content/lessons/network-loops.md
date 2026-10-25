@@ -16,6 +16,20 @@ buyerScore:
   pressure: 0
   owner: 0.5
   verdict: "Essential engineering that comes built into every business switch. Nobody buys it, but everyone needs it switched on."
+posterGrid: [1.7, 49.3, 50.6, 98.3, 12.7, 52.2, 54.1, 98.0]
+panels:
+  - title: "One Cable Too Many"
+    note: "Two paths between switches, added for resilience or by accident, can form a loop."
+    find: "Switching loops"
+  - title: "The Broadcast Storm"
+    note: "In a loop, broadcasts multiply forever because Ethernet frames have no time-to-live. The network freezes within seconds."
+    find: "Why loops are so destructive"
+  - title: "Spanning Tree"
+    note: "STP blocks redundant ports so only one active path remains, and reopens a spare if the active one fails."
+    find: "IEEE 802.1D"
+  - title: "BPDU Guard"
+    note: "A normal PC never sends BPDUs. If one arrives on a user port, BPDU guard shuts that port down."
+    find: "err-disables"
 flashcards:
   - q: "What causes a broadcast storm?"
     a: "A switching loop. Broadcast frames go out of every port, travel round the loop and come back, multiplying until they swamp the network."
@@ -31,7 +45,7 @@ flashcards:
 
 ![Poster: Broadcast storms and loops. A corridor that loops into a circle, children running round shouting in a storm, a caretaker locking one door marked BLOCKED (spanning tree), and an alarm when a toy robot is plugged into a socket (BPDU guard).](./images/network-loops-poster.jpg)
 
-<p class="caption">Tap the poster to zoom in.</p>
+<p class="caption">Tap any panel to explore it.</p>
 
 <div class="layer layer-kid">
 <p class="layer-name">Like you’re 10</p>

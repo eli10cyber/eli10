@@ -16,6 +16,20 @@ buyerScore:
   pressure: 1
   owner: 1
   verdict: "Switch hardening is configuration, not a purchase. The money is in network access control, which checks every device before it gets on."
+posterGrid: [1.7, 49.3, 50.6, 98.3, 12.7, 52.2, 54.1, 98.0]
+panels:
+  - title: "Unicast"
+    note: "Unicast sends a frame to one specific device. The switch looks up which port leads to it in its MAC address table."
+    find: "How a switch works"
+  - title: "Broadcast"
+    note: "A broadcast reaches every device on the local network. Routers mark the edge, and IPv6 has no broadcast at all."
+    find: "cross routers"
+  - title: "Port Security"
+    note: "Port security limits which devices each switch port accepts. Badges can be copied (MAC spoofing), so 802.1X is the strong version."
+    find: "limit how many MAC"
+  - title: "Physical vs Logical Ports"
+    note: "A physical port is a socket for a cable. A logical port is a number for a service, like 22 for SSH or 443 for HTTPS."
+    find: "A physical port"
 flashcards:
   - q: "What is the difference between unicast and broadcast?"
     a: "Unicast goes from one device to one specific device. Broadcast goes from one device to every device on the local network."
@@ -31,7 +45,7 @@ flashcards:
 
 ![Poster: Switches. A note passed to one friend (unicast), a megaphone in the dining hall stopped at a router gate (broadcast), a hallway monitor checking badges (port security), and a wall socket next to doors numbered 22, 53 and 443 (physical vs logical ports).](./images/switches-poster.jpg)
 
-<p class="caption">Tap the poster to zoom in.</p>
+<p class="caption">Tap any panel to explore it.</p>
 
 <div class="layer layer-kid">
 <p class="layer-name">Like you’re 10</p>

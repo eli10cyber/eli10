@@ -16,6 +16,20 @@ buyerScore:
   pressure: 0.5
   owner: 1
   verdict: "Companies spend heavily on calling platforms, but the security piece is usually a feature inside them rather than a separate purchase."
+posterGrid: [2.0, 49.5, 50.6, 98.2, 11.0, 52.0, 53.2, 97.1]
+panels:
+  - title: "VoIP"
+    note: "VoIP carries calls over IP networks: signalling sets up the call, and media carries the sound."
+    find: "Voice over IP"
+  - title: "SIP: The Doorbell"
+    note: "SIP sets up, changes and ends calls, on port 5060, or 5061 when protected with TLS."
+    find: "Session Initiation Protocol"
+  - title: "RTP: The Conveyor Belt"
+    note: "RTP carries audio over UDP and numbers each packet so the receiver can reorder it. Late packets are dropped."
+    find: "guarantee delivery"
+  - title: "SRTP: The Locked Tunnel"
+    note: "SRTP encrypts and authenticates the audio. A fully secure call needs SRTP for the voice and TLS for the signalling."
+    find: "Encrypting SIP alone"
 flashcards:
   - q: "What does SIP do in a VoIP call?"
     a: "It sets up, manages and ends the call: ringing the other side, agreeing how to talk, and hanging up. It doesn’t carry the voice itself."
@@ -31,7 +45,7 @@ flashcards:
 
 ![Poster: SIP, RTP and SRTP. Tin-can phones joined by the internet, a doorbell asking want to talk, a conveyor belt of numbered speech bubbles, and the same belt inside a locked glass tunnel.](./images/voip-poster.jpg)
 
-<p class="caption">Tap the poster to zoom in.</p>
+<p class="caption">Tap any panel to explore it.</p>
 
 <div class="layer layer-kid">
 <p class="layer-name">Like you’re 10</p>

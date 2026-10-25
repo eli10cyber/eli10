@@ -17,6 +17,20 @@ buyerScore:
   owner: 2
   verdict: "Identity is where most modern attacks go first, and Active Directory holds the keys to everything else."
   pitch: "Protects the system that decides who can access everything in the company, the attacker’s favourite target."
+posterGrid: [2.0, 49.5, 50.6, 98.2, 11.0, 52.0, 53.2, 97.1]
+panels:
+  - title: "Active Directory"
+    note: "Active Directory Domain Services holds every user, group and permission, and runs on servers called domain controllers."
+    find: "Active Directory Domain Services"
+  - title: "Joiners & Leavers"
+    note: "Disable one account and access to everything tied to it stops. That’s why the directory sits at the centre of security."
+    find: "Fast joiners and leavers"
+  - title: "LDAP"
+    note: "LDAP is the standard protocol apps use to query the directory, on TCP port 389."
+    find: "Lightweight Directory Access Protocol"
+  - title: "LDAPS"
+    note: "LDAPS wraps LDAP in TLS on TCP port 636, so passwords and answers can’t be read in transit."
+    find: "Plain LDAP sends data unencrypted"
 flashcards:
   - q: "What is Active Directory Domain Services (AD DS)?"
     a: "Microsoft’s directory service. It stores users, groups, computers and policies centrally, and runs on servers called domain controllers."
@@ -32,7 +46,7 @@ flashcards:
 
 ![Poster: Directory services. A head teacher with a giant binder and key cards, a new pupil getting a key card while a leaver’s card is crossed out, a robot asking whether Sam is a teacher (LDAP), and an eavesdropper hearing only scrambled noise (LDAPS).](./images/directory-services-poster.jpg)
 
-<p class="caption">Tap the poster to zoom in.</p>
+<p class="caption">Tap any panel to explore it.</p>
 
 <div class="layer layer-kid">
 <p class="layer-name">Like you’re 10</p>
