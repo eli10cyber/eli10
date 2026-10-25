@@ -2,7 +2,7 @@
 title: "SPF, DKIM and DMARC: proving an email is really from who it says"
 description: "SPF, DKIM and DMARC explained like you're 10: a guest list, a wax seal and a rulebook that stop fake emails, plus the exam trap most people get wrong."
 pubDate: 2026-10-24
-number: 5
+number: 8
 topic: email-auth
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "SPF lists who may send email for a company, DKIM seals each email so changes show, and DMARC tells inboxes what to do with fakes."

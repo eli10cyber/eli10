@@ -2,7 +2,7 @@
 title: "DNSSEC: a wax seal on the internet’s address book"
 description: "DNSSEC explained like you're 10: what it is, how the chain of trust works, what it doesn't do, and why companies care."
 pubDate: 2026-10-17
-number: 4
+number: 7
 topic: dnssec
 chapter: "Gibson & Shelley, Ch. 3 (protocols)"
 oneLiner: "DNSSEC puts a seal on the internet’s address book, so you know the address you were given is real and nobody swapped it on the way."

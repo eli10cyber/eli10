@@ -2,7 +2,7 @@
 title: "DHCP and NTP: the car park attendant and the school bell"
 description: "DHCP and NTP explained like you're 10: how devices get an address automatically, why every clock must agree, and the attacks on both."
 pubDate: 2026-10-24
-number: 2
+number: 5
 topic: dhcp-ntp
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "DHCP hands every new device an address the moment it joins a network. NTP makes sure every device’s clock shows exactly the same time."

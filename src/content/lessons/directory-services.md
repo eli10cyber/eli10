@@ -2,7 +2,7 @@
 title: "Directory services: AD DS, LDAP and LDAPS"
 description: "Active Directory, LDAP and LDAPS explained like you're 10: the company's master list of people and permissions, how apps ask it questions, and why attackers target it first."
 pubDate: 2026-10-24
-number: 6
+number: 9
 topic: directory-services
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "A directory is a company’s master list of every person, computer and permission. Whoever controls it controls the company."

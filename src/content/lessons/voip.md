@@ -2,7 +2,7 @@
 title: "Internet calls: VoIP, SIP, RTP and SRTP"
 description: "VoIP, SIP, RTP and SRTP explained like you're 10: how a phone call travels over the internet, which protocol does which job, and how calls get eavesdropped or abused."
 pubDate: 2026-10-24
-number: 8
+number: 11
 topic: voip
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "An internet call needs a doorbell to start it (SIP), a conveyor belt to carry your voice (RTP), and a locked tunnel so nobody listens in (SRTP)."

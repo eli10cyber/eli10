@@ -2,7 +2,7 @@
 title: "Remote access: SSH and RDP"
 description: "SSH and RDP explained like you're 10: controlling a computer from far away, how SSH keys work, the commands for the exam, and why exposed RDP is a ransomware magnet."
 pubDate: 2026-10-24
-number: 7
+number: 10
 topic: remote-access
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "SSH lets you type commands on a faraway computer through a secret tunnel. RDP lets you see and control its whole screen. Both are powerful, so attackers love them too."

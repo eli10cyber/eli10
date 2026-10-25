@@ -2,7 +2,7 @@
 title: "DNS: the internet’s address book"
 description: "DNS explained like you're 10: how a name like eli10cyber.com becomes an address, the main record types, the attacks on DNS, and why it's a security control."
 pubDate: 2026-10-24
-number: 3
+number: 6
 topic: dns
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "DNS turns names people can remember, like eli10cyber.com, into the number addresses computers actually use."
