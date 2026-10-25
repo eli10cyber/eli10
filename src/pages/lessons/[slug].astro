@@ -39,7 +39,7 @@ const date = d.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'lon
     </div>
 
     <div class="measure">
-      {d.buyerScore && <BuyerScore score={d.buyerScore} />}
+      {d.buyerScore && <BuyerScore score={d.buyerScore} url={new URL(`/lessons/${lesson.id}/`, Astro.site).href} title={d.title} />}
       <Quiz slug={lesson.id} topic={d.topic} questions={d.quiz} />
       <Flashcards cards={d.flashcards} />
       <LearnedButton topic={d.topic} />

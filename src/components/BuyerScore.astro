@@ -1,9 +1,14 @@
 ---
 // The commercial "buyer score": four questions, 0–2.5 each, adding up to 10.
 interface Props {
-  score: { budget: number; pain: number; pressure: number; owner: number; verdict: string };
+  score: { budget: number; pain: number; pressure: number; owner: number; verdict: string; pitch?: string };
+  url: string; // absolute lesson URL, for sharing
+  title: string;
 }
-const { score } = Astro.props;
+const { score, url, title } = Astro.props;
+const shareLine = score.pitch ?? score.verdict;
+const shareText = `${shareLine}\n\n${title.split(':')[0]}, explained three ways: ${url}`;
+const linkedIn = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
 const total = score.budget + score.pain + score.pressure + score.owner;
 const parts = [
   { key: 'budget', label: 'Budget', q: 'Is there a product category companies buy for this?' },
@@ -19,12 +24,24 @@ const fmt = (n: number) => (Number.isInteger(n) ? String(n) : n.toFixed(1));
     <p class="bs-total"><span class="bs-num">{fmt(total)}</span><span class="bs-of">/10</span></p>
   </div>
   <p class="bs-verdict">{score.verdict}</p>
+  {score.pitch && (
+    <blockquote class="bs-pitch">
+      <span class="bs-pitch-label small">The pitch</span>
+      <p>{score.pitch}</p>
+    </blockquote>
+  )}
+  <div class="bs-share" data-text={shareText} data-url={url}>
+    <button type="button" class="bs-sbtn bs-copy">{score.pitch ? 'Copy the pitch' : 'Copy the verdict'}</button>
+    <a class="bs-sbtn" href={linkedIn} target="_blank" rel="noopener">Share on LinkedIn</a>
+    <button type="button" class="bs-sbtn bs-native" hidden>Share…</button>
+    <span class="bs-copied small" role="status"></span>
+  </div>
   <dl class="bs-parts">
     {parts.map((p) => (
       <div class="bs-row">
         <dt><span class="bs-label">{p.label}</span><span class="bs-q small">{p.q}</span></dt>
         <dd>
-          <span class="bs-bar" aria-hidden="true"><span style={`width:${(score[p.key] / 2.5) * 100}%`}></span></span>
+          <span class="bs-bar" aria-hidden="true"><span style={`--w:${(score[p.key] / 2.5) * 100}%`}></span></span>
           <span class="bs-val">{fmt(score[p.key])}<span class="bs-max">/2.5</span></span>
         </dd>
       </div>
@@ -34,6 +51,13 @@ const fmt = (n: number) => (Number.isInteger(n) ? String(n) : n.toFixed(1));
 </section>
 
 <style>
+  .bs-pitch { margin: 0 0 1rem; padding: 14px 18px; border-left: 6px solid var(--marker); background: var(--surface); border-radius: 0 12px 12px 0; }
+  .bs-pitch-label { display: block; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; font-size: .72rem; color: var(--ink-2); margin-bottom: 4px; }
+  .bs-pitch p { margin: 0; font-size: 1.15rem; font-weight: 700; line-height: 1.4; font-variation-settings: 'CASL' 1, 'MONO' 0; }
+  .bs-share { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 0 0 1.4rem; }
+  .bs-sbtn { font: inherit; font-size: .88rem; font-weight: 700; padding: 7px 14px; border-radius: 999px; border: 1.5px solid var(--ink); background: transparent; color: var(--ink); cursor: pointer; text-decoration: none; }
+  .bs-sbtn:hover { background: var(--marker); color: var(--marker-ink); border-color: var(--marker); }
+  .bs-copied { color: var(--ok); font-weight: 700; }
   .buyer-score { margin-top: 3rem; border-top: 2px solid var(--ink); padding-top: 1rem; }
   .bs-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
   .bs-head h2 { margin: 0; }
@@ -48,8 +72,37 @@ const fmt = (n: number) => (Number.isInteger(n) ? String(n) : n.toFixed(1));
   .bs-q { color: var(--ink-2); }
   .bs-row dd { margin: 0; display: flex; align-items: center; gap: 10px; }
   .bs-bar { flex: 1; height: 10px; border-radius: 999px; background: var(--paper-2); overflow: hidden; }
-  .bs-bar span { display: block; height: 100%; background: var(--ink); border-radius: 999px; }
+  .bs-bar span { display: block; height: 100%; width: var(--w); background: var(--ink); border-radius: 999px; }
+  .buyer-score.animate .bs-bar span { width: 0; transition: width .9s cubic-bezier(.2,.8,.2,1); }
+  .buyer-score.animate.in .bs-bar span { width: var(--w); }
   .bs-val { font-variation-settings: 'CASL' 0, 'MONO' 1; font-size: 0.9rem; min-width: 7.5ch; text-align: right; }
   .bs-max { color: var(--ink-2); }
   @media (max-width: 560px) { .bs-row { grid-template-columns: 1fr; gap: 6px; } }
 </style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.buyer-score').forEach((card) => {
+    // Bars fill in when the card scrolls into view
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+      card.classList.add('animate');
+      const io = new IntersectionObserver((entries) => {
+        if (entries.some((e) => e.isIntersecting)) { card.classList.add('in'); io.disconnect(); }
+      }, { threshold: 0.35 });
+      io.observe(card);
+    }
+    const share = card.querySelector<HTMLElement>('.bs-share');
+    if (!share) return;
+    const text = share.dataset.text!;
+    const status = share.querySelector<HTMLElement>('.bs-copied')!;
+    share.querySelector('.bs-copy')!.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(text); status.textContent = 'Copied'; }
+      catch { status.textContent = 'Copy failed. Select the text instead.'; }
+      setTimeout(() => (status.textContent = ''), 2500);
+    });
+    const native = share.querySelector<HTMLButtonElement>('.bs-native')!;
+    if (navigator.share) {
+      native.hidden = false;
+      native.addEventListener('click', () => navigator.share({ text, url: share.dataset.url }).catch(() => {}));
+    }
+  });
+</script>
