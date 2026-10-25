@@ -6,7 +6,9 @@ number: 5
 topic: dhcp-ntp
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "DHCP hands every new device an address the moment it joins a network. NTP makes sure every device’s clock shows exactly the same time."
-draft: true
+draft: false
+image: "/images/og/dhcp-ntp.jpg"
+imageAlt: "Poster: DHCP and NTP. A car park attendant handing out address tickets, a fake attendant being stopped, a town clock and computer screens all showing 10:30, and a detective lining up clues all stamped 10:31."
 buyerScore:
   budget: 1
   pain: 0.5
@@ -23,6 +25,10 @@ flashcards:
   - q: "Which ports do DHCP and NTP use?"
     a: "DHCP uses UDP 67 (server) and 68 (client). NTP uses UDP 123."
 ---
+
+![Poster: DHCP and NTP. A car park attendant handing out address tickets, a fake attendant being stopped, a town clock and computer screens all showing 10:30, and a detective lining up clues all stamped 10:31.](./images/dhcp-ntp-poster.jpg)
+
+<p class="caption">Tap the poster to zoom in.</p>
 
 <div class="layer layer-kid">
 <p class="layer-name">Like you’re 10</p>

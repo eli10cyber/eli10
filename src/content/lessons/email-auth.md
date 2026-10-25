@@ -6,7 +6,9 @@ number: 8
 topic: email-auth
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "SPF lists who may send email for a company, DKIM seals each email so changes show, and DMARC tells inboxes what to do with fakes."
-draft: true
+draft: false
+image: "/images/og/email-auth.jpg"
+imageAlt: "Poster: SPF, DKIM and DMARC. A castle bouncer with an approved senders list, an intact and a broken wax seal, a postman following the DMARC rulebook into a REJECT bin, and two paths that both lead to delivery."
 buyerScore:
   budget: 2
   pain: 2.5
@@ -26,6 +28,10 @@ flashcards:
   - q: "Where are SPF, DKIM and DMARC published?"
     a: "As TXT records in the sending domain’s DNS. DMARC lives at _dmarc.yourdomain."
 ---
+
+![Poster: SPF, DKIM and DMARC. A castle bouncer with an approved senders list, an intact and a broken wax seal, a postman following the DMARC rulebook into a REJECT bin, and two paths that both lead to delivery.](./images/email-auth-poster.jpg)
+
+<p class="caption">Tap the poster to zoom in.</p>
 
 <div class="layer layer-kid">
 <p class="layer-name">Like you’re 10</p>

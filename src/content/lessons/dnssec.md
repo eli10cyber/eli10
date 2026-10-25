@@ -24,7 +24,13 @@ flashcards:
     a: "DNS spoofing and cache poisoning, where an attacker slips a forged answer into a resolver so people are sent to the wrong server."
   - q: "Which record holds the actual signature on a set of DNS records?"
     a: "RRSIG. The public key used to check it is published in a DNSKEY record."
+image: "/images/og/dnssec.jpg"
+imageAlt: "Poster: DNSSEC. A sneaky person swapping a page in the address book, an intact and a broken wax seal, books labelled ROOT and .com passing seals down a chain, and a glass envelope that is sealed but readable."
 ---
+
+![Poster: DNSSEC. A sneaky person swapping a page in the address book, an intact and a broken wax seal, books labelled ROOT and .com passing seals down a chain, and a glass envelope that is sealed but readable.](./images/dnssec-poster.jpg)
+
+<p class="caption">Tap the poster to zoom in.</p>
 
 <div class="layer layer-kid">
 <p class="layer-name">Like you’re 10</p>

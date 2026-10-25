@@ -6,7 +6,9 @@ number: 10
 topic: remote-access
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "SSH lets you type commands on a faraway computer through a secret tunnel. RDP lets you see and control its whole screen. Both are powerful, so attackers love them too."
-draft: true
+draft: false
+image: "/images/og/remote-access.jpg"
+imageAlt: "Poster: SSH and RDP. A child in a treehouse sending commands through an encrypted tunnel, hanging a padlock on a server door, a chained root door while Sam walks in by a side door, and a magic remote behind an MFA gate."
 buyerScore:
   budget: 2
   pain: 2.5
@@ -26,6 +28,10 @@ flashcards:
   - q: "What is the main risk of exposing RDP to the internet?"
     a: "Attackers constantly scan for open RDP and try stolen or guessed passwords. It is one of the most common ways ransomware gets in. Put RDP behind a VPN or gateway with MFA."
 ---
+
+![Poster: SSH and RDP. A child in a treehouse sending commands through an encrypted tunnel, hanging a padlock on a server door, a chained root door while Sam walks in by a side door, and a magic remote behind an MFA gate.](./images/remote-access-poster.jpg)
+
+<p class="caption">Tap the poster to zoom in.</p>
 
 <div class="layer layer-kid">
 <p class="layer-name">Like you’re 10</p>

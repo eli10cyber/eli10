@@ -6,7 +6,9 @@ number: 6
 topic: dns
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "DNS turns names people can remember, like eli10cyber.com, into the number addresses computers actually use."
-draft: true
+draft: false
+image: "/images/og/dns.jpg"
+imageAlt: "Poster: DNS. A child wondering what eli10cyber.com is, a librarian walking between ROOT and .com shelves, the librarian handing over 203.0.113.5, and the librarian refusing to give out the address of a bad site."
 buyerScore:
   budget: 2
   pain: 2
@@ -26,6 +28,10 @@ flashcards:
   - q: "What is protective DNS?"
     a: "A resolver that refuses to answer lookups for known malicious domains, so users and malware can’t reach them."
 ---
+
+![Poster: DNS. A child wondering what eli10cyber.com is, a librarian walking between ROOT and .com shelves, the librarian handing over 203.0.113.5, and the librarian refusing to give out the address of a bad site.](./images/dns-poster.jpg)
+
+<p class="caption">Tap the poster to zoom in.</p>
 
 <div class="layer layer-kid">
 <p class="layer-name">Like you’re 10</p>

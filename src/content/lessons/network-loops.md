@@ -6,7 +6,9 @@ number: 3
 topic: network-loops
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "One extra cable can make messages run round in circles until the whole network jams. Spanning tree switches off the extra path before that happens."
-draft: true
+draft: false
+image: "/images/og/network-loops.jpg"
+imageAlt: "Poster: Broadcast storms and loops. A corridor that loops into a circle, children running round shouting in a storm, a caretaker locking one door marked BLOCKED (spanning tree), and an alarm when a toy robot is plugged into a socket (BPDU guard)."
 buyerScore:
   budget: 0.5
   pain: 1
@@ -25,6 +27,10 @@ flashcards:
   - q: "What does BPDU guard do?"
     a: "It shuts down a port meant for a normal device, like a PC, if a BPDU arrives on it. That means someone has plugged in a switch where none should be."
 ---
+
+![Poster: Broadcast storms and loops. A corridor that loops into a circle, children running round shouting in a storm, a caretaker locking one door marked BLOCKED (spanning tree), and an alarm when a toy robot is plugged into a socket (BPDU guard).](./images/network-loops-poster.jpg)
+
+<p class="caption">Tap the poster to zoom in.</p>
 
 <div class="layer layer-kid">
 <p class="layer-name">Like you’re 10</p>

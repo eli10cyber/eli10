@@ -6,7 +6,9 @@ number: 11
 topic: voip
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "An internet call needs a doorbell to start it (SIP), a conveyor belt to carry your voice (RTP), and a locked tunnel so nobody listens in (SRTP)."
-draft: true
+draft: false
+image: "/images/og/voip.jpg"
+imageAlt: "Poster: SIP, RTP and SRTP. Tin-can phones joined by the internet, a doorbell asking want to talk, a conveyor belt of numbered speech bubbles, and the same belt inside a locked glass tunnel."
 buyerScore:
   budget: 1.5
   pain: 1
@@ -25,6 +27,10 @@ flashcards:
   - q: "What is toll fraud?"
     a: "When attackers break into a company’s phone system and use it to make large numbers of expensive international or premium-rate calls, leaving the company with the bill."
 ---
+
+![Poster: SIP, RTP and SRTP. Tin-can phones joined by the internet, a doorbell asking want to talk, a conveyor belt of numbered speech bubbles, and the same belt inside a locked glass tunnel.](./images/voip-poster.jpg)
+
+<p class="caption">Tap the poster to zoom in.</p>
 
 <div class="layer layer-kid">
 <p class="layer-name">Like you’re 10</p>

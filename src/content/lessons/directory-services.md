@@ -6,7 +6,9 @@ number: 9
 topic: directory-services
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "A directory is a company’s master list of every person, computer and permission. Whoever controls it controls the company."
-draft: true
+draft: false
+image: "/images/og/directory-services.jpg"
+imageAlt: "Poster: Directory services. A head teacher with a giant binder and key cards, a new pupil getting a key card while a leaver’s card is crossed out, a robot asking whether Sam is a teacher (LDAP), and an eavesdropper hearing only scrambled noise (LDAPS)."
 buyerScore:
   budget: 2.5
   pain: 2.5
@@ -26,6 +28,10 @@ flashcards:
   - q: "Why do attackers target domain controllers?"
     a: "Control of a domain controller means control of every account and computer in the domain. Attackers can create admin accounts or push ransomware to every machine."
 ---
+
+![Poster: Directory services. A head teacher with a giant binder and key cards, a new pupil getting a key card while a leaver’s card is crossed out, a robot asking whether Sam is a teacher (LDAP), and an eavesdropper hearing only scrambled noise (LDAPS).](./images/directory-services-poster.jpg)
+
+<p class="caption">Tap the poster to zoom in.</p>
 
 <div class="layer layer-kid">
 <p class="layer-name">Like you’re 10</p>

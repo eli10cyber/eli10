@@ -6,7 +6,9 @@ number: 2
 topic: switching
 chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "A switch is the hallway monitor of a network: it delivers each message to the right door, and a hardened one won’t let strangers plug in."
-draft: true
+draft: false
+image: "/images/og/switches.jpg"
+imageAlt: "Poster: Switches. A note passed to one friend (unicast), a megaphone in the dining hall stopped at a router gate (broadcast), a hallway monitor checking badges (port security), and a wall socket next to doors numbered 22, 53 and 443 (physical vs logical ports)."
 buyerScore:
   budget: 1.5
   pain: 1
@@ -25,6 +27,10 @@ flashcards:
   - q: "What is the difference between a physical port and a logical port?"
     a: "A physical port is the socket you plug a cable into. A logical port is a number, such as 443 for HTTPS, that identifies a service on a device."
 ---
+
+![Poster: Switches. A note passed to one friend (unicast), a megaphone in the dining hall stopped at a router gate (broadcast), a hallway monitor checking badges (port security), and a wall socket next to doors numbered 22, 53 and 443 (physical vs logical ports).](./images/switches-poster.jpg)
+
+<p class="caption">Tap the poster to zoom in.</p>
 
 <div class="layer layer-kid">
 <p class="layer-name">Like you’re 10</p>
