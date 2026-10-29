@@ -292,6 +292,29 @@ Scene: the same conveyor belt inside a glass tunnel with a padlock; a spy peekin
 Caption: "Encrypted so nobody can listen in."
 ```
 
+## In the news: Chrome extensions hijacking search (29 Oct 2026)
+
+```
+POSTER
+Title: "Search Hijacking: The Swapped Signpost"
+
+Panel 1 heading: "A Helpful-Looking Add-on"
+Scene: a happy child at a laptop clicks to add a small gift box labelled "PDF HELPER" to their web browser window.
+Caption: "It looks like a handy free tool."
+
+Panel 2 heading: "The Swapped Signpost"
+Scene: a sneaky person in a trench coat secretly turns a street signpost so the path to a big shop now curves past their own little stall.
+Caption: "Every search takes a detour."
+
+Panel 3 heading: "Follow the Money"
+Scene: children walk past the stall on their way to the shop; the shopkeeper hands the sneaky person a gold coin for each child.
+Caption: "Each detour earns them money."
+
+Panel 4 heading: "The Sign Can Change"
+Scene: the same signpost now points to a dark, spooky house with a sign reading "FAKE SHOP"; a child stops and looks worried.
+Caption: "One day it could point somewhere worse."
+```
+
 ---
 
 ## Checklist before sending me an image

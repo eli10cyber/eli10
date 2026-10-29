@@ -1,0 +1,77 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Lightbox from '../../components/Lightbox.astro';
+import BuyerScore from '../../components/BuyerScore.astro';
+import PosterPanels from '../../components/PosterPanels.astro';
+import TermCards from '../../components/TermCards.astro';
+import Quiz from '../../components/Quiz.astro';
+import ReadingMode from '../../components/ReadingMode.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('news', ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const d = post.data;
+const date = d.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+const lessons = await getCollection('lessons', ({ data }) => !data.draft);
+const related = d.related.map((id) => lessons.find((l) => l.id === id)).filter((l) => l !== undefined);
+---
+<Base title={d.title} description={d.description} image={d.image} type="article">
+  <article class="wrap">
+    <header class="lesson-head measure">
+      <p class="crumbs small muted"><a href="/news/">In the news</a> / {date}</p>
+      <h1>{d.title}</h1>
+      <p class="byline small muted">Vas Evangelopoulos, {date}</p>
+      <p class="oneliner casual">{d.oneLiner}</p>
+      <ReadingMode />
+    </header>
+
+    <div class="prose measure">
+      <Content />
+    </div>
+
+    <div class="measure">
+      {d.buyerScore && <BuyerScore score={d.buyerScore} url={new URL(`/news/${post.id}/`, Astro.site).href} title={d.title} />}
+      <Quiz slug={`news-${post.id}`} topic={`news-${post.id}`} questions={d.quiz} learn={false} />
+
+      <section class="sources" aria-labelledby="src-title">
+        <h2 id="src-title">Sources</h2>
+        <ul>
+          {d.sources.map((s) => <li><a href={s.url} rel="noopener">{s.title}</a> <span class="muted">· {s.publisher}</span></li>)}
+        </ul>
+      </section>
+
+      {related.length > 0 && (
+        <section class="related" aria-labelledby="rel-title">
+          <h2 id="rel-title">Lessons behind this story</h2>
+          <ul>
+            {related.map((l) => <li><a href={`/lessons/${l.id}/`}><span class="pt">{l.data.title}</span><span class="small muted">{l.data.oneLiner}</span></a></li>)}
+          </ul>
+        </section>
+      )}
+    </div>
+  </article>
+  <Lightbox />
+  <TermCards />
+  {d.panels && <PosterPanels panels={d.panels} grid={d.posterGrid} />}
+</Base>
+
+<style>
+  .crumbs { margin-bottom: 1rem; }
+  .crumbs a { color: var(--ink-2); }
+  .lesson-head h1 { font-size: clamp(2rem, 6vw, 3rem); }
+  .byline { margin: 0.9rem 0 1.5rem; }
+  .oneliner { font-size: clamp(1.25rem, 3vw, 1.5rem); line-height: 1.4; font-weight: 650; padding-left: 18px; border-left: 6px solid var(--marker); margin: 0 0 2rem; }
+  .sources, .related { margin-top: 3rem; }
+  .sources ul { padding-left: 1.2rem; }
+  .sources li { margin-bottom: 6px; }
+  .related ul { list-style: none; padding: 0; margin: 0; border-top: 2px solid var(--ink); }
+  .related li { border-bottom: 1px solid var(--rule); }
+  .related a { display: flex; flex-direction: column; gap: 4px; padding: 14px 0; text-decoration: none; color: var(--ink); }
+  .related .pt { font-weight: 750; }
+  .related a:hover .pt { text-decoration: underline; text-decoration-color: var(--marker); text-decoration-thickness: 4px; }
+</style>

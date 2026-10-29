@@ -4,6 +4,8 @@ import Base from '../layouts/Base.astro';
 
 const lessons = (await getCollection('lessons', ({ data }) => !data.draft)).sort((a, b) => a.data.number - b.data.number);
 const latest = [...lessons].reverse().slice(0, 5);
+const news = (await getCollection('news', ({ data }) => !data.draft)).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const story = news[0];
 const first = lessons[0];
 
 // One example per published lesson. The homepage picks one per day; "Show me another" cycles.
@@ -56,6 +58,17 @@ const levels = [
       <a class="btn" href="/map/">Open the learning map</a>
     </div>
   </section>
+
+  {story && (
+    <section class="wrap">
+      <a class="story-card" href={`/news/${story.id}/`}>
+        <span class="sc-tag small">In the news, explained</span>
+        <span class="sc-title">{story.data.title}</span>
+        <span class="sc-line muted">{story.data.oneLiner}</span>
+        <span class="sc-more small">Read the story →</span>
+      </a>
+    </section>
+  )}
 
   {latest.length > 0 && (
     <section class="wrap">
@@ -141,6 +154,12 @@ const levels = [
   .lo { grid-column: 2; margin-top: 4px; }
 
   .story { margin-top: 1rem; }
+  .story-card { display: grid; gap: 8px; max-width: 860px; margin: 1rem 0 0.5rem; padding: 20px 22px; border: 2px solid var(--ink); border-radius: var(--radius-l); background: var(--surface); text-decoration: none; color: var(--ink); box-shadow: 6px 6px 0 var(--marker); transition: transform .15s, box-shadow .15s; }
+  .story-card:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--marker); }
+  .sc-tag { justify-self: start; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; font-size: .72rem; background: var(--marker); color: var(--marker-ink); padding: 3px 10px; border-radius: 999px; }
+  .sc-title { font-weight: 800; font-size: clamp(1.3rem, 3.5vw, 1.7rem); line-height: 1.25; }
+  .sc-more { font-weight: 750; color: var(--link); }
+  @media (prefers-reduced-motion: reduce) { .story-card { transition: none; } .story-card:hover { transform: none; } }
 
   @media (max-width: 560px) {
     .switch-tabs button { font-size: 0.82rem; padding: 10px 6px; line-height: 1.2; }

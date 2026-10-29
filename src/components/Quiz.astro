@@ -5,13 +5,14 @@ interface Props {
   slug: string;
   topic: string;
   questions: { q: string; options: string[]; answer: number; why: string }[];
+  learn?: boolean; // false for news posts: no "learned" progress
 }
-const { slug, topic, questions } = Astro.props;
+const { slug, topic, questions, learn = true } = Astro.props;
 ---
 {questions.length > 0 && (
-  <section class="quiz" data-slug={slug} data-topic={topic} data-total={questions.length} aria-labelledby="quiz-title">
+  <section class="quiz" data-slug={slug} data-topic={topic} data-total={questions.length} data-learn={String(learn)} aria-labelledby="quiz-title">
     <h2 id="quiz-title">Check yourself</h2>
-    <p class="muted">{questions.length} quick questions. Get them all right and this lesson is marked as learned.</p>
+    <p class="muted">{learn ? `${questions.length} quick questions. Get them all right and this lesson is marked as learned.` : `${questions.length} quick questions to check you got the story.`}</p>
     <ol class="quiz-list">
       {questions.map((qq, i) => (
         <li class="quiz-q" data-answer={qq.answer}>
@@ -77,7 +78,9 @@ const { slug, topic, questions } = Astro.props;
       save(BEST, best);
       result.hidden = false;
       result.classList.toggle('perfect', correct === total);
-      if (correct === total) {
+      if (correct === total && quiz.dataset.learn === 'false') {
+        scoreEl.textContent = `${correct} out of ${total}. You’ve got this story.`;
+      } else if (correct === total) {
         const learned = load<string[]>(LEARNED, []);
         if (!learned.includes(quiz.dataset.topic!)) save(LEARNED, [...learned, quiz.dataset.topic!]);
         window.dispatchEvent(new Event('eli10:learned'));

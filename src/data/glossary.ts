@@ -399,4 +399,61 @@ export const glossary: Term[] = [
     kid: 'A password plus something you hold, like a code on your phone.',
     grownup: 'Multi-factor authentication: requiring two or more different kinds of proof to sign in.',
   },
+  // Browsers and ad fraud (from "In the news")
+  {
+    term: 'Browser extension',
+    aliases: ['browser extensions', 'Chrome extension', 'Chrome extensions'],
+    kid: 'A sticker you add to your browser that gives it a new trick, and can see what you do.',
+    grownup: 'A small add-on program that changes or extends what a web browser does. It can read or change pages and settings, depending on what it is allowed.',
+  },
+  {
+    term: 'Browser hijacker',
+    aliases: ['browser hijackers', 'browser hijacking'],
+    kid: 'Someone secretly changing where your browser takes you.',
+    grownup: 'Unwanted software that changes browser settings, such as the home page or default search engine, to redirect the user, usually for profit.',
+  },
+  {
+    term: 'PUP',
+    aliases: ['PUPs', 'potentially unwanted program', 'potentially unwanted programs'],
+    kid: 'A ‘free gift’ that does things you never asked for.',
+    grownup: 'Potentially unwanted program: software the user agreed to install, often without understanding it, that behaves in unwanted ways such as showing ads or tracking.',
+  },
+  {
+    term: 'Search syndication',
+    kid: 'A shop paying a coin to whoever brings it customers.',
+    grownup: 'Programmes where search engines serve results and ads through partners, and share the ad revenue with the partner whose code is on the search.',
+  },
+  {
+    term: 'Proxy server',
+    aliases: ['proxy servers'],
+    kid: 'A messenger who carries your note for you, and can read it on the way.',
+    grownup: 'A server that sits between a user and the destination, passing requests on. It can see, log, change or redirect the traffic.',
+  },
+  {
+    term: 'Watering hole attack',
+    aliases: ['watering hole', 'watering hole attacks'],
+    kid: 'Waiting at the pond where all the animals drink, instead of chasing them.',
+    grownup: 'Compromising a site or service the targets already use, then attacking the people who come to it.',
+  },
+  {
+    term: 'Ad fraud',
+    kid: 'Getting paid for customers who never really chose to come.',
+    grownup: 'Generating fake or misattributed ad impressions, clicks or traffic so that advertisers pay for audiences that aren’t real or didn’t choose the route.',
+  },
+  {
+    term: 'Malvertising',
+    kid: 'A poster on the wall that leads you into a trap.',
+    grownup: 'Using online adverts to spread malware or lead people to malicious or unwanted software.',
+  },
+  {
+    term: 'Allow list',
+    aliases: ['allow lists', 'allowlist', 'allowlists', 'allowlisting'],
+    kid: 'Only people on the list get in. Everyone else waits outside.',
+    grownup: 'A control that permits only approved items, such as apps, extensions or addresses, and blocks everything else by default.',
+  },
+  {
+    term: 'Phishing',
+    kid: 'A fake letter pretending to be someone you trust, to trick you.',
+    grownup: 'Tricking people into revealing credentials or installing malware, usually with fake emails, messages or websites.',
+  },
 ];
