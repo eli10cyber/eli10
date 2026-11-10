@@ -1,0 +1,34 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+const posts = (await getCollection('practice', ({ data }) => !data.draft)).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const fmt = (d: Date) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+---
+<Base title="Practice problems" description="Security+ style problems, solved step by step, with simulations you can try.">
+  <div class="wrap">
+    <h1>Practice problems</h1>
+    <p class="lead muted measure">Exam-style problems, like the performance-based questions in Security+. Try the simulation, then read how to think it through.</p>
+    <ol class="news-list">
+      {posts.map((p) => (
+        <li>
+          <a href={`/practice/${p.id}/`}>
+            <span class="nd mono small">{fmt(p.data.pubDate)}</span>
+            <span class="nt">{p.data.title}</span>
+            <span class="no muted">{p.data.oneLiner}</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </div>
+</Base>
+
+<style>
+  .lead { font-size: 1.15rem; margin: 1rem 0 2rem; }
+  .news-list { list-style: none; padding: 0; margin: 0; border-top: 2px solid var(--ink); max-width: 860px; }
+  .news-list li { border-bottom: 1px solid var(--rule); }
+  .news-list a { display: grid; gap: 4px; padding: 18px 0; text-decoration: none; color: var(--ink); }
+  .nd { color: var(--ink-2); }
+  .nt { font-weight: 750; font-size: 1.25rem; line-height: 1.3; }
+  .news-list a:hover .nt { text-decoration: underline; text-decoration-color: var(--marker); text-decoration-thickness: 4px; text-underline-offset: 0.15em; }
+</style>

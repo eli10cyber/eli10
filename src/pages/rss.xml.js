@@ -4,7 +4,8 @@ import { getCollection } from 'astro:content';
 export async function GET(context) {
   const lessons = (await getCollection('lessons', ({ data }) => !data.draft)).map((l) => ({ ...l, href: `/lessons/${l.id}/` }));
   const news = (await getCollection('news', ({ data }) => !data.draft)).map((n) => ({ ...n, href: `/news/${n.id}/` }));
-  const items = [...lessons, ...news].sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+  const practice = (await getCollection('practice', ({ data }) => !data.draft)).map((n) => ({ ...n, href: `/practice/${n.id}/` }));
+  const items = [...lessons, ...news, ...practice].sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
   return rss({
     title: 'ELI10 Cyber',
     description: 'Cybersecurity explained like you’re 10, for mid-career career switchers.',

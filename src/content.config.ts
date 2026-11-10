@@ -62,4 +62,24 @@ const news = defineCollection({
   }),
 });
 
-export const collections = { lessons, news };
+// Practice problems: exam-style scenarios solved step by step, usually with a simulation
+const practice = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/practice' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    pubDate: z.coerce.date(),
+    oneLiner: z.string(),
+    image: z.string().optional(),
+    imageAlt: z.string().optional(),
+    related: z.array(z.string()).default([]),
+    sources: z.array(z.object({ title: z.string(), publisher: z.string(), url: z.string().url() })).default([]),
+    game: z.enum(['acl', 'pbq-acl']).optional(),
+    posterGrid: z.array(z.number()).length(8).optional(),
+    panels: z.array(z.object({ title: z.string(), note: z.string(), find: z.string() })).length(4).optional(),
+    quiz: z.array(z.object({ q: z.string(), options: z.array(z.string()).min(2), answer: z.number(), why: z.string() })).default([]),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { lessons, news, practice };

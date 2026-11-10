@@ -1,0 +1,265 @@
+---
+// A performance-based-question style simulation, in our own words and network.
+// Readers run checks on two workstations, then edit the router's ACL and submit.
+// Every command result is computed from the current ACL, so fixing a rule changes what the commands show.
+---
+<section class="game pbq" id="pbq-sim" hidden aria-labelledby="pbq-title">
+  <p class="game-tag small">Simulation</p>
+  <h3 id="pbq-title">Fix the executive’s internet</h3>
+  <p class="small muted">Step 1: pick a workstation and run the checks. Step 2: fix the router’s rules. Step 3: submit.</p>
+
+  <div class="pbq-map" aria-label="Network diagram">
+    <div class="zone">
+      <p class="zone-name">Executive office <span class="mono">192.168.1.0/24</span></p>
+      <div class="hosts">
+        <button type="button" class="host" data-host="ws1" aria-pressed="true"><span class="hn">Workstation 1</span><span class="mono small">click to check</span></button>
+        <button type="button" class="host" data-host="ws2" aria-pressed="false"><span class="hn">Workstation 2</span><span class="mono small">click to check</span></button>
+        <div class="host fixed"><span class="hn">Printer</span><span class="mono small">192.168.1.50</span></div>
+      </div>
+    </div>
+    <div class="router"><span class="hn">Router</span><span class="mono small">192.168.1.1 · ACL</span></div>
+    <div class="zone-pair">
+      <div class="zone">
+        <p class="zone-name">Server room <span class="mono">192.168.10.0/24</span></p>
+        <p class="small servers">DNS .53 · Email .25 · Intranet .80 · Files .45</p>
+      </div>
+      <div class="zone internet">
+        <p class="zone-name">Internet</p>
+        <p class="small servers">example.org <span class="mono">203.0.113.80</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pbq-console">
+    <div class="cmds" role="group" aria-label="Commands">
+      <button type="button" data-cmd="ipconfig">ipconfig</button>
+      <button type="button" data-cmd="ping">ping 192.168.1.1</button>
+      <button type="button" data-cmd="nslookup">nslookup example.org</button>
+      <button type="button" data-cmd="http">open http://example.org</button>
+      <button type="button" data-cmd="https">open https://example.org</button>
+    </div>
+    <pre class="term" aria-live="polite"><span class="muted">Pick a command to run it on the selected workstation.</span></pre>
+  </div>
+
+  <h4>Router ACL <span class="small muted">(applied to traffic leaving the executive office)</span></h4>
+  <div class="acl-edit-wrap">
+    <table class="acl-edit">
+      <thead><tr><th>Rule</th><th>Action</th><th>Protocol</th><th>Source</th><th>Destination</th><th>Port</th></tr></thead>
+      <tbody></tbody>
+      <tfoot><tr><td>∞</td><td colspan="5"><strong>DENY</strong> everything else (implicit deny)</td></tr></tfoot>
+    </table>
+  </div>
+
+  <div class="acl-run">
+    <button type="button" class="btn btn-primary pbq-submit">Submit</button>
+    <button type="button" class="acl-reset pbq-reset small">Reset all answers</button>
+  </div>
+  <div class="pbq-result" aria-live="polite" hidden></div>
+</section>
+
+<style is:global>
+  .pbq h4 { margin: 1.6rem 0 0.6rem; font-size: 1.1rem; }
+  .pbq-map { display: grid; grid-template-columns: 1fr auto 1fr; gap: 14px; align-items: center; margin: 1.2rem 0; }
+  .zone { border: 2px dashed var(--rule); border-radius: 14px; padding: 10px 12px; background: var(--paper); }
+  .zone.internet { border-style: solid; }
+  .zone-pair { display: grid; gap: 10px; }
+  .zone-name { margin: 0 0 8px; font-weight: 750; font-size: .9rem; display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+  .zone-name .mono { font-weight: 400; color: var(--ink-2); font-size: .8rem; }
+  .servers { margin: 0; color: var(--ink-2); }
+  .hosts { display: grid; gap: 8px; }
+  .host { font: inherit; display: flex; flex-direction: column; align-items: flex-start; gap: 2px; text-align: left; padding: 8px 12px; border-radius: 10px; border: 2px solid var(--ink); background: var(--surface); color: var(--ink); cursor: pointer; }
+  .host .hn, .router .hn { font-weight: 750; }
+  .host .small { color: var(--ink-2); }
+  .host[aria-pressed='true'] { background: var(--marker); color: var(--marker-ink); border-color: var(--marker-ink); }
+  .host[aria-pressed='true'] .small { color: var(--marker-ink); }
+  .host.fixed { cursor: default; border-style: dashed; border-color: var(--rule); }
+  .router { display: flex; flex-direction: column; align-items: center; padding: 10px 12px; border-radius: 50%; aspect-ratio: 1; justify-content: center; border: 2px solid var(--ink); background: var(--surface); text-align: center; min-width: 108px; }
+  .pbq-console { border: 2px solid var(--ink); border-radius: 14px; overflow: hidden; }
+  .cmds { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px; background: var(--paper-2); border-bottom: 2px solid var(--ink); }
+  .cmds button { font: inherit; font-size: .82rem; font-variation-settings: 'CASL' 0, 'MONO' 1; padding: 6px 10px; border-radius: 8px; border: 1.5px solid var(--ink); background: var(--surface); color: var(--ink); cursor: pointer; }
+  .cmds button:hover { background: var(--marker); color: var(--marker-ink); }
+  .term { margin: 0; padding: 14px; min-height: 9.5em; background: #0b1426; color: #d7e3f4; font-size: .85rem; line-height: 1.5; white-space: pre-wrap; border-radius: 0; }
+  .term .ok { color: #7be0a8; }
+  .term .bad { color: #ff9b8f; }
+  .term .muted { color: #8ea3c0; }
+  .acl-edit-wrap { overflow-x: auto; }
+  .acl-edit { width: 100%; border-collapse: collapse; font-size: .9rem; min-width: 560px; }
+  .acl-edit th { text-align: left; font-size: .78rem; color: var(--ink-2); border-bottom: 2px solid var(--ink); padding: 6px; }
+  .acl-edit td { padding: 6px; border-bottom: 1px solid var(--rule); }
+  .acl-edit tfoot td { color: var(--ink-2); border-bottom: 0; }
+  .acl-edit select { font: inherit; font-size: .85rem; font-variation-settings: 'CASL' 0, 'MONO' 1; padding: 5px 6px; border-radius: 8px; border: 1.5px solid var(--ink); background: var(--surface); color: var(--ink); max-width: 100%; }
+  .acl-edit tr.changed select.diff { background: rgba(255, 216, 77, .35); }
+  .pbq .acl-run { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin: 1rem 0; }
+  .pbq-reset { font: inherit; background: none; border: 0; color: var(--link); text-decoration: underline; cursor: pointer; padding: 0; }
+  .acl-edit .rn { font-weight: 700; color: var(--ink-2); white-space: nowrap; }
+  @media (max-width: 600px) {
+    .acl-edit { min-width: 0; }
+    .acl-edit thead { display: none; }
+    .acl-edit, .acl-edit tbody, .acl-edit tfoot { display: block; }
+    .acl-edit tbody tr { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; padding: 10px 0; border-bottom: 1px solid var(--rule); }
+    .acl-edit tbody td { border: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+    .acl-edit tbody td.rn { grid-column: 1 / -1; }
+    .acl-edit tbody td[data-label]::before { content: attr(data-label); font-size: .72rem; color: var(--ink-2); font-weight: 700; }
+    .acl-edit tbody td[data-label="Source"], .acl-edit tbody td[data-label="Destination"] { grid-column: 1 / -1; }
+    .acl-edit select { width: 100%; }
+    .acl-edit tfoot tr { display: block; padding-top: 8px; }
+    .acl-edit tfoot td { display: inline; padding: 0 4px 0 0; }
+  }
+  .pbq-result { margin-top: 1rem; padding: 14px 16px; border-radius: 12px; border: 2px solid var(--ink); }
+  .pbq-result.pass { background: var(--marker); color: var(--marker-ink); border-color: var(--marker); }
+  .pbq-result ul { margin: 8px 0 0; padding-left: 1.2rem; }
+  .pbq-result .score { font-weight: 800; font-size: 1.15rem; margin: 0; }
+  @media (max-width: 720px) {
+    .pbq-map { grid-template-columns: 1fr; }
+    .router { aspect-ratio: auto; border-radius: 14px; flex-direction: row; gap: 10px; }
+  }
+</style>
+
+<script>
+  type Rule = { action: string; proto: string; src: string; dst: string; port: string };
+  type Flow = { src: string; dst: string; proto: 'TCP' | 'UDP'; port: string };
+  const START: Rule[] = [
+    { action: 'PERMIT', proto: 'ANY', src: '192.168.1.0/24', dst: '192.168.10.0/24', port: 'ANY' },
+    { action: 'PERMIT', proto: 'TCP', src: '192.168.1.0/24', dst: 'ANY', port: '80' },
+    { action: 'PERMIT', proto: 'TCP', src: '192.168.1.10/32', dst: 'ANY', port: '443' },
+  ];
+  const OPTIONS: Record<keyof Rule, string[]> = {
+    action: ['PERMIT', 'DENY'],
+    proto: ['ANY', 'TCP', 'UDP'],
+    src: ['ANY', '192.168.1.0/24', '192.168.1.10/32', '192.168.1.20/32'],
+    dst: ['ANY', '192.168.10.0/24'],
+    port: ['ANY', '53', '80', '443'],
+  };
+  const LABELS: Record<string, string> = { action: 'Action', proto: 'Protocol', src: 'Source', dst: 'Destination', port: 'Port' };
+  const HOSTS: Record<string, { name: string; ip: string }> = {
+    ws1: { name: 'Workstation 1', ip: '192.168.1.10' },
+    ws2: { name: 'Workstation 2', ip: '192.168.1.20' },
+  };
+  const WEB = '203.0.113.80';
+  const DNS = '192.168.10.53';
+
+  const sim = document.getElementById('pbq-sim');
+  const slot = document.querySelector('[data-game="pbq-acl"]');
+  if (sim && slot) {
+    slot.replaceWith(sim);
+    sim.hidden = false;
+    const term = sim.querySelector<HTMLElement>('.term')!;
+    const body = sim.querySelector('tbody')!;
+    const result = sim.querySelector<HTMLElement>('.pbq-result')!;
+    let rules: Rule[] = START.map((r) => ({ ...r }));
+    let host = 'ws1';
+
+    const toNum = (ip: string) => ip.split('.').reduce((a, o) => a * 256 + Number(o), 0);
+    const inNet = (ip: string, net: string) => {
+      if (net === 'ANY') return true;
+      const [base, bits] = net.split('/');
+      const size = 2 ** (32 - Number(bits));
+      return Math.floor(toNum(ip) / size) === Math.floor(toNum(base) / size);
+    };
+    const decide = (f: Flow): { allowed: boolean; by: string } => {
+      for (const [i, r] of rules.entries()) {
+        if ((r.proto === 'ANY' || r.proto === f.proto) && inNet(f.src, r.src) && inNet(f.dst, r.dst) && (r.port === 'ANY' || r.port === f.port)) {
+          return { allowed: r.action === 'PERMIT', by: `rule ${i + 1}` };
+        }
+      }
+      return { allowed: false, by: 'the implicit deny' };
+    };
+
+    const renderRules = () => {
+      body.innerHTML = '';
+      rules.forEach((r, i) => {
+        const tr = document.createElement('tr');
+        const cells = (Object.keys(OPTIONS) as (keyof Rule)[]).map((k) => {
+          const opts = OPTIONS[k].map((o) => `<option${o === r[k] ? ' selected' : ''}>${o}</option>`).join('');
+          const diff = r[k] !== START[i][k] ? ' class="diff"' : '';
+          return `<td data-label="${LABELS[k]}"><select data-i="${i}" data-k="${k}"${diff} aria-label="Rule ${i + 1} ${k}">${opts}</select></td>`;
+        }).join('');
+        tr.innerHTML = `<td class="rn">Rule ${i + 1}</td>${cells}`;
+        if (Object.keys(r).some((k) => r[k as keyof Rule] !== START[i][k as keyof Rule])) tr.classList.add('changed');
+        body.appendChild(tr);
+      });
+    };
+    body.addEventListener('change', (e) => {
+      const sel = e.target as HTMLSelectElement;
+      rules[Number(sel.dataset.i)][sel.dataset.k as keyof Rule] = sel.value;
+      renderRules();
+      body.querySelector<HTMLSelectElement>(`select[data-i="${sel.dataset.i}"][data-k="${sel.dataset.k}"]`)?.focus();
+    });
+
+    // Commands: computed from the current rules
+    const run = (cmd: string) => {
+      const h = HOSTS[host];
+      const p = `<span class="muted">${h.name}&gt;</span> `;
+      if (cmd === 'ipconfig') {
+        return `${p}ipconfig\n\n   IPv4 Address. . . . : ${h.ip}\n   Subnet Mask . . . . : 255.255.255.0\n   Default Gateway . . : 192.168.1.1\n   DNS Server. . . . . : ${DNS}`;
+      }
+      if (cmd === 'ping') {
+        return `${p}ping 192.168.1.1\n\n` + Array(4).fill('Reply from 192.168.1.1: bytes=32 time=1ms').join('\n') + `\n<span class="ok">4 sent, 4 received, 0% lost</span>`;
+      }
+      if (cmd === 'nslookup') {
+        const d = decide({ src: h.ip, dst: DNS, proto: 'UDP', port: '53' });
+        return d.allowed
+          ? `${p}nslookup example.org\n\nServer:  ${DNS}\nName:    example.org\nAddress: <span class="ok">${WEB}</span>`
+          : `${p}nslookup example.org\n\n<span class="bad">DNS request timed out. No response from server.</span>`;
+      }
+      const port = cmd === 'https' ? '443' : '80';
+      const url = `${cmd}://example.org`;
+      const d = decide({ src: h.ip, dst: WEB, proto: 'TCP', port });
+      return d.allowed
+        ? `${p}open ${url}\n\nConnecting to ${WEB}:${port} ...\n<span class="ok">Connected. Page loaded.</span>`
+        : `${p}open ${url}\n\nConnecting to ${WEB}:${port} ...\n<span class="bad">Connection timed out. This site can’t be reached.</span>`;
+    };
+    sim.querySelectorAll<HTMLButtonElement>('.cmds button').forEach((b) => b.addEventListener('click', () => { term.innerHTML = run(b.dataset.cmd!); }));
+    sim.querySelectorAll<HTMLButtonElement>('.host[data-host]').forEach((b) => b.addEventListener('click', () => {
+      host = b.dataset.host!;
+      sim.querySelectorAll('.host[data-host]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      term.innerHTML = `<span class="muted">${HOSTS[host].name} selected. Pick a command.</span>`;
+    }));
+
+    // Marking: does it work, and did you open more than needed?
+    sim.querySelector('.pbq-submit')!.addEventListener('click', () => {
+      const checks: [string, boolean][] = [
+        ['Workstation 1 can open https://example.org', decide({ src: HOSTS.ws1.ip, dst: WEB, proto: 'TCP', port: '443' }).allowed],
+        ['Workstation 2 can open https://example.org', decide({ src: HOSTS.ws2.ip, dst: WEB, proto: 'TCP', port: '443' }).allowed],
+        ['Both can still reach DNS, email and the intranet', ['ws1', 'ws2'].every((k) =>
+          decide({ src: HOSTS[k].ip, dst: DNS, proto: 'UDP', port: '53' }).allowed &&
+          decide({ src: HOSTS[k].ip, dst: '192.168.10.25', proto: 'TCP', port: '25' }).allowed &&
+          decide({ src: HOSTS[k].ip, dst: '192.168.10.80', proto: 'TCP', port: '80' }).allowed)],
+        ['Plain web (http) still works for both', ['ws1', 'ws2'].every((k) => decide({ src: HOSTS[k].ip, dst: WEB, proto: 'TCP', port: '80' }).allowed)],
+        ['Nothing extra opened (e.g. Telnet to the internet stays blocked)', !decide({ src: HOSTS.ws2.ip, dst: WEB, proto: 'TCP', port: '23' }).allowed],
+      ];
+      const passed = checks.filter(([, ok]) => ok).length;
+      const fixed = checks[0][1] && checks[1][1];
+      const changed = rules.reduce((n, r, i) => n + (Object.keys(r) as (keyof Rule)[]).filter((k) => r[k] !== START[i][k]).length, 0);
+      const broad = rules.some((r) => r.action === 'PERMIT' && r.src === 'ANY');
+      const notes: string[] = [];
+      let headline: string;
+      let score = 0;
+      if (!fixed) {
+        headline = changed === 0 ? 'Not fixed yet: you haven’t changed any rules.' : 'Not fixed yet.';
+        if (checks[1][1] && !checks[0][1]) notes.push('You fixed Workstation 2 but locked out Workstation 1. The instructions say every workstation needs the internet.');
+        else notes.push('Tip: run the same commands on both workstations and compare the results.');
+      } else {
+        score = 100;
+        if (passed < checks.length) { score -= 20 * (checks.length - passed); notes.push('The executive is back online, but something else changed. Check the ✗ lines.'); }
+        if (changed > 1) { score -= 10; notes.push('You changed more settings than needed. The instructions say to change only what fixes the problem.'); }
+        if (broad) { score -= 10; notes.push('A source of ANY works, but it’s broader than needed. Least privilege says use the office network, 192.168.1.0/24.'); }
+        score = Math.max(score, 0);
+        headline = `Score: ${score} / 100` + (score === 100 ? ' · Fixed with one change' : '');
+      }
+      const pass = score === 100;
+      result.hidden = false;
+      result.classList.toggle('pass', pass);
+      result.innerHTML = `<p class="score">${headline}</p>
+        <ul>${checks.map(([t, ok]) => `<li>${ok ? '✓' : '✗'} ${t}</li>`).join('')}</ul>
+        ${notes.map((n) => `<p class="small">${n}</p>`).join('')}`;
+    });
+    sim.querySelector('.pbq-reset')!.addEventListener('click', () => {
+      rules = START.map((r) => ({ ...r }));
+      renderRules();
+      result.hidden = true;
+      term.innerHTML = '<span class="muted">Reset. Pick a command to run it on the selected workstation.</span>';
+    });
+    renderRules();
+  }
+</script>

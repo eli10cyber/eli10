@@ -456,4 +456,70 @@ export const glossary: Term[] = [
     kid: 'A fake letter pretending to be someone you trust, to trick you.',
     grownup: 'Tricking people into revealing credentials or installing malware, usually with fake emails, messages or websites.',
   },
+  // Networking basics and troubleshooting (from the practice problems)
+  {
+    term: 'Subnet mask',
+    aliases: ['subnet masks'],
+    kid: 'The part of your address that says which street you live on.',
+    grownup: 'A number (like 255.255.255.0) that splits an IP address into the network part and the device part, so a device knows who is local and who is reached through the router.',
+  },
+  {
+    term: 'CIDR',
+    kid: 'A short way of saying how big a street is.',
+    grownup: 'Classless Inter-Domain Routing notation: writing a network as an address plus a slash and the number of fixed bits, e.g. 192.168.1.0/24. /32 is one address.',
+  },
+  {
+    term: 'Default gateway',
+    aliases: ['default gateways'],
+    kid: 'The front door of your street. Anything for another street goes out through it.',
+    grownup: 'The router address a device sends traffic to when the destination is not on its own network.',
+  },
+  {
+    term: 'TCP',
+    kid: 'Posting a letter that needs a signature: slower, but you know it arrived.',
+    grownup: 'Transmission Control Protocol: sets up a connection and makes sure data arrives complete and in order. Used by the web, email and SSH.',
+  },
+  {
+    term: 'UDP',
+    kid: 'Throwing paper planes: fast, but some might not land.',
+    grownup: 'User Datagram Protocol: sends data without setting up a connection or checking delivery. Used for DNS lookups, calls and streaming.',
+  },
+  {
+    term: 'HTTPS',
+    kid: 'Visiting a website through a locked tunnel.',
+    grownup: 'The web protocol (HTTP) protected with TLS encryption, usually on TCP port 443. Plain HTTP uses port 80.',
+  },
+  {
+    term: 'Screened subnet',
+    aliases: ['DMZ', 'screened subnets'],
+    kid: 'A lobby between the street and the house where visitors can meet staff without going inside.',
+    grownup: 'A separate network for servers that the internet must reach, kept apart from the internal network by firewall rules. Older name: DMZ.',
+  },
+  {
+    term: 'Least privilege',
+    aliases: ['principle of least privilege'],
+    kid: 'Only give out the keys someone actually needs.',
+    grownup: 'Giving users, devices and rules only the access required for their job, and nothing more.',
+  },
+  {
+    term: 'Ping',
+    kid: 'Shouting “are you there?” and waiting for “yes!”.',
+    grownup: 'A tool that sends ICMP echo requests to check whether a device is reachable and how long replies take.',
+  },
+  {
+    term: 'Intranet',
+    kid: 'The school’s own noticeboard that only pupils can see.',
+    grownup: 'A private website or set of web services available only inside an organisation’s network.',
+  },
+  {
+    term: 'Change management',
+    kid: 'Asking before you move the furniture, and knowing how to put it back.',
+    grownup: 'The process for planning, approving, testing and recording changes to systems, including a way to roll back if something breaks.',
+  },
+  {
+    term: 'PBQ',
+    aliases: ['PBQs', 'performance-based question', 'performance-based questions'],
+    kid: 'A test where you fix the thing instead of picking an answer.',
+    grownup: 'Performance-based question: an exam item where you solve a task in a simulation, such as configuring rules or reading logs.',
+  },
 ];

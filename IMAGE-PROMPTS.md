@@ -315,6 +315,29 @@ Scene: the same signpost now points to a dark, spooky house with a sign reading 
 Caption: "One day it could point somewhere worse."
 ```
 
+## Practice problem: the executive who can’t reach the internet (10 Nov 2026)
+
+```
+POSTER
+Title: "Troubleshooting: Who Can’t Get to the Park?"
+
+Panel 1 heading: "Check Your Address"
+Scene: a pupil sits at a classroom desk with a clear name card reading "DESK 20", checking it with a smile.
+Caption: "Is your own address right?"
+
+Panel 2 heading: "Check the Way Out"
+Scene: the same pupil reaches the classroom door and gives a thumbs up; the door is open.
+Caption: "Can you reach the door?"
+
+Panel 3 heading: "Check the Name"
+Scene: a friendly librarian points to a simple map with a path to a park marked "PARK".
+Caption: "Do you know where it is?"
+
+Panel 4 heading: "Check the Rules"
+Scene: at the park gate, a guard holds a clipboard that reads "DESK 10 ONLY"; the pupil looks surprised; a pencil is ready to fix the list.
+Caption: "One wrong line on the list."
+```
+
 ---
 
 ## Checklist before sending me an image

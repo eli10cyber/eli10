@@ -25,9 +25,6 @@
 </section>
 
 <style is:global>
-  .game { margin: 2.5rem 0; padding: 22px 24px 24px; border: 2px solid var(--ink); border-radius: var(--radius-l); background: var(--surface); box-shadow: 6px 6px 0 var(--marker); }
-  .game h3 { margin: 0.2rem 0 0.6rem; font-size: 1.45rem; }
-  .game-tag { display: inline-block; margin: 0; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; font-size: .75rem; background: var(--marker); color: var(--marker-ink); padding: 3px 10px; border-radius: 999px; }
   .game ol.acl-rules { list-style: none; padding: 0; margin: 1.2rem 0; display: grid; gap: 8px; counter-reset: rule; }
   .acl-rule { display: grid; grid-template-columns: 2rem 1fr auto; gap: 4px 12px; align-items: center; padding: 10px 12px; border: 1.5px solid var(--rule); border-radius: 12px; background: var(--paper); transition: background-color .15s, border-color .15s, opacity .2s; }
   .acl-rule .n { font-variation-settings: 'CASL' 0, 'MONO' 1; color: var(--ink-2); font-weight: 700; }
@@ -61,7 +58,6 @@
   .acl-verdict { font-weight: 700; margin: 1rem 0 0; min-height: 1.5em; }
   .acl-verdict.win { background: var(--marker); color: var(--marker-ink); padding: 12px 14px; border-radius: 12px; }
   @media (max-width: 560px) {
-    .game { padding: 18px 16px 20px; box-shadow: 4px 4px 0 var(--marker); }
     .acl-rule { grid-template-columns: 1.4rem 1fr; }
     .acl-rule .ctl { grid-column: 2; grid-row: auto; margin-top: 4px; }
     .acl-packets th:nth-child(2), .acl-packets td:nth-child(2) { display: none; }

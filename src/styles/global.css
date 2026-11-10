@@ -201,3 +201,10 @@ main { padding: 40px 0 72px; }
 .prose a.term-link { color: inherit; text-decoration: underline dotted; text-decoration-color: var(--link); text-decoration-thickness: 2px; text-underline-offset: 0.22em; }
 .prose a.term-link:hover { text-decoration-style: solid; text-decoration-color: var(--marker); text-decoration-thickness: 4px; }
 .layer-buyer a.term-link { text-decoration-color: var(--buyer-link); }
+
+/* Interactive exercises (games, simulations) */
+.game { margin: 2.5rem 0; padding: 22px 24px 24px; border: 2px solid var(--ink); border-radius: var(--radius-l); background: var(--surface); box-shadow: 6px 6px 0 var(--marker); }
+.game h3 { margin: 0.2rem 0 0.6rem; font-size: 1.45rem; }
+.game-tag { display: inline-block; margin: 0; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; font-size: .75rem; background: var(--marker); color: var(--marker-ink); padding: 3px 10px; border-radius: 999px; }
+.game { padding: 18px 16px 20px; box-shadow: 4px 4px 0 var(--marker); }
+@media (max-width: 560px) { .game { padding: 18px 16px 20px; box-shadow: 4px 4px 0 var(--marker); } }
