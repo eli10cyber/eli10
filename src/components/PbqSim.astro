@@ -9,23 +9,42 @@
   <p class="small muted">Step 1: pick a workstation and run the checks. Step 2: fix the router’s rules. Step 3: submit.</p>
 
   <div class="pbq-map" aria-label="Network diagram">
-    <div class="zone">
-      <p class="zone-name">Executive office <span class="mono">192.168.1.0/24</span></p>
+    <div class="edge">
+      <div class="zone internet">
+        <p class="zone-name">Internet</p>
+        <p class="small servers">example.org <span class="mono">203.0.113.80</span></p>
+      </div>
+      <div class="zone telco">
+        <p class="zone-name">Telco cage</p>
+        <p class="small servers">The provider’s router</p>
+      </div>
+    </div>
+    <div class="router">
+      <span class="hn">Router</span>
+      <span class="mono small">ACL on eth3</span>
+      <ul class="ifs mono small">
+        <li><b>eth1</b> → telco</li>
+        <li><b>eth2</b> → DMZ</li>
+        <li><b>eth3</b> → office <span>192.168.1.1</span></li>
+      </ul>
+    </div>
+    <div class="zone dmz">
+      <p class="zone-name">DMZ (screened subnet) <span class="mono">192.168.10.0/24</span></p>
+      <p class="small switch-chip">Switch</p>
+      <ul class="srv small">
+        <li>DNS <span class="mono">.53</span></li>
+        <li>Email <span class="mono">.25</span></li>
+        <li>Web / intranet <span class="mono">.80</span></li>
+        <li>File server <span class="mono">.45</span></li>
+      </ul>
+    </div>
+    <div class="zone office">
+      <p class="zone-name">Floor 2: executive offices <span class="mono">192.168.1.0/24</span></p>
+      <p class="small switch-chip">Switch</p>
       <div class="hosts">
         <button type="button" class="host" data-host="ws1" aria-pressed="true"><span class="hn">Workstation 1</span><span class="mono small">click to check</span></button>
         <button type="button" class="host" data-host="ws2" aria-pressed="false"><span class="hn">Workstation 2</span><span class="mono small">click to check</span></button>
         <div class="host fixed"><span class="hn">Printer</span><span class="mono small">192.168.1.50</span></div>
-      </div>
-    </div>
-    <div class="router"><span class="hn">Router</span><span class="mono small">192.168.1.1 · ACL</span></div>
-    <div class="zone-pair">
-      <div class="zone">
-        <p class="zone-name">Server room <span class="mono">192.168.10.0/24</span></p>
-        <p class="small servers">DNS .53 · Email .25 · Intranet .80 · Files .45</p>
-      </div>
-      <div class="zone internet">
-        <p class="zone-name">Internet</p>
-        <p class="small servers">example.org <span class="mono">203.0.113.80</span></p>
       </div>
     </div>
   </div>
@@ -41,7 +60,7 @@
     <pre class="term" aria-live="polite"><span class="muted">Pick a command to run it on the selected workstation.</span></pre>
   </div>
 
-  <h4>Router ACL <span class="small muted">(applied to traffic leaving the executive office)</span></h4>
+  <h4>Router ACL <span class="small muted">(applied on eth3, to traffic coming in from the executive office)</span></h4>
   <div class="acl-edit-wrap">
     <table class="acl-edit">
       <thead><tr><th>Rule</th><th>Action</th><th>Protocol</th><th>Source</th><th>Destination</th><th>Port</th></tr></thead>
@@ -59,7 +78,18 @@
 
 <style is:global>
   .pbq h4 { margin: 1.6rem 0 0.6rem; font-size: 1.1rem; }
-  .pbq-map { display: grid; grid-template-columns: 1fr auto 1fr; gap: 14px; align-items: center; margin: 1.2rem 0; }
+  .pbq-map { display: grid; grid-template-columns: 1fr auto 1.2fr; grid-template-areas: 'edge router dmz' 'office office office'; gap: 14px; align-items: center; margin: 1.2rem 0; }
+  .pbq-map .edge { grid-area: edge; display: grid; gap: 10px; }
+  .pbq-map .router { grid-area: router; }
+  .pbq-map .dmz { grid-area: dmz; }
+  .pbq-map .office { grid-area: office; }
+  .pbq-map .office .hosts { grid-template-columns: repeat(3, 1fr); }
+  .zone.telco { border-style: dotted; }
+  .pbq .ifs { list-style: none; padding: 0 !important; margin: 8px 0 0; text-align: left; line-height: 1.5; }
+  .ifs span { color: var(--ink-2); }
+  .pbq .srv { list-style: none; padding: 0 !important; margin: 0; display: grid; grid-template-columns: 1fr; gap: 2px; color: var(--ink-2); }
+  .pbq .srv li { margin: 0; display: flex; justify-content: space-between; gap: 8px; }
+  .switch-chip { display: inline-block; margin: 0 0 8px; padding: 1px 8px; border: 1.5px solid var(--rule); border-radius: 6px; font-weight: 700; color: var(--ink-2); }
   .zone { border: 2px dashed var(--rule); border-radius: 14px; padding: 10px 12px; background: var(--paper); }
   .zone.internet { border-style: solid; }
   .zone-pair { display: grid; gap: 10px; }
@@ -73,7 +103,7 @@
   .host[aria-pressed='true'] { background: var(--marker); color: var(--marker-ink); border-color: var(--marker-ink); }
   .host[aria-pressed='true'] .small { color: var(--marker-ink); }
   .host.fixed { cursor: default; border-style: dashed; border-color: var(--rule); }
-  .router { display: flex; flex-direction: column; align-items: center; padding: 10px 12px; border-radius: 50%; aspect-ratio: 1; justify-content: center; border: 2px solid var(--ink); background: var(--surface); text-align: center; min-width: 108px; }
+  .router { display: flex; flex-direction: column; align-items: center; padding: 14px 16px; border-radius: 18px; justify-content: center; border: 2px solid var(--ink); background: var(--surface); text-align: center; min-width: 150px; }
   .pbq-console { border: 2px solid var(--ink); border-radius: 14px; overflow: hidden; }
   .cmds { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px; background: var(--paper-2); border-bottom: 2px solid var(--ink); }
   .cmds button { font: inherit; font-size: .82rem; font-variation-settings: 'CASL' 0, 'MONO' 1; padding: 6px 10px; border-radius: 8px; border: 1.5px solid var(--ink); background: var(--surface); color: var(--ink); cursor: pointer; }
@@ -110,8 +140,8 @@
   .pbq-result ul { margin: 8px 0 0; padding-left: 1.2rem; }
   .pbq-result .score { font-weight: 800; font-size: 1.15rem; margin: 0; }
   @media (max-width: 720px) {
-    .pbq-map { grid-template-columns: 1fr; }
-    .router { aspect-ratio: auto; border-radius: 14px; flex-direction: row; gap: 10px; }
+    .pbq-map { grid-template-columns: 1fr; grid-template-areas: 'edge' 'router' 'dmz' 'office'; }
+    .pbq-map .office .hosts { grid-template-columns: 1fr; }
   }
 </style>
 

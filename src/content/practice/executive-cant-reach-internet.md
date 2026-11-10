@@ -31,7 +31,7 @@ quiz:
 
 ## The problem
 
-After attacks on its servers, a company moved them into their own network behind the router and tightened the router’s rules. Since then, an assistant reports that one of the executives can’t open secure websites, such as `https://example.org`. Strangely, the executive can still send internal email, use the intranet and print on the office printer.
+After attacks on its servers, a company moved them into a **DMZ** (a screened subnet) on its own router port and tightened the router’s rules. The router now joins three networks: the provider’s line to the internet, the DMZ, and the executive offices on the second floor. Since then, an assistant reports that one of the executives can’t open secure websites, such as `https://example.org`. Strangely, the executive can still send internal email, use the intranet and print on the office printer.
 
 **Your task:**
 
@@ -68,14 +68,18 @@ The first three are fine. Then you read the guard’s list: **“Park gate: Desk
 | 3. Can it find names? | `nslookup example.org` | **DNS** works, so the problem isn’t name lookups |
 | 4. What works, and what doesn’t? | Open the site over HTTP and HTTPS | If plain web works but secure web fails, something is blocking **TCP port 443** for this machine |
 
+**Read the diagram first:** one router, three interfaces, three networks. `eth1` goes to the provider’s router and the internet, `eth2` to the DMZ, and `eth3` to the executive offices. The ACL sits on `eth3`, so it checks everything the offices send out, whether it’s heading for the DMZ or the internet.
+
 **Two exam traps hidden in the story:**
 
-- **Why printing still works:** the printer is on the same network as the workstation, so print jobs never cross the router. The ACL never sees them.
-- **Why email and the intranet still work:** those servers are in the server room, and a separate rule allows the office to reach them. Internal success tells you the device is fine and points you at the route out.
+- **Why printing still works:** the printer plugs into the same office switch as the workstations, so print jobs never reach the router. The ACL never sees them.
+- **Why email and the intranet still work:** those servers are in the DMZ, and a separate rule allows the office to reach them. Internal success tells you the device is fine and points you at the route out.
 
 **Reading the addresses:** `/24` and `/32` are **CIDR** notation, a short way to write a subnet mask. `/24` means the first three numbers are fixed, so `192.168.1.0/24` covers every address from 192.168.1.0 to 192.168.1.255. `/32` fixes all four numbers, so it matches exactly one device.
 
 </div>
+
+**Exam world vs real world:** a DMZ is for servers the internet must reach, such as a public website, email gateway or public DNS. A company file server would normally live inside, not in the DMZ. Exam diagrams simplify; in a real interview, spotting that is a good point to raise.
 
 ## Try it yourself
 
