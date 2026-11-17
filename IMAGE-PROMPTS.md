@@ -384,6 +384,29 @@ Scene: the receptionist is busy on the phone while a separate security guard at 
 Caption: "NAT hides addresses. A firewall decides who gets in."
 ```
 
+## In the news: Optimizely script hijack (17 Nov 2026)
+
+```
+POSTER
+Title: "Supply Chain Attack: The Poisoned Posters"
+
+Panel 1 heading: "One Poster Company"
+Scene: a cheerful poster company van with a stack of identical posters drives towards a row of many different schools.
+Caption: "178 schools hire the same company."
+
+Panel 2 heading: "A Thief Sneaks In"
+Scene: at night, a sneaky person in a trench coat slips into the poster company's workshop and slides a tiny extra note onto a stack of posters.
+Caption: "Break into one company..."
+
+Panel 3 heading: "Every School Gets It"
+Scene: in a school corridor, a pupil copies a number from a poster while a tiny hand from the poster quietly swaps the number on their notepad.
+Caption: "...and reach every school at once."
+
+Panel 4 heading: "Check the Delivery List"
+Scene: a school guard at the door holds a clipboard titled "APPROVED SUPPLIERS" and turns away a delivery that is not on the list.
+Caption: "Only load what you approved."
+```
+
 ---
 
 ## Checklist before sending me an image

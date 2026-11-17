@@ -656,4 +656,34 @@ export const glossary: Term[] = [
     kid: 'Pinning a booby-trapped note on someone else’s noticeboard.',
     grownup: 'Cross-site scripting: injecting malicious script into a website so it runs in other visitors’ browsers.',
   },
+  // Web supply chain (from "In the news")
+  {
+    term: 'Third-party script',
+    aliases: ['third-party scripts', 'third-party JavaScript'],
+    kid: 'A poster another company hangs in your corridor.',
+    grownup: 'JavaScript a website loads from another company’s servers, such as analytics, ads or A/B testing. It runs with the same powers as the site’s own code.',
+  },
+  {
+    term: 'Content Security Policy',
+    aliases: ['CSP'],
+    kid: 'A list at the door saying which suppliers may deliver to the school.',
+    grownup: 'A browser security header that tells the browser which domains a page may load scripts from and send data to, blocking everything else.',
+  },
+  {
+    term: 'Subresource Integrity',
+    aliases: ['SRI'],
+    kid: 'A fingerprint check on a parcel, so you notice if anyone swapped what’s inside.',
+    grownup: 'A browser check that a loaded file matches an exact cryptographic hash, so any change to it stops it loading.',
+  },
+  {
+    term: 'Card skimmer',
+    aliases: ['card skimmers', 'skimmer', 'Magecart', 'web skimming'],
+    kid: 'A sneaky copy machine hidden on a shop’s till.',
+    grownup: 'Malicious script on a checkout page that copies payment card details as customers type them. Also known as Magecart attacks.',
+  },
+  {
+    term: 'A/B testing',
+    kid: 'Showing two poster designs to see which one people like more.',
+    grownup: 'Showing different versions of a web page to different visitors to measure which performs better. Done by injecting scripts that change the page.',
+  },
 ];
