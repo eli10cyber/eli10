@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import { iconFor } from '../lib/icons';
 import { domains } from '../data/map';
 
 const lessons = await getCollection('lessons', ({ data }) => !data.draft);
@@ -33,6 +34,7 @@ const total = domains.reduce((n, d) => n + d.topics.length, 0);
                   <input type="checkbox" aria-label={`Mark ${t.name} as learned`} />
                   <span class="tick" aria-hidden="true"></span>
                 </label>
+                {lesson && iconFor(lesson.id) ? <img class="topic-icon" src={iconFor(lesson.id)!.src} srcset={iconFor(lesson.id)!.srcset} sizes="44px" width="44" height="44" alt="" loading="lazy" decoding="async" /> : <span class="topic-icon blank" aria-hidden="true"></span>}
                 <div class="topic-text">
                   {lesson ? <a href={`/lessons/${lesson.id}/`} class="topic-name">{t.name}</a> : <span class="topic-name">{t.name}</span>}
                   <span class="muted casual">{t.kid}</span>
@@ -59,6 +61,8 @@ const total = domains.reduce((n, d) => n + d.topics.length, 0);
   .weight { margin: 0 0 0.8rem; }
   .topics { list-style: none; padding: 0; margin: 0; border-top: 2px solid var(--ink); }
   .topic { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+  .topic-icon { width: 44px; height: 44px; flex-shrink: 0; border-radius: 50%; border: 1.5px solid var(--rule); background: #f9f3d9; }
+  .topic-icon.blank { background: var(--paper-2); border-style: dashed; }
   .topic-text { display: flex; flex-direction: column; flex: 1; min-width: 0; }
   .topic-name { font-weight: 700; }
   span.topic-name { color: var(--ink); }

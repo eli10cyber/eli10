@@ -217,12 +217,18 @@ main { padding: 40px 0 72px; }
 .lc-thumb { position: relative; display: block; aspect-ratio: 16 / 10; background: var(--paper-2); border-bottom: 2px solid var(--ink); overflow: hidden; }
 .lc-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; transition: transform .4s ease; }
 .lcard:hover .lc-thumb img { transform: scale(1.04); }
-.lc-blank { position: absolute; inset: 0; display: grid; place-items: center; background: repeating-linear-gradient(135deg, var(--paper-2) 0 14px, var(--paper) 14px 28px); }
+.lc-blank { position: absolute; inset: 0; display: grid; place-items: center; background: #f9f3d9; }
+.lc-blank-icon { width: 46%; height: auto; max-width: 160px; }
+.lcard:hover .lc-blank-icon { transform: rotate(-4deg) scale(1.05); }
+.lc-blank-icon { transition: transform .3s ease; }
 .lc-blank span { font-size: 3.2rem; font-weight: 900; color: var(--rule); font-variation-settings: 'CASL' 1, 'MONO' 0; }
 .lc-num { position: absolute; left: 10px; top: 10px; background: var(--marker); color: var(--marker-ink); font-weight: 800; font-size: .85rem; padding: 3px 9px; border-radius: 999px; border: 2px solid var(--marker-ink); }
 .lc-new { position: absolute; right: 10px; top: 10px; background: #13233f; color: #ffd84d; font-weight: 800; font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; }
 .lc-tick { position: absolute; right: 10px; bottom: 10px; background: #1e8a5a; color: #fff; font-weight: 800; font-size: .75rem; padding: 4px 10px; border-radius: 999px; }
-.lc-body { display: flex; flex-direction: column; gap: 6px; padding: 14px 16px 16px; flex: 1; }
+.lc-body { position: relative; display: flex; flex-direction: column; gap: 6px; padding: 14px 16px 16px; flex: 1; }
+.lc-icon { position: absolute; right: 12px; top: -30px; width: 56px; height: 56px; border-radius: 50%; border: 2px solid var(--ink); background: #f9f3d9; box-shadow: 2px 2px 0 var(--ink); transition: transform .3s ease; }
+.lcard:hover .lc-icon { transform: rotate(-8deg) scale(1.08); }
+.lc-body .lc-title { padding-right: 52px; }
 .lc-label { font-weight: 800; text-transform: uppercase; letter-spacing: .05em; font-size: .72rem; color: var(--ink-2); }
 .lc-title { font-weight: 800; font-size: 1.2rem; line-height: 1.25; }
 .lc-sub { font-weight: 650; color: var(--ink-2); line-height: 1.3; }
@@ -230,7 +236,7 @@ main { padding: 40px 0 72px; }
 .lc-score { margin-top: auto; padding-top: 6px; color: var(--ink-2); }
 .lc-score b { background: var(--marker); color: var(--marker-ink); border-radius: 6px; padding: 1px 7px; }
 .lcard.small .lc-title { font-size: 1.05rem; }
-@media (prefers-reduced-motion: reduce) { .lcard, .lc-thumb img { transition: none; } .lcard:hover { transform: none; } .lcard:hover .lc-thumb img { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .lcard, .lc-thumb img, .lc-icon, .lc-blank-icon { transition: none; } .lcard:hover .lc-icon, .lcard:hover .lc-blank-icon { transform: none; } .lcard:hover { transform: none; } .lcard:hover .lc-thumb img { transform: none; } }
 
 /* Smooth page-to-page transitions in supporting browsers. No JavaScript involved. */
 @view-transition { navigation: auto; }

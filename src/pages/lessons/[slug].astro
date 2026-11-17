@@ -12,6 +12,7 @@ import Quiz from '../../components/Quiz.astro';
 import ReadingMode from '../../components/ReadingMode.astro';
 import LessonCard from '../../components/LessonCard.astro';
 import OnThisPage from '../../components/OnThisPage.astro';
+import { iconFor } from '../../lib/icons';
 
 export async function getStaticPaths() {
   const lessons = (await getCollection('lessons', ({ data }) => !data.draft)).sort((a, b) => a.data.number - b.data.number);
@@ -24,6 +25,7 @@ export async function getStaticPaths() {
 const { lesson, prev, next } = Astro.props;
 const { Content } = await render(lesson);
 const d = lesson.data;
+const icon = iconFor(lesson.id);
 const date = d.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 ---
 <Base title={d.title} description={d.description} image={d.image} type="article">
@@ -32,7 +34,10 @@ const date = d.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'lon
     <OnThisPage />
     <header class="lesson-head measure">
       <p class="crumbs small muted"><a href="/lessons/">Lessons</a> / Lesson {d.number}{d.chapter && <span>, {d.chapter}</span>}</p>
-      <h1>{d.title}</h1>
+      <div class="title-row">
+        {icon && <img class="head-icon" src={icon.src} srcset={icon.srcset} sizes="88px" width="88" height="88" alt="" />}
+        <h1>{d.title}</h1>
+      </div>
       <p class="byline small muted">Vas Evangelopoulos, {date}</p>
       <p class="oneliner casual">{d.oneLiner}</p>
       <ReadingMode />
@@ -66,6 +71,9 @@ const date = d.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'lon
 <style>
   .crumbs { margin-bottom: 1rem; }
   .crumbs a { color: var(--ink-2); }
+  .title-row { display: flex; align-items: center; gap: 18px; }
+  .head-icon { width: 88px; height: 88px; flex-shrink: 0; border-radius: 50%; border: 2px solid var(--ink); background: #f9f3d9; box-shadow: 3px 3px 0 var(--marker); }
+  @media (max-width: 560px) { .head-icon { width: 60px; height: 60px; } .title-row { gap: 12px; } }
   .lesson-head h1 { font-size: clamp(2rem, 6vw, 3rem); }
   .byline { margin: 0.9rem 0 1.5rem; }
   .oneliner { font-size: clamp(1.25rem, 3vw, 1.5rem); line-height: 1.4; font-weight: 650; padding-left: 18px; border-left: 6px solid var(--marker); margin: 0 0 2rem; }

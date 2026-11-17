@@ -7,7 +7,7 @@ const fmt = (d: Date) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 
 ---
 <Base title="Practice problems" description="Security+ style problems, solved step by step, with simulations you can try.">
   <div class="wrap">
-    <h1>Practice problems</h1>
+    <div class="sec-head"><img class="sec-icon" src="/icons/practice-96.webp" srcset="/icons/practice-96.webp 96w, /icons/practice-192.webp 192w" sizes="88px" width="88" height="88" alt="" /><h1>Practice problems</h1></div>
     <p class="lead muted measure">Exam-style problems, like the performance-based questions in Security+. Try the simulation, then read how to think it through.</p>
     <ol class="news-list">
       {posts.map((p) => (
@@ -24,6 +24,10 @@ const fmt = (d: Date) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 
 </Base>
 
 <style>
+  .sec-head { display: flex; align-items: center; gap: 18px; }
+  .sec-head h1 { margin: 0; }
+  .sec-icon { width: 88px; height: 88px; border-radius: 50%; border: 2px solid var(--ink); background: #f9f3d9; box-shadow: 3px 3px 0 var(--marker); }
+  @media (max-width: 560px) { .sec-icon { width: 60px; height: 60px; } }
   .lead { font-size: 1.15rem; margin: 1rem 0 2rem; }
   .news-list { list-style: none; padding: 0; margin: 0; border-top: 2px solid var(--ink); max-width: 860px; }
   .news-list li { border-bottom: 1px solid var(--rule); }
