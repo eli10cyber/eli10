@@ -8,6 +8,8 @@ chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "Put the things strangers must visit in the castle courtyard, behind one wall. Keep everything precious in the keep, behind a second wall with its own guard."
 grownLiner: "A screened subnet (DMZ) is a separate network for internet-facing servers, filtered by firewalls on both sides, so a compromised public server can’t reach the internal network directly."
 draft: false
+image: "/images/og/screened-subnet.jpg"
+imageAlt: "Poster: Network segmentation, screened subnet and DMZ. Top: attackers in a storm on the internet side, a castle wall as the perimeter firewall, a house with public web and mail servers in the buffer zone, and a brick wall as the internal firewall in front of the internal corporate network. Bottom: internet, perimeter firewall, web server in the DMZ, internal firewall, internal network."
 buyerScore:
   budget: 2
   pain: 2
@@ -39,6 +41,10 @@ flashcards:
   - q: "What is the difference between segmentation and an air gap?"
     a: "Segmentation splits a network into zones that talk through controlled rules. An air gap means the network is physically disconnected, with no link at all."
 ---
+
+![Poster: Network segmentation, screened subnet and DMZ. Top: attackers in a storm on the internet side, a castle wall as the perimeter firewall, a house with public web and mail servers in the buffer zone, and a brick wall as the internal firewall in front of the internal corporate network. Bottom: internet, perimeter firewall, web server in the DMZ, internal firewall, internal network.](./images/screened-subnet-poster.jpg)
+
+<p class="caption">On the poster, the castle wall is the perimeter firewall, the house in the middle is the screened subnet, and the brick wall guards the internal network. Tap to zoom in.</p>
 
 <div class="layer layer-kid">
 <p class="layer-name">Like you’re 10</p>
