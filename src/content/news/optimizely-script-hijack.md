@@ -18,6 +18,8 @@ sources:
     publisher: "BleepingComputer"
     url: "https://www.bleepingcomputer.com/news/security/optimizely-supply-chain-attack-delivers-malware-to-cnn-fox-news-bbc-salesforce-sites/"
 diagram: optimjack
+image: "/images/og/optimizely-script-hijack.jpg"
+imageAlt: "Diagram: how 178 websites served a card skimmer. Attacker exploits a flaw in Optimizely, plants malicious code, Optimizely’s servers serve the script, big-name websites load it, your browser runs it and sends stolen data to the attacker’s server."
 buyerScore:
   budget: 2
   pain: 2
