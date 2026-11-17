@@ -35,6 +35,7 @@ export const domains: Domain[] = [
     weight: '18%',
     topics: [
       { id: 'ip-addressing', name: 'IPv4 and IPv6', kid: 'House numbers for computers, and why we ran out' },
+      { id: 'nat', name: 'NAT and PAT', kid: 'One phone number for the whole school' },
       { id: 'switching', name: 'Switches: unicast, broadcast, port security', kid: 'A hallway monitor who checks name badges' },
       { id: 'network-loops', name: 'Broadcast storms, STP and BPDU guard', kid: 'Stopping messages running round in circles' },
       { id: 'routing', name: 'Routers, ACLs and SNMP', kid: 'A crossroads guard with a clipboard of rules' },

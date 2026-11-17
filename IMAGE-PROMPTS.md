@@ -361,6 +361,29 @@ Scene: the sneaky figure has got into the courtyard but is stopped at the inner 
 Caption: "One break-in doesn’t reach the treasure."
 ```
 
+## Lesson 13: NAT and PAT
+
+```
+POSTER
+Title: "NAT: One Phone Number for the Whole School"
+
+Panel 1 heading: "Static NAT: The VIP Hotline"
+Scene: a school receptionist at a switchboard connects a call from a phone labelled "HOTLINE" straight through a cable to the head teacher’s desk.
+Caption: "One outside number, always the same desk."
+
+Panel 2 heading: "Dynamic NAT: The Badge Bucket"
+Scene: by the school door, a pupil grabs a badge from a bucket labelled "OUTSIDE BADGES" while another pupil drops one back in.
+Caption: "Borrow a badge, give it back."
+
+Panel 3 heading: "PAT: Extension Codes"
+Scene: the receptionist writes "5042" and "5043" on a notepad, with arrows from each number to a different pupil’s desk.
+Caption: "One number, a code for every call."
+
+Panel 4 heading: "Not a Security Guard"
+Scene: the receptionist is busy on the phone while a separate security guard at the front door checks a visitor’s pass.
+Caption: "NAT hides addresses. A firewall decides who gets in."
+```
+
 ---
 
 ## Checklist before sending me an image

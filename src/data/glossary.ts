@@ -32,7 +32,7 @@ export const glossary: Term[] = [
     term: 'NAT',
     kid: 'One front door number shared by everyone living in a big house.',
     grownup: 'Network Address Translation: lets many devices share one public IP address by rewriting addresses at the router.',
-    lesson: 'ip-addressing',
+    lesson: 'nat',
   },
   {
     term: 'Dual stack',
@@ -554,5 +554,46 @@ export const glossary: Term[] = [
     aliases: ['air-gapped', 'air gapped'],
     kid: 'A room with no doors to the outside at all.',
     grownup: 'Physically isolating a system or network so it has no connection to other networks.',
+  },
+  // NAT
+  {
+    term: 'Static NAT',
+    lesson: 'nat',
+    kid: 'A permanent hotline straight to one desk.',
+    grownup: 'A fixed one-to-one mapping between a private IP address and a public IP address, so outside systems can always reach that device.',
+  },
+  {
+    term: 'Dynamic NAT',
+    lesson: 'nat',
+    kid: 'Grabbing a free badge from a bucket and returning it later.',
+    grownup: 'NAT that lends public addresses from a pool to internal devices while they need one. When the pool runs out, new devices can’t connect.',
+  },
+  {
+    term: 'PAT',
+    lesson: 'nat',
+    aliases: ['NAT overload', 'Port Address Translation', 'port address translation'],
+    kid: 'One phone number for everyone, with an extension code for each call.',
+    grownup: 'Port Address Translation: many private addresses share one public address, with the router giving each connection its own port number.',
+  },
+  {
+    term: 'Port forwarding',
+    lesson: 'nat',
+    aliases: ['static PAT'],
+    kid: 'Calls to extension 443 always go to the web team’s desk.',
+    grownup: 'A fixed rule that sends traffic arriving on one public port to one internal device and port.',
+  },
+  {
+    term: 'Private IP address',
+    lesson: 'nat',
+    aliases: ['private IP addresses', 'private address', 'private addresses', 'RFC 1918'],
+    kid: 'A room number that only means something inside the building.',
+    grownup: 'An address from 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16, usable inside networks but never routed on the internet.',
+  },
+  {
+    term: 'CGNAT',
+    lesson: 'nat',
+    aliases: ['carrier-grade NAT'],
+    kid: 'The phone company sharing one number between whole streets.',
+    grownup: 'Carrier-grade NAT: an internet provider shares public IPv4 addresses between many customers using PAT at large scale.',
   },
 ];
