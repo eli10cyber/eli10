@@ -1,8 +1,8 @@
 ---
-title: "178 big-name websites served malware through a marketing tool"
-description: "Attackers slipped malicious JavaScript into Optimizely, an A/B testing tool, so sites like the BBC, CNN, Zoom and HSBC served a card skimmer and crypto thief to their visitors. Explained like you're 10, properly, and from the ad tech and buyer side."
+title: "BBC, CNN, Zoom and HSBC served malware to their own visitors through one marketing tool"
+description: "The BBC, CNN, Zoom, HSBC, IKEA, Salesforce and 172 other websites served a card skimmer and crypto thief to their visitors after attackers hijacked Optimizely, an A/B testing tool. Explained like you're 10, properly, and from the ad tech and buyer side."
 pubDate: 2026-11-17
-oneLiner: "On Monday 16 November 2026, a company that helps websites test two designs was broken into, and for about 16 hours 178 famous websites handed their visitors a hidden pickpocket along with the page."
+oneLiner: "On Monday 16 November 2026, the BBC, CNN, Zoom, HSBC and 174 other websites handed their visitors a hidden pickpocket for about 16 hours, because one marketing tool they all trusted had been broken into."
 related: ["firewalls", "dns"]
 sources:
   - title: "OPTIMJACK: Optimizely-hosted scripts loaded a crypto clipper and card skimmer on 178 organizations"
@@ -49,13 +49,23 @@ quiz:
 <div class="layer layer-kid">
 <p class="layer-name">Like you’re 10</p>
 
-Imagine **178 schools** all hire the same company to put up **posters** in their corridors. The company sometimes hangs two different designs to see which one pupils like more. That’s called **A/B testing**.
+Imagine **178 schools**, including the most famous ones in the country, all hire the same company to put up **posters** in their corridors. The company sometimes hangs two different designs to see which one pupils like more. That’s called **A/B testing**.
 
 The schools never check the posters, because they trust the company. One night a **thief sneaks into the poster company** and slips a tiny trick into the posters: whenever a pupil copies down a number, the poster quietly **changes it to the thief’s number**.
 
 Next morning, pupils in all **178 schools** walk past the posters. Nobody broke into a single school. The thief only had to break into **the one company every school trusted**.
 
 </div>
+
+## Who was hit
+
+Researchers at Report URI counted **178 organisations** whose websites served the malicious script. The names include some of the most visited sites in the world:
+
+<ul class="hit-list">
+<li>BBC</li><li>CNN</li><li>Zoom</li><li>HSBC</li><li>Salesforce</li><li>IKEA</li><li>Equifax</li><li>GitLab</li><li>Air France-KLM</li><li>Fox News</li><li>Peacock</li><li>Ledger</li>
+</ul>
+
+<p class="caption">None of these companies’ own servers were broken into. Several, including Salesforce and Equifax, switched off Optimizely’s scripts while they investigated.</p>
 
 ## First, two words you need
 
@@ -80,7 +90,7 @@ This attack also carried a **crypto clipper**: when someone copied a crypto wall
 <div class="layer layer-grown">
 <p class="layer-name">Grown-up version</p>
 
-**The short version:** the attackers never touched the BBC’s, CNN’s or Zoom’s servers. They broke into the one tool all those sites had invited onto their pages.
+**The short version:** the attackers never touched the servers of the BBC, CNN, Zoom or HSBC. They broke into the one tool all those sites had invited onto their pages.
 
 **When and how big:** on Monday 16 November 2026, an attacker exploited a flaw in **Optimizely Web Experimentation**, an A/B testing service. Optimizely says the flaw was in its account sign-up process; it hasn’t yet explained how that let the attacker edit other customers’ projects. The attacker wrote malicious JavaScript into each project’s **“Project JavaScript”** field, which runs on every page of the customer’s site. Researchers at Report URI counted **178 organisations** affected, including Zoom, the BBC, CNN, Salesforce, GitLab, IKEA, HSBC and Equifax. The first injection was around 04:00 UTC and most sites were cleaned up by about 21:00 UTC: roughly **16 hours**.
 
