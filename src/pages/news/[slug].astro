@@ -7,6 +7,7 @@ import PosterPanels from '../../components/PosterPanels.astro';
 import TermCards from '../../components/TermCards.astro';
 import Quiz from '../../components/Quiz.astro';
 import ReadingMode from '../../components/ReadingMode.astro';
+import HackFlow from '../../components/HackFlow.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('news', ({ data }) => !data.draft);
@@ -57,6 +58,7 @@ const related = d.related.map((id) => lessons.find((l) => l.id === id)).filter((
   </article>
   <Lightbox />
   <TermCards />
+  {d.diagram === 'optimjack' && <HackFlow />}
   {d.panels && <PosterPanels panels={d.panels} grid={d.posterGrid} />}
 </Base>
 

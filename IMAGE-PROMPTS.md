@@ -407,6 +407,10 @@ Scene: a school guard at the door holds a clipboard titled "APPROVED SUPPLIERS" 
 Caption: "Only load what you approved."
 ```
 
+## LinkedIn image: Optimizely attack flow (dark blueprint style)
+
+See the Gemini prompt in the chat of 17 Nov 2026 (dark glowing flow diagram, 6 boxes, 5 numbered arrows).
+
 ---
 
 ## Checklist before sending me an image

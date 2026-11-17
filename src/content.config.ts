@@ -58,6 +58,7 @@ const news = defineCollection({
     posterGrid: z.array(z.number()).length(8).optional(),
     panels: z.array(z.object({ title: z.string(), note: z.string(), find: z.string() })).length(4).optional(),
     quiz: z.array(z.object({ q: z.string(), options: z.array(z.string()).min(2), answer: z.number(), why: z.string() })).default([]),
+    diagram: z.enum(['optimjack']).optional(), // an interactive diagram placed where the post has <div data-diagram="..."></div>
     draft: z.boolean().default(false),
   }),
 });

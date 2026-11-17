@@ -686,4 +686,10 @@ export const glossary: Term[] = [
     kid: 'Showing two poster designs to see which one people like more.',
     grownup: 'Showing different versions of a web page to different visitors to measure which performs better. Done by injecting scripts that change the page.',
   },
+  {
+    term: 'Crypto clipper',
+    aliases: ['crypto clippers', 'clipper'],
+    kid: 'A trick that changes the number you copied into the thief’s number.',
+    grownup: 'Malware that watches for copied cryptocurrency wallet addresses and replaces them with the attacker’s address, so payments go to the attacker.',
+  },
 ];
