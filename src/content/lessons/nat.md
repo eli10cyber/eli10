@@ -8,6 +8,8 @@ chapter: "Gibson & Shelley, Ch. 3"
 oneLiner: "The school has hundreds of pupils but one phone number. The receptionist gives every call its own extension code, so each answer finds its way back to the right desk."
 grownLiner: "NAT rewrites private IP addresses into public ones at the router. Static NAT maps one-to-one, dynamic NAT lends addresses from a pool, and PAT shares one public address by giving every connection its own port."
 draft: false
+image: "/images/og/nat.jpg"
+imageAlt: "Poster: Network Address Translation, how computers share one address. Static NAT: a house computer at 192.168.1.10 permanently mapped to 203.0.113.10 by a NAT router. Dynamic NAT: computers borrow addresses from a public IP pool until it runs out and others must wait. PAT: many computers share one public IP, 203.0.113.100, each connection told apart by its own port number."
 buyerScore:
   budget: 0.5
   pain: 0.5
@@ -39,6 +41,10 @@ flashcards:
   - q: "Is NAT a security control?"
     a: "Not on its own. It hides internal addresses, but deciding what may come in is a firewall’s job."
 ---
+
+![Poster: Network Address Translation, how computers share one address. Static NAT: a house computer at 192.168.1.10 permanently mapped to 203.0.113.10 by a NAT router. Dynamic NAT: computers borrow addresses from a public IP pool until it runs out and others must wait. PAT: many computers share one public IP, 203.0.113.100, each connection told apart by its own port number.](./images/nat-poster.jpg)
+
+<p class="caption">Tap the poster to zoom in.</p>
 
 <div class="layer layer-kid">
 <p class="layer-name">Like you’re 10</p>
