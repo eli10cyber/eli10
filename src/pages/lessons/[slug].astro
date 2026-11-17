@@ -10,6 +10,8 @@ import TermCards from '../../components/TermCards.astro';
 import AclGame from '../../components/AclGame.astro';
 import Quiz from '../../components/Quiz.astro';
 import ReadingMode from '../../components/ReadingMode.astro';
+import LessonCard from '../../components/LessonCard.astro';
+import OnThisPage from '../../components/OnThisPage.astro';
 
 export async function getStaticPaths() {
   const lessons = (await getCollection('lessons', ({ data }) => !data.draft)).sort((a, b) => a.data.number - b.data.number);
@@ -25,7 +27,9 @@ const d = lesson.data;
 const date = d.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 ---
 <Base title={d.title} description={d.description} image={d.image} type="article">
-  <article class="wrap">
+  <div class="read-progress" aria-hidden="true"></div>
+  <article class="wrap lesson-layout">
+    <OnThisPage />
     <header class="lesson-head measure">
       <p class="crumbs small muted"><a href="/lessons/">Lessons</a> / Lesson {d.number}{d.chapter && <span>, {d.chapter}</span>}</p>
       <h1>{d.title}</h1>
@@ -45,8 +49,11 @@ const date = d.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'lon
       <LearnedButton topic={d.topic} />
 
       <nav class="pager" aria-label="More lessons">
-        {prev ? <a href={`/lessons/${prev.id}/`}><span class="small muted">Previous lesson</span><span class="pt">{prev.data.title}</span></a> : <span />}
-        {next ? <a class="right" href={`/lessons/${next.id}/`}><span class="small muted">Next lesson</span><span class="pt">{next.data.title}</span></a> : <a class="right" href="/map/"><span class="small muted">What to learn next</span><span class="pt">Open the learning map</span></a>}
+        <h2 class="pager-title">Keep going</h2>
+        <div class="pager-cards">
+          {prev ? <LessonCard lesson={prev} size="small" label="← Previous lesson" /> : <span />}
+          {next ? <LessonCard lesson={next} size="small" label="Next lesson →" /> : <a class="lcard small map-card" href="/map/"><span class="lc-body"><span class="lc-label small">You’re up to date</span><span class="lc-title">See what’s coming on the learning map →</span></span></a>}
+        </div>
       </nav>
     </div>
   </article>
@@ -62,10 +69,18 @@ const date = d.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'lon
   .lesson-head h1 { font-size: clamp(2rem, 6vw, 3rem); }
   .byline { margin: 0.9rem 0 1.5rem; }
   .oneliner { font-size: clamp(1.25rem, 3vw, 1.5rem); line-height: 1.4; font-weight: 650; padding-left: 18px; border-left: 6px solid var(--marker); margin: 0 0 2rem; }
-  .pager { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 3.5rem; border-top: 2px solid var(--ink); padding-top: 16px; }
-  .pager a { text-decoration: none; color: var(--ink); display: flex; flex-direction: column; gap: 4px; }
-  .pager .pt { font-weight: 750; }
-  .pager a:hover .pt { text-decoration: underline; text-decoration-color: var(--marker); text-decoration-thickness: 4px; }
-  .pager .right { text-align: right; align-items: flex-end; }
-  @media (max-width: 560px) { .pager { grid-template-columns: 1fr; } .pager .right { text-align: left; align-items: flex-start; } }
+  .pager { margin-top: 3.5rem; border-top: 2px solid var(--ink); padding-top: 16px; }
+  .pager-title { margin: 0 0 1rem; font-size: 1.3rem; }
+  .pager-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .map-card { background: var(--marker); color: var(--marker-ink); border-color: var(--marker-ink); }
+  .map-card .lc-body { justify-content: center; min-height: 140px; }
+  .map-card .lc-label { color: var(--marker-ink); }
+  @media (max-width: 560px) { .pager-cards { grid-template-columns: 1fr; } }
+  /* Reading progress: driven by scrolling itself, no JavaScript. Hidden where the browser can't do it. */
+  .read-progress { display: none; }
+  @supports (animation-timeline: scroll()) {
+    .read-progress { display: block; position: fixed; inset: 0 0 auto 0; height: 4px; background: var(--marker); transform-origin: 0 50%; transform: scaleX(0); z-index: 40; animation: read-grow linear both; animation-timeline: scroll(root); }
+    @keyframes read-grow { to { transform: scaleX(1); } }
+  }
+  @media (prefers-reduced-motion: reduce) { .read-progress { display: none; } }
 </style>

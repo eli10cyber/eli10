@@ -208,3 +208,31 @@ main { padding: 40px 0 72px; }
 .game-tag { display: inline-block; margin: 0; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; font-size: .75rem; background: var(--marker); color: var(--marker-ink); padding: 3px 10px; border-radius: 999px; }
 .game { padding: 18px 16px 20px; box-shadow: 4px 4px 0 var(--marker); }
 @media (max-width: 560px) { .game { padding: 18px 16px 20px; box-shadow: 4px 4px 0 var(--marker); } }
+
+/* Lesson cards */
+.lcards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 20px; list-style: none; padding: 0; margin: 0; }
+.lcards > li { display: flex; }
+.lcard { display: flex; flex-direction: column; width: 100%; text-decoration: none; color: var(--ink); background: var(--surface); border: 2px solid var(--ink); border-radius: var(--radius-l); overflow: hidden; box-shadow: 4px 4px 0 var(--ink); transition: transform .15s ease, box-shadow .15s ease; }
+.lcard:hover, .lcard:focus-visible { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--marker); }
+.lc-thumb { position: relative; display: block; aspect-ratio: 16 / 10; background: var(--paper-2); border-bottom: 2px solid var(--ink); overflow: hidden; }
+.lc-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; transition: transform .4s ease; }
+.lcard:hover .lc-thumb img { transform: scale(1.04); }
+.lc-blank { position: absolute; inset: 0; display: grid; place-items: center; background: repeating-linear-gradient(135deg, var(--paper-2) 0 14px, var(--paper) 14px 28px); }
+.lc-blank span { font-size: 3.2rem; font-weight: 900; color: var(--rule); font-variation-settings: 'CASL' 1, 'MONO' 0; }
+.lc-num { position: absolute; left: 10px; top: 10px; background: var(--marker); color: var(--marker-ink); font-weight: 800; font-size: .85rem; padding: 3px 9px; border-radius: 999px; border: 2px solid var(--marker-ink); }
+.lc-new { position: absolute; right: 10px; top: 10px; background: #13233f; color: #ffd84d; font-weight: 800; font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; }
+.lc-tick { position: absolute; right: 10px; bottom: 10px; background: #1e8a5a; color: #fff; font-weight: 800; font-size: .75rem; padding: 4px 10px; border-radius: 999px; }
+.lc-body { display: flex; flex-direction: column; gap: 6px; padding: 14px 16px 16px; flex: 1; }
+.lc-label { font-weight: 800; text-transform: uppercase; letter-spacing: .05em; font-size: .72rem; color: var(--ink-2); }
+.lc-title { font-weight: 800; font-size: 1.2rem; line-height: 1.25; }
+.lc-sub { font-weight: 650; color: var(--ink-2); line-height: 1.3; }
+.lc-line { color: var(--ink-2); font-size: .95rem; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.lc-score { margin-top: auto; padding-top: 6px; color: var(--ink-2); }
+.lc-score b { background: var(--marker); color: var(--marker-ink); border-radius: 6px; padding: 1px 7px; }
+.lcard.small .lc-title { font-size: 1.05rem; }
+@media (prefers-reduced-motion: reduce) { .lcard, .lc-thumb img { transition: none; } .lcard:hover { transform: none; } .lcard:hover .lc-thumb img { transform: none; } }
+
+/* Smooth page-to-page transitions in supporting browsers. No JavaScript involved. */
+@view-transition { navigation: auto; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .18s; }
+@media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }

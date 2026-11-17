@@ -1,0 +1,36 @@
+---
+// A visual card for one lesson: poster thumbnail, number, title, one-liner, buyer score and a learned tick.
+import { thumbFor } from '../lib/thumbs';
+interface Props {
+  lesson: { id: string; data: { number: number; title: string; oneLiner: string; topic: string; pubDate: Date; buyerScore?: { budget: number; pain: number; pressure: number; owner: number } } };
+  size?: 'normal' | 'small';
+  label?: string; // e.g. "Next lesson"
+  eager?: boolean;
+}
+const { lesson, size = 'normal', label, eager = false } = Astro.props;
+const d = lesson.data;
+const thumb = await thumbFor(lesson.id);
+const [main, rawSub] = d.title.split(/:\s(.+)/);
+const sub = rawSub ? rawSub.charAt(0).toUpperCase() + rawSub.slice(1) : undefined;
+const score = d.buyerScore ? d.buyerScore.budget + d.buyerScore.pain + d.buyerScore.pressure + d.buyerScore.owner : null;
+const isNew = Date.now() - d.pubDate.valueOf() < 14 * 86400000;
+---
+<a class={`lcard ${size}`} href={`/lessons/${lesson.id}/`} data-topic={d.topic}>
+  <span class="lc-thumb">
+    {thumb ? (
+      <img src={thumb.src} srcset={thumb.srcset} sizes={size === 'small' ? '(max-width: 640px) 90vw, 300px' : '(max-width: 640px) 90vw, (max-width: 1000px) 45vw, 340px'} width={thumb.width} height={thumb.height} alt="" loading={eager ? 'eager' : 'lazy'} decoding="async" />
+    ) : (
+      <span class="lc-blank" aria-hidden="true"><span>{String(d.number).padStart(2, '0')}</span></span>
+    )}
+    <span class="lc-num mono">{String(d.number).padStart(2, '0')}</span>
+    {isNew && <span class="lc-new">New</span>}
+    <span class="lc-tick" hidden>✓ Learned</span>
+  </span>
+  <span class="lc-body">
+    {label && <span class="lc-label small">{label}</span>}
+    <span class="lc-title">{main}</span>
+    {sub && size !== 'small' && <span class="lc-sub">{sub}</span>}
+    {size !== 'small' && <span class="lc-line">{d.oneLiner}</span>}
+    {score !== null && size !== 'small' && <span class="lc-score small">Buyer score <b>{score}</b>/10</span>}
+  </span>
+</a>
