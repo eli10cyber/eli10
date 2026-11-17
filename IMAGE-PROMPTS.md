@@ -338,6 +338,29 @@ Scene: at the park gate, a guard holds a clipboard that reads "DESK 10 ONLY"; th
 Caption: "One wrong line on the list."
 ```
 
+## Lesson 12: Screened subnets (DMZ)
+
+```
+POSTER
+Title: "Screened Subnets: The Castle Courtyard"
+
+Panel 1 heading: "The Outer Wall"
+Scene: a guard at the outer castle gate waves a smiling visitor through into the courtyard, while holding up a hand to stop a sneaky figure carrying a crowbar.
+Caption: "The first guard lets visitors into the courtyard only."
+
+Panel 2 heading: "The Courtyard"
+Scene: inside the courtyard, visitors buy bread at a market stall with a sign reading "WEBSITE" and drop letters into a post box with a sign reading "MAIL".
+Caption: "Public things live in the buffer zone."
+
+Panel 3 heading: "The Inner Keep"
+Scene: a second, taller wall with its own guard stands in front of the keep; through the open doorway a treasure chest labelled "CUSTOMER DATA" is visible.
+Caption: "A second guard protects the precious things."
+
+Panel 4 heading: "If the Courtyard Falls"
+Scene: the sneaky figure has got into the courtyard but is stopped at the inner gate by the second guard, looking frustrated.
+Caption: "One break-in doesn’t reach the treasure."
+```
+
 ---
 
 ## Checklist before sending me an image

@@ -491,6 +491,7 @@ export const glossary: Term[] = [
   },
   {
     term: 'Screened subnet',
+    lesson: 'screened-subnet',
     aliases: ['DMZ', 'screened subnets'],
     kid: 'A lobby between the street and the house where visitors can meet staff without going inside.',
     grownup: 'A separate network for servers that the internet must reach, kept apart from the internal network by firewall rules. Older name: DMZ.',
@@ -521,5 +522,37 @@ export const glossary: Term[] = [
     aliases: ['PBQs', 'performance-based question', 'performance-based questions'],
     kid: 'A test where you fix the thing instead of picking an answer.',
     grownup: 'Performance-based question: an exam item where you solve a task in a simulation, such as configuring rules or reading logs.',
+  },
+  // Segmentation
+  {
+    term: 'Network segmentation',
+    lesson: 'screened-subnet',
+    aliases: ['segmentation'],
+    kid: 'Locked rooms inside the house, so a burglar in the hallway can’t reach the bedrooms.',
+    grownup: 'Splitting a network into separate zones that can only talk through controlled rules, so one compromise doesn’t spread everywhere.',
+  },
+  {
+    term: 'Jump server',
+    aliases: ['jump servers', 'jump box'],
+    kid: 'The one door admins must use to get into the locked rooms.',
+    grownup: 'A hardened, monitored server that administrators connect to first, and from which they manage other systems.',
+  },
+  {
+    term: 'Microsegmentation',
+    lesson: 'screened-subnet',
+    kid: 'A lock on every single door, not just the front door.',
+    grownup: 'Fine-grained segmentation that controls traffic between individual servers or workloads, often with software rather than network hardware.',
+  },
+  {
+    term: 'VLAN',
+    aliases: ['VLANs'],
+    kid: 'Invisible walls that split one big room into separate rooms.',
+    grownup: 'Virtual LAN: a way to split one physical switch network into separate logical networks.',
+  },
+  {
+    term: 'Air gap',
+    aliases: ['air-gapped', 'air gapped'],
+    kid: 'A room with no doors to the outside at all.',
+    grownup: 'Physically isolating a system or network so it has no connection to other networks.',
   },
 ];

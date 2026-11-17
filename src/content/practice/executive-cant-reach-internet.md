@@ -3,7 +3,7 @@ title: "Practice problem: the executive who can’t reach the internet"
 description: "A Security+ performance-based question, solved step by step: check two workstations, find the broken one, and fix the router's ACL without opening anything else. With a working simulator."
 pubDate: 2026-11-10
 oneLiner: "One executive can print, email and use the intranet, but can’t open a secure website. Work out why, then fix it without breaking anything else."
-related: ["routers-acls", "ip-addressing", "dns", "dhcp-ntp"]
+related: ["screened-subnet", "routers-acls", "ip-addressing", "dns", "dhcp-ntp"]
 game: pbq-acl
 sources:
   - title: "Performance-based questions explained"
