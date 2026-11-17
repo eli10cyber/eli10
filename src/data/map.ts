@@ -46,6 +46,7 @@ export const domains: Domain[] = [
       { id: 'remote-access', name: 'Remote access: SSH and RDP', kid: 'Controlling a computer from far away, safely' },
       { id: 'voip', name: 'Internet calls: SIP, RTP, SRTP', kid: 'A doorbell, a conveyor belt and a locked tunnel' },
       { id: 'segmentation', name: 'Network segmentation', kid: 'Locked rooms inside the house' },
+      { id: 'firewalls', name: 'Firewalls: stateless, stateful, NGFW, WAF', kid: 'Security guards at the gate' },
       { id: 'cloud', name: 'Cloud security', kid: 'Keeping your stuff safe in someone else’s house' },
       { id: 'resilience', name: 'Backups and resilience', kid: 'A spare key and a spare house' },
     ],
