@@ -42,6 +42,10 @@ quiz:
     why: "A CSP with an allow list of script and connection domains would have blocked the payload’s download or its data being sent away. Subresource Integrity didn’t fit, because testing tools change their script all the time."
 ---
 
+![Diagram: how 178 websites served a card skimmer. 1. The attacker exploits a flaw in Optimizely. 2. Plants malicious code in the control panel. 3. Optimizely’s servers serve the script. 4. Big-name websites load it. 5. Your browser runs it and sends stolen data to the attacker’s server.](./images/optimjack-flow.jpg)
+
+<p class="caption">The whole attack in one picture. Tap to zoom, or play it step by step further down.</p>
+
 <div class="layer layer-kid">
 <p class="layer-name">Like you’re 10</p>
 
